@@ -28,6 +28,11 @@ export class LoginComponent {
       return;
     }
 
+    if (password.length < 8) {
+      alert("Enter a valid password");
+      return;
+    }
+
     // Example: Just log the values to console
     console.log('Username: ' + email);
     console.log('Password: ' + password);
