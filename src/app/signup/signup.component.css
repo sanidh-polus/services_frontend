@@ -15,6 +15,20 @@ body {
   background-color: #fff; /* Form background color */
 }
 
+/* Custom styling */
+.form-container {
+  padding: 20px; /* Padding around the form */
+  margin-bottom: 50px; /* Margin at the bottom to create space */
+}
+
+@media (max-width: 760px) {
+  /* Adjustments for smaller screens */
+  .form-container {
+    padding: 10px; /* Decrease padding */
+    margin-top: 300px; /* Decrease margin */
+  }
+}
+
 .gradient-custom-2 {
   /* Ensure minimum height is reduced */
   min-height: auto;
