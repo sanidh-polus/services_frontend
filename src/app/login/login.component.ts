@@ -10,14 +10,26 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent {
-  login(username: string, password: string) {
+  isValidEmailFormat(email: string): boolean {
+    // Regular expression for basic email validation
+    const emailRegex = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+    return emailRegex.test(email);
+  }
+
+  login(email: string, password: string) {
     // TypeScript code
-    if (username == '' || password == '') {
+    if (email == '' || password == '') {
       alert('Please enter valid details.');
       return;
     }
+
+    if (this.isValidEmailFormat(email) == false){
+      alert("Enter a valid email");
+      return;
+    }
+
     // Example: Just log the values to console
-    console.log('Username: ' + username);
+    console.log('Username: ' + email);
     console.log('Password: ' + password);
 
     // You can perform further validation or processing here
@@ -25,8 +37,6 @@ export class LoginComponent {
     // Example: Redirect to another page after successful login
     // window.location.href = 'dashboard.html';
   }
-
-  // TypeScript code
 
   // Function to toggle password visibility
   togglePasswordVisibility(): void {
