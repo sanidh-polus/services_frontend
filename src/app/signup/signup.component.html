@@ -17,18 +17,11 @@
     />
   </head>
   <body>
-    <a
-      type="button"
-      class="btn btn-primary position-absolute top-0 start-0 m-3"
-      type="button"
-      routerLink="/login"
-      >Login</a
-    >
     <div class="container">
       <div class="form-container">
         <form class="border rounded p-3 bg-white">
-          <div class="row">
-            <div class="col-md-6 mb-3">
+          <div class="row mb-3">
+            <div class="col-md-6">
               <label for="inputFirstName" class="form-label">First Name</label>
               <input
                 type="text"
@@ -37,7 +30,7 @@
                 placeholder="First Name"
               />
             </div>
-            <div class="col-md-6 mb-3">
+            <div class="col-md-6">
               <label for="inputLastName" class="form-label">Last Name</label>
               <input
                 type="text"
@@ -56,8 +49,8 @@
               placeholder="Software Engineer"
             />
           </div>
-          <div class="row">
-            <div class="col-md-6 mb-3">
+          <div class="row mb-3">
+            <div class="col-md-6">
               <label for="inputEmail" class="form-label">Email</label>
               <input
                 type="email"
@@ -66,7 +59,7 @@
                 placeholder="Email"
               />
             </div>
-            <div class="col-md-6 mb-3">
+            <div class="col-md-6">
               <label for="inputPhoneNumber" class="form-label">Phone No.</label>
               <input
                 type="text"
@@ -76,8 +69,8 @@
               />
             </div>
           </div>
-          <div class="row">
-            <div class="col-md-6 mb-3">
+          <div class="row mb-3">
+            <div class="col-md-6">
               <label for="inputCountry" class="form-label">Country</label>
               <input
                 type="text"
@@ -86,7 +79,7 @@
                 placeholder="Country"
               />
             </div>
-            <div class="col-md-6 mb-3">
+            <div class="col-md-6">
               <label for="inputState" class="form-label">State</label>
               <input
                 type="text"
@@ -105,55 +98,63 @@
               placeholder="1234 Main St"
             />
           </div>
-          <div class="row">
-            <div class="col-md-6 mb-3 form-outline">
+          <div class="row mb-3">
+            <div class="col-md-6 form-outline">
               <label for="inputPassword" class="form-label">Password</label>
-              <input
-                type="password"
-                class="form-control"
-                id="inputPassword"
-                placeholder="Password"
-              />
-              <span
-                class="show-password"
-                id="showInputPassword"
-                (click)="togglePasswordVisibility('inputPassword')"
-                ><i class="bi bi-eye-slash" id="toggleInputPasswordButton"></i
-              ></span>
+              <div class="input-group">
+                <input
+                  type="password"
+                  class="form-control"
+                  id="inputPassword"
+                  placeholder="Password"
+                />
+                <button
+                  class="btn btn-outline-secondary"
+                  type="button"
+                  (click)="togglePasswordVisibility('inputPassword')"
+                >
+                  <i  id="toggleInputPasswordButton" class="bi bi-eye-slash"></i>
+                </button>
+              </div>
             </div>
-            <div class="col-md-6 mb-3 form-outline">
-              <label for="inputConfirmPassword" class="form-label">
-                Confirm Password</label
+            <div class="col-md-6 form-outline">
+              <label for="inputConfirmPassword" class="form-label"
+                >Confirm Password</label
               >
-              <input
-                type="password"
-                class="form-control"
-                id="inputConfirmPassword"
-                placeholder="Password"
-              />
-              <span
-                class="show-password"
-                id="showConfirmPassword"
-                (click)="togglePasswordVisibility('inputConfirmPassword')"
-                ><i
-                  class="bi bi-eye-slash"
-                  id="toggleInputConfirmPasswordButton"
-                ></i
-              ></span>
+              <div class="input-group">
+                <input
+                  type="password"
+                  class="form-control"
+                  id="inputConfirmPassword"
+                  placeholder="Password"
+                />
+                <button
+                  class="btn btn-outline-secondary"
+                  type="button"
+                  (click)="togglePasswordVisibility('inputConfirmPassword')"
+                >
+                  <i id="toggleInputConfirmPasswordButton" class="bi bi-eye-slash"></i>
+                </button>
+              </div>
             </div>
           </div>
-          <button
-            type="button"
-            data-mdb-button-init
-            data-mdb-ripple-init
-            class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-2"
-            type="button"
-          >
-            Sign Up
-          </button>
+          <div class="sign-up-group">
+            <button
+              type="button"
+              class="btn btn-primary btn-block gradient-custom-2"
+            >
+              Sign Up
+            </button>
+            <div class="d-flex flex-row">
+              <p class="mb-0 me-2">Already have an account?</p>
+              <a class="btn btn-primary" routerLink="/login">Login</a>
+            </div>
+            </div>
         </form>
       </div>
     </div>
+
+    <!-- Bootstrap JS bundle -->
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
