@@ -24,13 +24,13 @@ export class LoginComponent {
       return;
     }
 
-    if (this.isValidEmailFormat(email) == false){
-      alert("Enter a valid email");
+    if (this.isValidEmailFormat(email) == false) {
+      alert('Enter a valid email');
       return;
     }
 
     if (password.length < 8) {
-      alert("Enter a valid password");
+      alert('Enter a valid password');
       return;
     }
 
@@ -49,9 +49,7 @@ export class LoginComponent {
     const passwordInput = document.getElementById(
       'password'
     ) as HTMLInputElement;
-    const icon = document.getElementById(
-      'togglePasswordButton'
-    ) as HTMLElement;
+    const icon = document.getElementById('togglePasswordButton') as HTMLElement;
 
     if (passwordInput.type === 'password') {
       passwordInput.type = 'text';

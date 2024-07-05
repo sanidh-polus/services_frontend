@@ -1,10 +1,10 @@
 /* Custom CSS to reduce height */
 .card-body {
-  padding: 1rem; 
+  padding: 1rem;
 }
 
 .gradient-custom-2 {
-  min-height: auto; 
+  min-height: auto;
   background: linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
 }
 
