@@ -79,11 +79,21 @@
           <div class="row">
             <div class="col-md-6 mb-3">
               <label for="inputCountry" class="form-label">Country</label>
-              <input type="text" class="form-control" id="inputCountry" placeholder="Country" />
+              <input
+                type="text"
+                class="form-control"
+                id="inputCountry"
+                placeholder="Country"
+              />
             </div>
             <div class="col-md-6 mb-3">
               <label for="inputState" class="form-label">State</label>
-              <input type="text" class="form-control" id="inputState" placeholder="State" />
+              <input
+                type="text"
+                class="form-control"
+                id="inputState"
+                placeholder="State"
+              />
             </div>
           </div>
           <div class="mb-3">
@@ -96,7 +106,7 @@
             />
           </div>
           <div class="row">
-            <div class="col-md-6 mb-3">
+            <div class="col-md-6 mb-3 form-outline">
               <label for="inputPassword" class="form-label">Password</label>
               <input
                 type="password"
@@ -104,15 +114,29 @@
                 id="inputPassword"
                 placeholder="Password"
               />
+              <span
+                class="show-password"
+                id="showPassword"
+                (click)="togglePasswordVisibility()"
+                ><i class="bi bi-eye-slash" id="togglePasswordButton"></i
+              ></span>
             </div>
-            <div class="col-md-6 mb-3">
-              <label for="inputConfirmPassword" class="form-label"> Confirm Password</label>
+            <div class="col-md-6 mb-3 form-outline">
+              <label for="inputPassword" class="form-label">
+                Confirm Password</label
+              >
               <input
                 type="password"
                 class="form-control"
-                id="inputConfirmPassword"
+                id="inputPassword"
                 placeholder="Password"
               />
+              <span
+                class="show-password"
+                id="showPassword"
+                (click)="togglePasswordVisibility()"
+                ><i class="bi bi-eye-slash" id="togglePasswordButton"></i
+              ></span>
             </div>
           </div>
           <button

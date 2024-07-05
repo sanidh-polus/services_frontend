@@ -12,7 +12,7 @@ export class SignupComponent {
   // Function to toggle password visibility
   togglePasswordVisibility(): void {
     const passwordInput = document.getElementById(
-      'password'
+      'inputPassword'
     ) as HTMLInputElement;
     const icon = document.getElementById(
       'togglePasswordButton'
