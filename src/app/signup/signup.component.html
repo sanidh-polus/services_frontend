@@ -117,25 +117,25 @@
               <span
                 class="show-password"
                 id="showPassword"
-                (click)="togglePasswordVisibility()"
-                ><i class="bi bi-eye-slash" id="togglePasswordButton"></i
+                (click)="togglePasswordVisibility('inputPassword')"
+                ><i class="bi bi-eye-slash" id="toggleInputPasswordButton"></i
               ></span>
             </div>
             <div class="col-md-6 mb-3 form-outline">
-              <label for="inputPassword" class="form-label">
+              <label for="inputConfirmPassword" class="form-label">
                 Confirm Password</label
               >
               <input
                 type="password"
                 class="form-control"
-                id="inputPassword"
+                id="inputConfirmPassword"
                 placeholder="Password"
               />
               <span
                 class="show-password"
-                id="showPassword"
-                (click)="togglePasswordVisibility()"
-                ><i class="bi bi-eye-slash" id="togglePasswordButton"></i
+                id="showConfirmPassword"
+                (click)="togglePasswordVisibility('inputConfirmPassword')"
+                ><i class="bi bi-eye-slash" id="toggleInputConfirmPasswordButton"></i
               ></span>
             </div>
           </div>

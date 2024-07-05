@@ -6,17 +6,14 @@ import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
   standalone: true,
   imports: [RouterOutlet, RouterLink, RouterLinkActive],
   templateUrl: './signup.component.html',
-  styleUrl: './signup.component.css'
+  styleUrl: './signup.component.css',
 })
 export class SignupComponent {
   // Function to toggle password visibility
-  togglePasswordVisibility(): void {
-    const passwordInput = document.getElementById(
-      'inputPassword'
-    ) as HTMLInputElement;
-    const icon = document.getElementById(
-      'togglePasswordButton'
-    ) as HTMLElement;
+  togglePasswordVisibility(inputId: string): void {
+    const passwordInput = document.getElementById(inputId) as HTMLInputElement;
+    const icon = document.getElementById(`toggle${inputId.charAt(0).toUpperCase() + inputId.slice(1)}Button`) as HTMLElement;
+    console.log('Button Name:', `toggle${inputId.charAt(0).toUpperCase() + inputId.slice(1)}Button`);
 
     if (passwordInput.type === 'password') {
       passwordInput.type = 'text';
