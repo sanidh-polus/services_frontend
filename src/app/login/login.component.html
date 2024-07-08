@@ -3,6 +3,7 @@
   id="login-box-main"
   tabindex="0"
   aria-label="Login Page Body"
+  role="login-body"
 >
   <div class="container py-4" id="login-box-container">
     <div
@@ -90,6 +91,7 @@
                       id="login-button"
                       tabindex="0"
                       aria-label="Login Button"
+                      role="button"
                       (click)="login(EmailInput.value, PasswordInput.value)"
                     >
                       Log In
@@ -110,6 +112,7 @@
                       title="sign-up-link"
                       tabindex="0"
                       aria-label="Sign Up Link"
+                      role="link"
                       routerLink="/signup"
                     >
                       Create new

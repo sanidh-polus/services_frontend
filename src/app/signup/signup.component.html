@@ -1,4 +1,9 @@
-<section id="signup-box-main" tabindex="0" aria-label="Signup Page Body">
+<section
+  id="signup-box-main"
+  tabindex="0"
+  aria-label="Signup Page Body"
+  role="signup-body"
+>
   <div class="container" id="signup-box-container">
     <div class="form-container" id="signup-form-box">
       <form class="border rounded p-3 bg-white" id="signup-form">
@@ -186,6 +191,7 @@
             title="sign-up-button"
             tabindex="0"
             aria-label="Signup Button"
+            role="button"
             (click)="
               signup(
                 firstName.value,
@@ -213,6 +219,7 @@
               title="login-link"
               tabindex="0"
               aria-label="Login Link"
+              role="link"
               routerLink="/login"
               >Login</a
             >
