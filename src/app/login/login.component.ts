@@ -2,6 +2,13 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 
+import { DataService } from '../service/data.service';
+
+interface Login {
+  email: string;
+  password: string;
+}
+
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -11,6 +18,23 @@ import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent {
+  loginDetails: Login[] = [];
+  errorMessage!: string;
+
+  constructor(private data_service: DataService) {}
+
+  ngOnInit() {
+    this.data_service.getAllDetails().subscribe({
+      next: (loginDetails: Login[]) => {
+        this.loginDetails = loginDetails;
+        console.log(this.loginDetails);
+      },
+      error: (error: string) => {
+        this.errorMessage = error;
+      },
+    });
+  }
+
   isValidEmailFormat(email: string): boolean {
     // Regular expression for basic email validation
     const emailRegex = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
