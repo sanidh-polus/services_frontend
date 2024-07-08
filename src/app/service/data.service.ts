@@ -11,12 +11,13 @@ interface Login {
   providedIn: 'root'
 })
 export class DataService {
-  apiUrl = 'https://jsonplaceholder.typicode.com/posts';
+  // apiUrl = 'http://10.199.100.140:8080/service/login';
+  proxyUrl = '/api'+'/service'+'/login';
 
   constructor(private http: HttpClient) {}
 
-  getAllDetails(): Observable<Login[]> {
-    return this.http.get<Login[]>(this.apiUrl);
+  checkLoginDetails(loginDetails: any): Observable<any> {
+    return this.http.post<Login[]>(this.proxyUrl, loginDetails);
    }
 
 }

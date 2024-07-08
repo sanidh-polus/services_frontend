@@ -23,18 +23,6 @@ export class LoginComponent {
 
   constructor(private data_service: DataService) {}
 
-  ngOnInit() {
-    this.data_service.getAllDetails().subscribe({
-      next: (loginDetails: Login[]) => {
-        this.loginDetails = loginDetails;
-        console.log(this.loginDetails);
-      },
-      error: (error: string) => {
-        this.errorMessage = error;
-      },
-    });
-  }
-
   isValidEmailFormat(email: string): boolean {
     // Regular expression for basic email validation
     const emailRegex = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
@@ -53,16 +41,29 @@ export class LoginComponent {
       return;
     }
 
-    if (password.length < 8) {
-      alert('Enter a valid password');
-      return;
-    }
+    // if (password.length < 8) {
+    //   alert('Enter a valid password');
+    //   return;
+    // }
 
     // Example: Just log the values to console
     console.log('Username: ' + email);
     console.log('Password: ' + password);
 
+    let loginBody = {
+      "email": email,
+      "emp_password": password
+    }
+    
     // You can perform further validation or processing here
+    this.data_service.checkLoginDetails(loginBody).subscribe({
+      next: (response) => {
+        console.log(response.body);
+      },
+      error: (error: string) => {
+        this.errorMessage = error;
+      },
+    });
 
     // Example: Redirect to another page after successful login
     // window.location.href = 'dashboard.html';
