@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 
 import { DataService } from '../service/data.service';
@@ -14,8 +14,7 @@ interface Login {
   standalone: true,
   imports: [CommonModule, RouterOutlet, RouterLink, RouterLinkActive],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrl: './login.component.css'
 })
 export class LoginComponent {
   loginDetails: Login[] = [];
