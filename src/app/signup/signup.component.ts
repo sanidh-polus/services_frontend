@@ -28,6 +28,23 @@ export class SignupComponent {
     }
   }
 
+  isValidEmailFormat(email: string): boolean {
+    // Regular expression for basic email validation
+    const emailRegex = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+    return emailRegex.test(email);
+  }
+
+  countDigitsWithSpaces(inputString: string) {
+    // Step 1: Remove non-digit characters
+    const digitsOnly = inputString.replace(/\D/g, '');
+
+    // Step 2: Check length of resulting string
+    const digitCount = digitsOnly.length;
+
+    // Return true if exactly 10 digits are found, false otherwise
+    return digitCount === 10;
+  }
+
   signup(
     firstName: string,
     lastName: string,
@@ -57,13 +74,20 @@ export class SignupComponent {
       return;
     }
 
+    if (this.isValidEmailFormat(email) == false) {
+      alert('Enter a valid email');
+      return;
+    }
+
+    // const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+
     if (password.length < 8) {
-      alert('Enter a valid password');
+      alert('Password should contain at least 8 characters');
       return;
     }
 
     if (password != confirmPassword) {
-      alert("Enter matching passwords");
+      alert('Enter matching passwords');
       return;
     }
 
