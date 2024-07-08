@@ -29,19 +29,24 @@ export class LoginComponent {
   }
 
   login(email: string, password: string) {
+    let errorText = document.getElementById('error-text') as HTMLInputElement;
+
     // TypeScript code
     if (email == '' || password == '') {
-      alert('Please enter valid details.');
+      // alert('Please enter valid details');
+      errorText.innerHTML = 'Please enter valid details';
       return;
     }
 
     if (this.isValidEmailFormat(email) == false) {
-      alert('Enter a valid email');
+      // alert('Enter a valid email');
+      errorText.innerHTML = 'Enter a valid email';
       return;
     }
 
     // if (password.length < 8) {
     //   alert('Enter a valid password');
+    //   errorText.innerHTML = 'Enter a valid password';
     //   return;
     // }
 
@@ -68,10 +73,12 @@ export class LoginComponent {
         }
         if (e.status == 401) {
           console.log("Status: Invalid credentials");
+          errorText.innerHTML = 'Invalid credentials';
           return;
         }
         if (e.status == 500) {
           console.log("Status: Cannot check data, server error");
+          errorText.innerHTML = 'Cannot check data, server error';
           return;
         }
         console.log("Error: ", e.status, e.error);

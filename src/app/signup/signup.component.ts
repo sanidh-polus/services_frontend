@@ -57,6 +57,8 @@ export class SignupComponent {
     password: string,
     confirmPassword: string
   ) {
+    let errorText = document.getElementById('error-text') as HTMLInputElement;
+
     // TypeScript code
     if (
       email == '' ||
@@ -70,24 +72,28 @@ export class SignupComponent {
       address == '' ||
       confirmPassword == ''
     ) {
-      alert('Please enter all details.');
+      // alert('Please enter all details');
+      errorText.innerHTML = 'Please enter all details';
       return;
     }
 
     if (this.isValidEmailFormat(email) == false) {
-      alert('Enter a valid email');
+      // alert('Enter a valid email');
+      errorText.innerHTML = 'Enter a valid email';
       return;
     }
 
     // const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
 
     if (password.length < 8) {
-      alert('Password should contain at least 8 characters');
+      // alert('Password should contain at least 8 characters');
+      errorText.innerHTML = 'Password should contain at least 8 characters';
       return;
     }
 
     if (password != confirmPassword) {
-      alert('Enter matching passwords');
+      // alert('Password do not match');
+      errorText.innerHTML = 'Passwords do not match';
       return;
     }
 
