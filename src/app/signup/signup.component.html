@@ -99,12 +99,6 @@
                 </div>
                 <p class="text-danger" id="error-text" tabindex="0"></p>
                 <div class="sign-up-group" id="signup-div">
-                    <button type="button" class="btn btn-primary btn-block gradient-custom-2" id="sign-up-button"
-                        tabindex="0" aria-label="Signup Button" role="button" (click)="signup(firstName.value, 
-                        lastName.value, designation.value, email.value, phoneNumber.value, country.value, state.value,
-                        address.value, password.value, confirmPassword.value)">
-                        Sign Up
-                    </button>
                     <div class="d-flex flex-row" id="login-div">
                         <p class="mb-0 me-2" id="login-text" tabindex="0">
                             Already have an account?
@@ -114,6 +108,12 @@
                             Login
                         </a>
                     </div>
+                    <button type="button" class="btn btn-primary btn-block gradient-custom-2" id="sign-up-button"
+                        tabindex="0" aria-label="Signup Button" role="button" (click)="signup(firstName.value, 
+                        lastName.value, designation.value, email.value, phoneNumber.value, country.value, state.value,
+                        address.value, password.value, confirmPassword.value)">
+                        Sign Up
+                    </button>
                 </div>
             </form>
         </div>

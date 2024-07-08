@@ -35,17 +35,31 @@
 
 .sign-up-group {
   display: flex;
-  justify-content: left;
+  justify-content: right;
   align-items: center;
   margin-top: 1rem; /* Adjust margin as needed */
 }
 
 .sign-up-group .btn {
-  margin-right: 20px;
+  margin-left: 20px;
 }
 
-a:hover, a:focus {
+a:hover,
+a:focus {
   color: red;
+}
+
+@media (max-width: 992px) {
+  .sign-up-group {
+    display: flex;
+    flex-direction: column;
+    margin-top: -20px;
+  }
+
+  .sign-up-group a,
+  p {
+    padding-top: 4px;
+  }
 }
 
 /* Adjustments for smaller screens */
