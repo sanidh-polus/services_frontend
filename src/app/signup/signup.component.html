@@ -28,6 +28,7 @@
                 class="form-control"
                 id="inputFirstName"
                 placeholder="First Name"
+                #firstName
               />
             </div>
             <div class="col-md-6">
@@ -37,6 +38,7 @@
                 class="form-control"
                 id="inputLastName"
                 placeholder="Last Name"
+                #lastName
               />
             </div>
           </div>
@@ -47,6 +49,7 @@
               class="form-control"
               id="inputDesignation"
               placeholder="Software Engineer"
+              #designation
             />
           </div>
           <div class="row mb-3">
@@ -57,6 +60,7 @@
                 class="form-control"
                 id="inputEmail"
                 placeholder="Email"
+                #email
               />
             </div>
             <div class="col-md-6">
@@ -66,6 +70,7 @@
                 class="form-control"
                 id="inputPhoneNumber"
                 placeholder="Phone Number"
+                #phoneNumber
               />
             </div>
           </div>
@@ -77,6 +82,7 @@
                 class="form-control"
                 id="inputCountry"
                 placeholder="Country"
+                #country
               />
             </div>
             <div class="col-md-6">
@@ -86,6 +92,7 @@
                 class="form-control"
                 id="inputState"
                 placeholder="State"
+                #state
               />
             </div>
           </div>
@@ -96,6 +103,7 @@
               class="form-control"
               id="inputAddress"
               placeholder="1234 Main St"
+              #address
             />
           </div>
           <div class="row mb-3">
@@ -107,13 +115,14 @@
                   class="form-control"
                   id="inputPassword"
                   placeholder="Password"
+                  #password
                 />
                 <button
                   class="btn btn-outline-secondary"
                   type="button"
                   (click)="togglePasswordVisibility('inputPassword')"
                 >
-                  <i  id="toggleInputPasswordButton" class="bi bi-eye-slash"></i>
+                  <i id="toggleInputPasswordButton" class="bi bi-eye-slash"></i>
                 </button>
               </div>
             </div>
@@ -127,13 +136,17 @@
                   class="form-control"
                   id="inputConfirmPassword"
                   placeholder="Password"
+                  #confirmPassword
                 />
                 <button
                   class="btn btn-outline-secondary"
                   type="button"
                   (click)="togglePasswordVisibility('inputConfirmPassword')"
                 >
-                  <i id="toggleInputConfirmPasswordButton" class="bi bi-eye-slash"></i>
+                  <i
+                    id="toggleInputConfirmPasswordButton"
+                    class="bi bi-eye-slash"
+                  ></i>
                 </button>
               </div>
             </div>
@@ -142,6 +155,20 @@
             <button
               type="button"
               class="btn btn-primary btn-block gradient-custom-2"
+              (click)="
+                signup(
+                  firstName.value,
+                  lastName.value,
+                  designation.value,
+                  email.value,
+                  phoneNumber.value,
+                  country.value,
+                  state.value,
+                  address.value,
+                  password.value,
+                  confirmPassword.value
+                )
+              "
             >
               Sign Up
             </button>
@@ -149,7 +176,7 @@
               <p class="mb-0 me-2">Already have an account?</p>
               <a class="btn btn-outline-danger" routerLink="/login">Login</a>
             </div>
-            </div>
+          </div>
         </form>
       </div>
     </div>

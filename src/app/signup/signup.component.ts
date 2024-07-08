@@ -27,4 +27,54 @@ export class SignupComponent {
       icon.classList.add('bi-eye-slash');
     }
   }
+
+  signup(
+    firstName: string,
+    lastName: string,
+    designation: string,
+    email: string,
+    phoneNumber: string,
+    country: string,
+    state: string,
+    address: string,
+    password: string,
+    confirmPassword: string
+  ) {
+    // TypeScript code
+    if (
+      email == '' ||
+      password == '' ||
+      firstName == '' ||
+      lastName == '' ||
+      designation == '' ||
+      phoneNumber == '' ||
+      country == '' ||
+      state == '' ||
+      address == '' ||
+      confirmPassword == ''
+    ) {
+      alert('Please enter all details.');
+      return;
+    }
+
+    if (password.length < 8) {
+      alert('Enter a valid password');
+      return;
+    }
+
+    if (password != confirmPassword) {
+      alert("Enter matching passwords");
+      return;
+    }
+
+    // Example: Just log the values to console
+    console.log('Username: ' + email);
+    console.log('Password: ' + password);
+    console.log('Confirm Password: ' + confirmPassword);
+
+    // You can perform further validation or processing here
+
+    // Example: Redirect to another page after successful login
+    // window.location.href = 'dashboard.html';
+  }
 }

@@ -25,10 +25,6 @@ body {
   padding: 0.375rem 0.75rem; /* Adjust button padding */
 }
 
-.show-password {
-  cursor: pointer;
-}
-
 .gradient-custom-2 {
   min-height: auto;
   background: linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
@@ -38,13 +34,13 @@ body {
   position: relative;
 }
 
-.form-outline .show-password {
+/* .form-outline .show-password {
   position: absolute;
   top: 75%;
   right: 20px;
   transform: translateY(-50%);
   cursor: pointer;
-}
+} */
 
 .sign-up-group {
   display: flex;
