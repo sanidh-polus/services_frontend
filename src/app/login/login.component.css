@@ -1,6 +1,14 @@
 /* Custom CSS to reduce height */
+.gradient-form {
+  background-color: #eee;
+}
+
 .card-body {
   padding: 1rem;
+}
+
+.card-body img {
+  width: 200px;
 }
 
 .gradient-custom-2 {
