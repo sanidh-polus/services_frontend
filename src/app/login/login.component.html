@@ -17,7 +17,12 @@
     />
   </head>
   <body>
-    <section class="gradient-form" id="login-box-main">
+    <section
+      class="gradient-form"
+      id="login-box-main"
+      tabindex="0"
+      aria-label="Login Page Body"
+    >
       <div class="container py-4" id="login-box-container">
         <div
           class="row justify-content-center align-content-center"
@@ -26,23 +31,33 @@
           <div class="col-lg-10" id="login-box-columns">
             <div class="card rounded-3 text-black" id="login-box-border">
               <div class="row g-0" id="login-box-row">
-                <div class="col-lg-6" id="login-box-first-half">
+                <div
+                  class="col-lg-6"
+                  id="login-box-first-half"
+                  tabindex="0"
+                  aria-label="Login Page First Half"
+                >
                   <div class="card-body p-md-3 mx-md-3" id="first-half-box">
                     <div class="text-center">
                       <img
                         src="https://www.manageengine.com/products/service-desk/itsm/images/service-request-process.png"
-                        alt="Logo, ringing for a service like at a hotel"
+                        alt="Image, ringing for a service like at a hotel"
                         id="bell-ring-img"
+                        tabindex="0"
                       />
-                      <h4 class="mt-3 mb-3" id="app-heading">
+                      <h4 class="mt-3 mb-3" id="app-heading" tabindex="0">
                         Enter the Service Requests App
                       </h4>
                     </div>
                     <form id="login-form">
-                      <p id="login-heading">
+                      <p id="login-heading" tabindex="0">
                         <b>Please login to your account</b>
                       </p>
-                      <label class="form-label" for="email" id="email-label"
+                      <label
+                        class="form-label"
+                        for="email"
+                        id="email-label"
+                        tabindex="0"
                         >Email</label
                       >
                       <div
@@ -54,7 +69,8 @@
                           type="email"
                           id="email"
                           class="form-control"
-                          placeholder="Email address"
+                          placeholder="Enter email address"
+                          tabindex="0"
                           #EmailInput
                         />
                       </div>
@@ -62,6 +78,7 @@
                         class="form-label"
                         for="password"
                         id="password-label"
+                        tabindex="0"
                         >Password</label
                       >
                       <div
@@ -73,12 +90,15 @@
                           type="password"
                           id="password"
                           class="form-control"
-                          placeholder="Password"
+                          placeholder="Enter password"
+                          tabindex="0"
                           #PasswordInput
                         />
                         <span
                           class="show-password btn btn-outline-secondary"
                           id="showPassword"
+                          tabindex="0"
+                          aria-label="Show/Hide Password"
                           (click)="togglePasswordVisibility()"
                           ><i
                             class="bi bi-eye-slash"
@@ -93,6 +113,8 @@
                           class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-2"
                           type="button"
                           id="login-button"
+                          tabindex="0"
+                          aria-label="Login Button"
                           (click)="login(EmailInput.value, PasswordInput.value)"
                         >
                           Log In
@@ -104,7 +126,7 @@
                         class="d-flex align-items-center justify-content-center"
                         id="sign-up-div"
                       >
-                        <p class="mb-0 me-2" id="sign-up-text">
+                        <p class="mb-0 me-2" id="sign-up-text" tabindex="0">
                           Don't have an account?
                         </p>
                         <button
@@ -113,6 +135,8 @@
                           data-mdb-ripple-init
                           class="btn btn-outline-danger"
                           id="sign-up-button"
+                          tabindex="0"
+                          aria-label="Sign Up Button"
                           routerLink="/signup"
                         >
                           Create new
@@ -124,15 +148,22 @@
                 <div
                   class="col-lg-6 d-flex align-items-center gradient-custom-2"
                   id="login-box-second-half"
+                  tabindex="0"
+                  aria-label="Login Page Second Half"
                 >
                   <div
                     class="text-white px-3 py-4 p-md-3 mx-md-3"
                     id="second-half-text"
                   >
-                    <h4 class="mb-3" id="company-heading">
+                    <h4 class="mb-3" id="company-heading" tabindex="0">
                       We are more than just a company
                     </h4>
-                    <p class="small mb-0" id="company-body">
+                    <p
+                      class="small mb-0"
+                      id="company-body"
+                      tabindex="0"
+                      aria-label="Company Description"
+                    >
                       Our commitment to our employees is at the heart of
                       everything we do. We believe that a company is only as
                       strong as its people, which is why we prioritize providing

@@ -1,6 +1,6 @@
 {
-    "/api": {
-      "target": "http://10.199.100.140:8080",
+    "/api/login": {
+      "target": "http://10.199.100.140:8080/service/login",
       "secure": false,
       "changeOrigin": true,
       "pathRewrite": {"^/api" : ""}

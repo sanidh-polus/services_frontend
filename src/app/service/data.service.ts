@@ -12,12 +12,12 @@ interface Login {
 })
 export class DataService {
   // apiUrl = 'http://10.199.100.140:8080/service/login';
-  proxyUrl = '/api'+'/service'+'/login';
+  // proxyUrl = '/api'+'/service/login';
 
   constructor(private http: HttpClient) {}
 
   checkLoginDetails(loginDetails: any): Observable<any> {
-    return this.http.post<Login[]>(this.proxyUrl, loginDetails);
+    return this.http.post<Login[]>('/api/login', loginDetails);
    }
 
 }

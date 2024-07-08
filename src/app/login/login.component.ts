@@ -61,6 +61,7 @@ export class LoginComponent {
         console.log("Status: Success");
       },
       error: (e: any) => {
+        console.log(e);
         if (e.status == 200) {
           console.log("Status: Correct details")
           return;
