@@ -1,4 +1,9 @@
-<div class="container" id="signup-main">
+<div
+  class="container"
+  id="signup-main"
+  tabindex="0"
+  aria-label="Signup Page Body"
+>
   <div class="form-container" id="signup-form-box">
     <form class="border rounded p-3 bg-white" id="signup-form">
       <div class="row mb-3" id="first-last-name-row">
@@ -11,6 +16,7 @@
             class="form-control"
             id="inputFirstName"
             placeholder="First Name"
+            tabindex="0"
             #firstName
           />
         </div>
@@ -23,6 +29,7 @@
             class="form-control"
             id="inputLastName"
             placeholder="Last Name"
+            tabindex="0"
             #lastName
           />
         </div>
@@ -36,6 +43,7 @@
           class="form-control"
           id="inputDesignation"
           placeholder="Software Engineer"
+          tabindex="0"
           #designation
         />
       </div>
@@ -49,18 +57,20 @@
             class="form-control"
             id="inputEmail"
             placeholder="Email"
+            tabindex="0"
             #email
           />
         </div>
         <div class="col-md-6" id="phone-div">
           <label for="inputPhoneNumber" class="form-label" id="phone-label"
-            >Phone No.</label
+            >Phone Number</label
           >
           <input
             type="text"
             class="form-control"
             id="inputPhoneNumber"
             placeholder="Phone Number"
+            tabindex="0"
             #phoneNumber
           />
         </div>
@@ -75,6 +85,7 @@
             class="form-control"
             id="inputCountry"
             placeholder="Country"
+            tabindex="0"
             #country
           />
         </div>
@@ -87,6 +98,7 @@
             class="form-control"
             id="inputState"
             placeholder="State"
+            tabindex="0"
             #state
           />
         </div>
@@ -100,6 +112,7 @@
           class="form-control"
           id="inputAddress"
           placeholder="1234 Main St"
+          tabindex="0"
           #address
         />
       </div>
@@ -114,12 +127,15 @@
               class="form-control"
               id="inputPassword"
               placeholder="Password"
+              tabindex="0"
               #password
             />
             <button
               class="btn btn-outline-secondary"
               type="button"
               id="password-toggle-button"
+              tabindex="0"
+              aria-label="Show or Hide Password"
               (click)="togglePasswordVisibility('inputPassword')"
             >
               <i id="toggleInputPasswordButton" class="bi bi-eye-slash"></i>
@@ -139,12 +155,15 @@
               class="form-control"
               id="inputConfirmPassword"
               placeholder="Password"
+              tabindex="0"
               #confirmPassword
             />
             <button
               class="btn btn-outline-secondary"
               type="button"
               id="confirm-password-toggle-button"
+              tabindex="0"
+              aria-label="Show or Hide Password"
               (click)="togglePasswordVisibility('inputConfirmPassword')"
             >
               <i
@@ -160,6 +179,8 @@
           type="button"
           class="btn btn-primary btn-block gradient-custom-2"
           id="sign-up-button"
+          tabindex="0"
+          aria-label="Signup Button"
           (click)="
             signup(
               firstName.value,
@@ -178,10 +199,14 @@
           Sign Up
         </button>
         <div class="d-flex flex-row" id="login-div">
-          <p class="mb-0 me-2" id="login-text">Already have an account?</p>
+          <p class="mb-0 me-2" id="login-text" tabindex="0">
+            Already have an account?
+          </p>
           <a
             class="btn btn-outline-danger"
             id="login-button"
+            tabindex="0"
+            aria-label="Login Button"
             routerLink="/login"
             >Login</a
           >
