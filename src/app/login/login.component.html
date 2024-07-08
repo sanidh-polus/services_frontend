@@ -26,12 +26,17 @@
                     id="bell-ring-img"
                     tabindex="0"
                   />
-                  <h4 class="mt-3 mb-3" id="app-heading" tabindex="0">
+                  <h4
+                    class="mt-3 mb-3"
+                    id="app-heading"
+                    title="app-heading"
+                    tabindex="0"
+                  >
                     Enter the Service Requests App
                   </h4>
                 </div>
                 <form id="login-form">
-                  <p id="login-heading" tabindex="0">
+                  <p id="login-heading" title="login-heading" tabindex="0">
                     <b>Please login to your account</b>
                   </p>
                   <label class="form-label" for="email" id="email-label"
@@ -99,18 +104,16 @@
                     <p class="mb-0 me-2" id="sign-up-text" tabindex="0">
                       Don't have an account?
                     </p>
-                    <button
-                      type="button"
-                      data-mdb-button-init
-                      data-mdb-ripple-init
-                      class="btn btn-outline-danger"
-                      id="sign-up-button"
+                    <a
+                      class="link-underline link-underline-opacity-0"
+                      id="sign-up-link"
+                      title="sign-up-link"
                       tabindex="0"
-                      aria-label="Sign Up Button"
+                      aria-label="Sign Up Link"
                       routerLink="/signup"
                     >
                       Create new
-                    </button>
+                    </a>
                   </div>
                 </form>
               </div>
@@ -125,7 +128,12 @@
                 class="text-white px-3 py-4 p-md-3 mx-md-3"
                 id="second-half-text"
               >
-                <h4 class="mb-3" id="company-heading" tabindex="0">
+                <h4
+                  class="mb-3"
+                  id="company-tagline"
+                  title="company-tagline"
+                  tabindex="0"
+                >
                   We are more than just a company
                 </h4>
                 <p class="small mb-0" id="company-body" tabindex="0">

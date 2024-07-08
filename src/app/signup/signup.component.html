@@ -2,7 +2,14 @@
   <div class="container" id="signup-box-container">
     <div class="form-container" id="signup-form-box">
       <form class="border rounded p-3 bg-white" id="signup-form">
-        <h1 class="display-6 bold" tabindex="0"><b>Create a new account</b></h1>
+        <h1
+          class="display-6 bold"
+          tabindex="0"
+          id="sign-up-heading"
+          title="sign-up-heading"
+        >
+          <b>Create a new account</b>
+        </h1>
         <div class="row mb-3" id="first-last-name-row">
           <div class="col-md-6" id="first-name-div">
             <label for="inputFirstName" class="form-label" id="first-name-label"
@@ -176,6 +183,7 @@
             type="button"
             class="btn btn-primary btn-block gradient-custom-2"
             id="sign-up-button"
+            title="sign-up-button"
             tabindex="0"
             aria-label="Signup Button"
             (click)="
@@ -200,10 +208,11 @@
               Already have an account?
             </p>
             <a
-              class="btn btn-outline-danger"
-              id="login-button"
+              class="link-underline link-underline-opacity-0"
+              id="login-link"
+              title="login-link"
               tabindex="0"
-              aria-label="Login Button"
+              aria-label="Login Link"
               routerLink="/login"
               >Login</a
             >
