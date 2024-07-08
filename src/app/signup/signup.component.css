@@ -35,9 +35,13 @@
 
 .sign-up-group {
   display: flex;
-  justify-content: space-between;
+  justify-content: left;
   align-items: center;
   margin-top: 1rem; /* Adjust margin as needed */
+}
+
+.sign-up-group .btn {
+  margin-right: 20px;
 }
 
 /* Adjustments for smaller screens */
@@ -45,10 +49,6 @@
   .form-container {
     padding: 10px;
     margin-top: 80px;
-  }
-
-  .sign-up-group .btn {
-    margin-right: 20px;
   }
 
   label {
