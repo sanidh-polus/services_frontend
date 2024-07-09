@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
+import { DataService } from '../service/data.service';
+
 @Component({
   selector: 'app-signup',
   standalone: true,
@@ -10,6 +12,8 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './signup.component.css',
 })
 export class SignupComponent {
+  constructor(private data_service: DataService) {}
+
   errorMessage: string = '';
   firstName: string = '';
   lastName: string = '';
@@ -40,8 +44,15 @@ export class SignupComponent {
 
   signup(): void {
     let signupBody = {
-      "email": this.email,
-      "userpassword": this.password
+        "firstname" : this.firstName,
+        "lastname" : this.lastName,
+        "designation" : this.designation,
+        "email" : this.email,
+        "userPassword": this.password,
+        "country" : this.country,
+        "state" : this.state,
+        "address" : this.address,
+        "phoneNo" : this.phoneNumber
     }
 
     if (
@@ -87,7 +98,30 @@ export class SignupComponent {
     console.log('Confirm Password: ' + this.confirmPassword);
 
     // You can perform further validation or processing here
-
+    this.data_service.enterSignupDetails(signupBody).subscribe({
+      next: (response) => {
+        console.log('Response: ', response);
+        console.log('Status: Success');
+      },
+      error: (e: any) => {
+        console.log(e);
+        if (e.status == 200) {
+          console.log('Status: Correct details');
+          return;
+        }
+        if (e.status == 401) {
+          console.log('Status: Error signing up');
+          this.errorMessage  = 'Error signing up';
+          return;
+        }
+        if (e.status == 500) {
+          console.log('Status: Cannot check data, server error');
+          this.errorMessage  = 'Cannot check data, server error';
+          return;
+        }
+        console.log('Error: ', e.status, e.error);
+      },
+    });
     // Example: Redirect to another page after successful login
     // window.location.href = 'dashboard.html';
   }

@@ -17,7 +17,10 @@ export class DataService {
   constructor(private http: HttpClient) {}
 
   checkLoginDetails(loginDetails: any): Observable<any> {
-    return this.http.post<Login[]>('/login', loginDetails);
+    return this.http.post<Login[]>('/service/login', loginDetails);
    }
 
+   enterSignupDetails(signupDetails: any): Observable<any> {
+    return this.http.post<Login[]>('/service/signup', signupDetails);
+   }
 }

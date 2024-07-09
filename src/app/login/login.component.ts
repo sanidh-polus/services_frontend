@@ -18,14 +18,14 @@ interface Login {
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
+  constructor(private data_service: DataService) {}
+  
   email: string = '';
   password: string = '';
   errorMessage: string = '';
   loginDetails: Login[] = [];
   passwordType: string = 'password';
   togglePasswordClass: string = 'bi-eye-slash';
-
-  constructor(private data_service: DataService) {}
 
   isValidEmailFormat(email: string): boolean {
     // Regular expression for basic email validation

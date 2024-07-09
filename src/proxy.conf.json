@@ -1,14 +1,14 @@
 {
-    "/login": {
+    "/service/login": {
       "target": "http://10.199.100.140:8080/api/login",
       "secure": false,
       "changeOrigin": true,
-      "pathRewrite": {"^/login" : ""}
+      "pathRewrite": {"^/service/login" : ""}
     },
-    "/signup": {
+    "/service/signup": {
       "target": "http://10.199.100.140:8080/api/signup",
       "secure": false,
       "changeOrigin": true,
-      "pathRewrite": {"^/signup" : ""}
+      "pathRewrite": {"^/service/signup" : ""}
     }
 }
