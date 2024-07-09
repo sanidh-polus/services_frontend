@@ -10,21 +10,21 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './signup.component.css',
 })
 export class SignupComponent {
-  errorMessage = '';
-  firstName = '';
-  lastName = '';
-  designation = '';
-  email = '';
-  phoneNumber = '';
-  country = '';
-  state = '';
-  address = '';
-  password = '';
-  confirmPassword = '';
-  passwordType = 'password';
-  togglePasswordClass = 'bi-eye-slash';
-  confirmPasswordType = 'password';
-  toggleConfirmPasswordClass = 'bi-eye-slash';
+  errorMessage: string = '';
+  firstName: string = '';
+  lastName: string = '';
+  designation: string = '';
+  email: string = '';
+  phoneNumber: string = '';
+  country: string = '';
+  state: string = '';
+  address: string = '';
+  password: string = '';
+  confirmPassword: string = '';
+  passwordType: string = 'password';
+  togglePasswordClass: string = 'bi-eye-slash';
+  confirmPasswordType: string = 'password';
+  toggleConfirmPasswordClass: string = 'bi-eye-slash';
 
   isValidEmailFormat(email: string): boolean {
     // Regular expression for basic email validation
@@ -38,7 +38,12 @@ export class SignupComponent {
     return digitCount === 10;
   }
 
-  signup() {
+  signup(): void {
+    let signupBody = {
+      "email": this.email,
+      "userpassword": this.password
+    }
+
     if (
       this.email == '' ||
       this.password == '' ||

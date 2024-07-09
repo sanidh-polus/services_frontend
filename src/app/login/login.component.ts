@@ -18,12 +18,12 @@ interface Login {
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  email = '';
-  password = '';
-  errorMessage = '';
+  email: string = '';
+  password: string = '';
+  errorMessage: string = '';
   loginDetails: Login[] = [];
-  passwordType = 'password';
-  togglePasswordClass = 'bi-eye-slash';
+  passwordType: string = 'password';
+  togglePasswordClass: string = 'bi-eye-slash';
 
   constructor(private data_service: DataService) {}
 
@@ -33,10 +33,10 @@ export class LoginComponent {
     return emailRegex.test(email);
   }
 
-  login() {
+  login(): void {
     let loginBody = {
       "email": this.email,
-      "emp_password": this.password
+      "userpassword": this.password
     }
 
     // TypeScript code
