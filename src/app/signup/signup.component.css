@@ -52,7 +52,7 @@ a:focus {
 @media (max-width: 992px) {
   .sign-up-group {
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
     margin-top: -20px;
   }
 

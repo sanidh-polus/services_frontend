@@ -27,15 +27,12 @@
   cursor: pointer;
 }
 
-a:hover, a:focus {
+a:hover,
+a:focus {
   color: red;
 }
 
-@media (min-width: 769px) {
-  .gradient-form {
-    height: 100vh;
-  }
-
+@media (min-width: 768px) {
   .gradient-custom-2 {
     border-top-right-radius: 0.3rem;
     border-bottom-right-radius: 0.3rem;
