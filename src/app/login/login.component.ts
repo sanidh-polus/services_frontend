@@ -5,10 +5,10 @@ import { FormsModule } from '@angular/forms';
 
 import { DataService } from '../service/data.service';
 
-interface Login {
-  email: string;
-  password: string;
-}
+// interface Login {
+//   email: string;
+//   password: string;
+// }
 
 @Component({
   selector: 'app-login',
@@ -23,7 +23,6 @@ export class LoginComponent {
   email: string = '';
   password: string = '';
   errorMessage: string = '';
-  loginDetails: Login[] = [];
   passwordType: string = 'password';
   togglePasswordClass: string = 'bi-eye-slash';
 
