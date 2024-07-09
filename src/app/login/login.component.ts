@@ -26,13 +26,13 @@ export class LoginComponent {
   passwordType: string = 'password';
   togglePasswordClass: string = 'bi-eye-slash';
 
-  isValidEmailFormat(email: string): boolean {
+  private isValidEmailFormat(email: string): boolean {
     // Regular expression for basic email validation
     const emailRegex = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
     return emailRegex.test(email);
   }
 
-  login(): void {
+  public login(): void {
     let loginBody = {
       "email": this.email,
       "userpassword": this.password
@@ -45,7 +45,7 @@ export class LoginComponent {
       return;
     }
 
-    if (this.isValidEmailFormat(this.email) == false) {
+    if (!this.isValidEmailFormat(this.email)) {
       // alert('Enter a valid email');
       this.errorMessage = 'Enter a valid email';
       return;
@@ -92,7 +92,7 @@ export class LoginComponent {
   }
 
   // Function to toggle password visibility
-  togglePasswordVisibility(): void {
+  public togglePasswordVisibility(): void {
     if (this.passwordType === 'password') {
       this.passwordType = 'text';
      this.togglePasswordClass = 'bi-eye';

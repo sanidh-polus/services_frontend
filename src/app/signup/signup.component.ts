@@ -44,16 +44,16 @@ export class SignupComponent {
 
   signup(): void {
     let signupBody = {
-        "firstname" : this.firstName,
-        "lastname" : this.lastName,
-        "designation" : this.designation,
-        "email" : this.email,
-        "userPassword": this.password,
-        "country" : this.country,
-        "state" : this.state,
-        "address" : this.address,
-        "phoneNo" : this.phoneNumber
-    }
+      firstname: this.firstName,
+      lastname: this.lastName,
+      designation: this.designation,
+      email: this.email,
+      userPassword: this.password,
+      country: this.country,
+      state: this.state,
+      address: this.address,
+      phoneNo: this.phoneNumber,
+    };
 
     if (
       this.email == '' ||
@@ -111,12 +111,12 @@ export class SignupComponent {
         }
         if (e.status == 401) {
           console.log('Status: Error signing up');
-          this.errorMessage  = 'Error signing up';
+          this.errorMessage = 'Error signing up';
           return;
         }
         if (e.status == 500) {
           console.log('Status: Cannot check data, server error');
-          this.errorMessage  = 'Cannot check data, server error';
+          this.errorMessage = 'Cannot check data, server error';
           return;
         }
         console.log('Error: ', e.status, e.error);
@@ -127,24 +127,17 @@ export class SignupComponent {
   }
 
   // Function to toggle password visibility
-  togglePasswordVisibility(): void {
-    if (this.passwordType === 'password') {
-      this.passwordType = 'text';
-     this.togglePasswordClass = 'bi-eye';
-    } else {
-      this.passwordType = 'password';
-     this.togglePasswordClass = 'bi-eye-slash';
-    }
-  }
-
-  // Function to toggle password visibility
-  toggleConfirmPasswordVisibility(): void {
-    if (this.confirmPasswordType === 'password') {
-      this.confirmPasswordType = 'text';
-     this.toggleConfirmPasswordClass = 'bi-eye';
-    } else {
-      this.confirmPasswordType = 'password';
-     this.toggleConfirmPasswordClass = 'bi-eye-slash';
+  public togglePasswordVisibility(field: string): void {
+    if (field === 'password') {
+      this.passwordType =
+        this.passwordType === 'password' ? 'text' : 'password';
+      this.togglePasswordClass =
+        this.passwordType === 'password' ? 'bi-eye-slash' : 'bi-eye';
+    } else if (field === 'confirmPassword') {
+      this.confirmPasswordType =
+        this.confirmPasswordType === 'password' ? 'text' : 'password';
+      this.toggleConfirmPasswordClass =
+        this.confirmPasswordType === 'password' ? 'bi-eye-slash' : 'bi-eye';
     }
   }
 }

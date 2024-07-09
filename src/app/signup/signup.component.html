@@ -59,7 +59,7 @@
                                 placeholder="Password" tabindex="0" name="password" [(ngModel)]="password"/>
                             <button class="btn btn-outline-secondary" type="button" id="password-toggle-button" 
                                 tabindex="0" aria-label="Show or Hide Password" title="Show or Hide Password"
-                                (click)="togglePasswordVisibility()">
+                                (click)="togglePasswordVisibility('password')">
                                 <i id="toggleInputPasswordButton" class="{{ togglePasswordClass }}"></i>
                             </button>
                         </div>
@@ -73,7 +73,7 @@
                                 [(ngModel)]="confirmPassword"/>
                             <button class="btn btn-outline-secondary" type="button" id="confirm-password-toggle-button"
                                 tabindex="0" aria-label="Show or Hide Password" title="Show or Hide Password"
-                                (click)="toggleConfirmPasswordVisibility()">
+                                (click)="togglePasswordVisibility('confirmPassword')">
                                 <i id="toggleInputConfirmPasswordButton" class="{{ toggleConfirmPasswordClass }}"></i>
                             </button>
                         </div>
