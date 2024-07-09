@@ -1,18 +1,14 @@
-.gradient-form {
+.login-body {
   background-color: #eee;
-}
-
-.card-body {
-  padding: 1rem;
-}
-
-.card-body img {
-  width: 200px;
 }
 
 .gradient-custom-2 {
   min-height: auto;
   background: linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
+}
+
+.card-body img {
+  width: 200px;
 }
 
 .form-outline {

@@ -1,18 +1,21 @@
+.signup-body {
+  background-color: #eee;
+}
+
 .form-container {
   max-width: 1000px;
   margin: auto;
   padding: 20px;
+  font-size: 1rem;
 }
 
 .form-control {
   height: calc(1.5em + 0.5rem + 2px);
-  font-size: 0.875rem;
   padding: 0.375rem 0.75rem;
 }
 
 .btn {
   height: calc(1.5em + 0.5rem + 2px);
-  font-size: 0.875rem;
   padding: 0.375rem 0.75rem;
 }
 

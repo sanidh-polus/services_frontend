@@ -1,4 +1,4 @@
-<section id="signup-box-main" tabindex="0" aria-label="Signup Page Body" role="signup-body">
+<section class="signup-body" id="signup-box-main" tabindex="0" aria-label="Signup Page Body" role="signup-body">
     <div class="container" id="signup-box-container">
         <div class="form-container" id="signup-form-box">
             <form class="border rounded p-3 bg-white" id="signup-form">
@@ -73,8 +73,8 @@
                             Password
                         </label>
                         <div class="input-group" id="password-input-group">
-                            <input type="{{ passwordType }}" class="form-control" id="inputPassword" placeholder="Password" 
-                                tabindex="0" name="password" [(ngModel)]="password"/>
+                            <input type="{{ passwordType }}" class="form-control" id="inputPassword" 
+                                placeholder="Password" tabindex="0" name="password" [(ngModel)]="password"/>
                             <button class="btn btn-outline-secondary" type="button" id="password-toggle-button" 
                                 tabindex="0" aria-label="Show or Hide Password" title="Show or Hide Password"
                                 (click)="togglePasswordVisibility()">
