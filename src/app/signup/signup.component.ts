@@ -29,6 +29,7 @@ export class SignupComponent {
   togglePasswordClass: string = 'bi-eye-slash';
   confirmPasswordType: string = 'password';
   toggleConfirmPasswordClass: string = 'bi-eye-slash';
+  countryNames: string[] = [];
 
   isValidEmailFormat(email: string): boolean {
     // Regular expression for basic email validation
@@ -46,10 +47,13 @@ export class SignupComponent {
     this.data_service
       .getCountries()
       .then((countries) => {
+        // console.log("Countries: ", countries);
         // console.log("Country Name: ", countries[0].name["common"]);
         countries.forEach((country, index) => {
-          console.log(`Country ${index+1}: ${country.name["common"]}`);
-      });
+          //console.log(`Country ${index+1}: ${country.name["common"]}`);
+          this.countryNames.push(country.name["common"]);
+        });
+        console.log(this.countryNames);
       })
       .catch((error) => {
         console.error('Error fetching countries:', error);
