@@ -21,6 +21,10 @@ export class SignupComponent {
   address = '';
   password = '';
   confirmPassword = '';
+  passwordType = 'password';
+  togglePasswordClass = 'bi-eye-slash';
+  confirmPasswordType = 'password';
+  toggleConfirmPasswordClass = 'bi-eye-slash';
 
   isValidEmailFormat(email: string): boolean {
     // Regular expression for basic email validation
@@ -84,21 +88,24 @@ export class SignupComponent {
   }
 
   // Function to toggle password visibility
-  togglePasswordVisibility(inputId: string): void {
-    const passwordInput = document.getElementById(inputId) as HTMLInputElement;
-    const icon = document.getElementById(
-      `toggle${inputId.charAt(0).toUpperCase() + inputId.slice(1)}Button`
-    ) as HTMLElement;
-    // console.log('Button Name:', `toggle${inputId.charAt(0).toUpperCase() + inputId.slice(1)}Button`);
-
-    if (passwordInput.type === 'password') {
-      passwordInput.type = 'text';
-      icon.classList.remove('bi-eye-slash');
-      icon.classList.add('bi-eye');
+  togglePasswordVisibility(): void {
+    if (this.passwordType === 'password') {
+      this.passwordType = 'text';
+     this.togglePasswordClass = 'bi-eye';
     } else {
-      passwordInput.type = 'password';
-      icon.classList.remove('bi-eye');
-      icon.classList.add('bi-eye-slash');
+      this.passwordType = 'password';
+     this.togglePasswordClass = 'bi-eye-slash';
+    }
+  }
+
+  // Function to toggle password visibility
+  toggleConfirmPasswordVisibility(): void {
+    if (this.confirmPasswordType === 'password') {
+      this.confirmPasswordType = 'text';
+     this.toggleConfirmPasswordClass = 'bi-eye';
+    } else {
+      this.confirmPasswordType = 'password';
+     this.toggleConfirmPasswordClass = 'bi-eye-slash';
     }
   }
 }

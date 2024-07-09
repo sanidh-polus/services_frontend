@@ -73,12 +73,12 @@
                             Password
                         </label>
                         <div class="input-group" id="password-input-group">
-                            <input type="password" class="form-control" id="inputPassword" placeholder="Password" 
+                            <input type="{{ passwordType }}" class="form-control" id="inputPassword" placeholder="Password" 
                                 tabindex="0" name="password" [(ngModel)]="password"/>
                             <button class="btn btn-outline-secondary" type="button" id="password-toggle-button" 
                                 tabindex="0" aria-label="Show or Hide Password" title="Show or Hide Password"
-                                (click)="togglePasswordVisibility('inputPassword')">
-                                <i id="toggleInputPasswordButton" class="bi bi-eye-slash"></i>
+                                (click)="togglePasswordVisibility()">
+                                <i id="toggleInputPasswordButton" class="{{ togglePasswordClass }}"></i>
                             </button>
                         </div>
                     </div>
@@ -87,13 +87,13 @@
                             Confirm Password
                         </label>
                         <div class="input-group" id="confirm-password-group">
-                            <input type="password" class="form-control" id="inputConfirmPassword" 
+                            <input type="{{ confirmPasswordType }}" class="form-control" id="inputConfirmPassword" 
                                 placeholder="Password" tabindex="0" name="confirmPassword" 
                                 [(ngModel)]="confirmPassword"/>
                             <button class="btn btn-outline-secondary" type="button" id="confirm-password-toggle-button"
                                 tabindex="0" aria-label="Show or Hide Password" title="Show or Hide Password"
-                                (click)="togglePasswordVisibility('inputConfirmPassword')">
-                                <i id="toggleInputConfirmPasswordButton" class="bi bi-eye-slash"></i>
+                                (click)="toggleConfirmPasswordVisibility()">
+                                <i id="toggleInputConfirmPasswordButton" class="{{ toggleConfirmPasswordClass }}"></i>
                             </button>
                         </div>
                     </div>

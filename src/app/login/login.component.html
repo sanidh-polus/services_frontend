@@ -4,8 +4,8 @@
             <div class="row g-0">
                 <div class="col-lg-6 d-flex align-items-center gradient-custom-2">
                     <div class="text-white px-3 py-4 p-md-3 mx-md-3">
-                        <h4 class="mb-3" id="company-tagline" tabindex="0">
-                            We are more than just a company
+                        <h4 class="mb-3 display-6" id="company-tagline" tabindex="0">
+                            Catalyst
                         </h4>
                         <p class="small mb-0" id="company-body" tabindex="0">
                             Our commitment to our employees is at the heart of everything we do. We believe 
@@ -39,15 +39,15 @@
                             </div>
                             <label class="form-label" for="password" id="password-label">Password</label>
                             <div class="form-outline mb-3" id="password-login">
-                                <input type="password" id="password" class="form-control" name="password" 
+                                <input type="{{ passwordType }}" id="password" class="form-control" name="password" 
                                     placeholder="Enter password" tabindex="0" [(ngModel)]="password"/>
                                 <span class="show-password btn btn-outline-secondary" id="showPassword"
                                     tabindex="0" aria-label="Show or Hide Password"
                                     title="Show or Hide Password" (click)="togglePasswordVisibility()">
-                                    <i class="bi bi-eye-slash" id="togglePasswordButton"></i>
+                                    <i class="{{ togglePasswordClass }}" id="togglePasswordButton"></i>
                                 </span>
                             </div>
-                            <p class="text-danger text-center" id="error-text">{{ errorMessage }}</p>
+                            <p class="text-danger text-center" id="error-text" tabindex="0">{{ errorMessage }}</p>
                             <div class="text-center pt-1 mb-3" id="login-button-div">
                                 <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-2" 
                                     type="button" id="login-button" tabindex="0" aria-label="Login Button"

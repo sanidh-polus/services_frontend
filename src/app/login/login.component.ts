@@ -22,6 +22,8 @@ export class LoginComponent {
   password = '';
   errorMessage = '';
   loginDetails: Login[] = [];
+  passwordType = 'password';
+  togglePasswordClass = 'bi-eye-slash';
 
   constructor(private data_service: DataService) {}
 
@@ -92,19 +94,12 @@ export class LoginComponent {
 
   // Function to toggle password visibility
   togglePasswordVisibility(): void {
-    const passwordInput = document.getElementById(
-      'password'
-    ) as HTMLInputElement;
-    const icon = document.getElementById('togglePasswordButton') as HTMLElement;
-
-    if (passwordInput.type === 'password') {
-      passwordInput.type = 'text';
-      icon.classList.remove('bi-eye-slash');
-      icon.classList.add('bi-eye');
+    if (this.passwordType === 'password') {
+      this.passwordType = 'text';
+     this.togglePasswordClass = 'bi-eye';
     } else {
-      passwordInput.type = 'password';
-      icon.classList.remove('bi-eye');
-      icon.classList.add('bi-eye-slash');
+      this.passwordType = 'password';
+     this.togglePasswordClass = 'bi-eye-slash';
     }
   }
 }
