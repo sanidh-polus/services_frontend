@@ -11,14 +11,14 @@
                             First Name
                         </label>
                         <input type="text" class="form-control" id="inputFirstName" placeholder="First Name" 
-                            tabindex="0" #firstName/>
+                            tabindex="0" name="firstName" [(ngModel)]="firstName"/>
                     </div>
                     <div class="col-md-6" id="last-name-div">
                         <label for="inputLastName" class="form-label" id="last-name-label">
                             Last Name
                         </label>
                         <input type="text" class="form-control" id="inputLastName" placeholder="Last Name" 
-                            tabindex="0" #lastName/>
+                            tabindex="0" name="lastName" [(ngModel)]="lastName"/>
                     </div>
                 </div>
                 <div class="mb-3" id="designation-div">
@@ -26,7 +26,7 @@
                         Designation
                     </label>
                     <input type="text" class="form-control" id="inputDesignation" placeholder="Software Engineer" 
-                        tabindex="0" #designation/>
+                        tabindex="0" name="designation" [(ngModel)]="designation"/>
                 </div>
                 <div class="row mb-3" id="email-phone-row">
                     <div class="col-md-6" id="email-div">
@@ -34,14 +34,14 @@
                             Email
                         </label>
                         <input type="email" class="form-control" id="inputEmail" placeholder="Email" tabindex="0" 
-                            #email/>
+                            name="email" [(ngModel)]="email"/>
                     </div>
                     <div class="col-md-6" id="phone-div">
                         <label for="inputPhoneNumber" class="form-label" id="phone-label">
                             Phone Number
                         </label>
                         <input type="text" class="form-control" id="inputPhoneNumber" placeholder="Phone Number" 
-                            tabindex="0" #phoneNumber/>
+                            tabindex="0" name="phoneNumber" [(ngModel)]="phoneNumber"/>
                     </div>
                 </div>
                 <div class="row mb-3" id="country-state-row">
@@ -50,14 +50,14 @@
                             Country
                         </label>
                         <input type="text" class="form-control" id="inputCountry" placeholder="Country" tabindex="0"
-                            #country/>
+                        name="country" [(ngModel)]="country"/>
                     </div>
                     <div class="col-md-6" id="state-div">
                         <label for="inputState" class="form-label" id="state-label">
                             State
                         </label>
                         <input type="text" class="form-control" id="inputState" placeholder="State" tabindex="0" 
-                            #state/>
+                            name="state" [(ngModel)]="state"/>
                     </div>
                 </div>
                 <div class="mb-3" id="address-div">
@@ -65,7 +65,7 @@
                         Address
                     </label>
                     <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St" tabindex="0"
-                        #address/>
+                        name="address" [(ngModel)]="address"/>
                 </div>
                 <div class="row mb-3" id="pass-confirm-pass-row">
                     <div class="col-md-6 form-outline" id="password-div">
@@ -74,7 +74,7 @@
                         </label>
                         <div class="input-group" id="password-input-group">
                             <input type="password" class="form-control" id="inputPassword" placeholder="Password" 
-                                tabindex="0" #password/>
+                                tabindex="0" name="password" [(ngModel)]="password"/>
                             <button class="btn btn-outline-secondary" type="button" id="password-toggle-button" 
                                 tabindex="0" aria-label="Show or Hide Password" title="Show or Hide Password"
                                 (click)="togglePasswordVisibility('inputPassword')">
@@ -88,7 +88,8 @@
                         </label>
                         <div class="input-group" id="confirm-password-group">
                             <input type="password" class="form-control" id="inputConfirmPassword" 
-                                placeholder="Password" tabindex="0" #confirmPassword/>
+                                placeholder="Password" tabindex="0" name="confirmPassword" 
+                                [(ngModel)]="confirmPassword"/>
                             <button class="btn btn-outline-secondary" type="button" id="confirm-password-toggle-button"
                                 tabindex="0" aria-label="Show or Hide Password" title="Show or Hide Password"
                                 (click)="togglePasswordVisibility('inputConfirmPassword')">
@@ -97,7 +98,7 @@
                         </div>
                     </div>
                 </div>
-                <p class="text-danger" id="error-text" tabindex="0"></p>
+                <p class="text-danger" id="error-text" tabindex="0">{{ errorMessage }}</p>
                 <div class="sign-up-group" id="signup-div">
                     <div class="d-flex flex-row" id="login-div">
                         <p class="mb-0 me-2" id="login-text" tabindex="0">
@@ -109,9 +110,7 @@
                         </a>
                     </div>
                     <button type="button" class="btn btn-primary btn-block gradient-custom-2" id="sign-up-button"
-                        tabindex="0" aria-label="Signup Button" role="button" (click)="signup(firstName.value, 
-                        lastName.value, designation.value, email.value, phoneNumber.value, country.value, state.value,
-                        address.value, password.value, confirmPassword.value)">
+                        tabindex="0" aria-label="Signup Button" role="button" (click)="signup()">
                         Sign Up
                     </button>
                 </div>
