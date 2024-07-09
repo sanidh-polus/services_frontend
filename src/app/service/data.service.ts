@@ -7,8 +7,14 @@ interface Login {
   password: string;
 }
 
+interface Country {
+  name: {
+    common: string;
+  };
+}
+
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DataService {
   // apiUrl = 'http://10.199.100.140:8080/service/login';
@@ -18,9 +24,17 @@ export class DataService {
 
   checkLoginDetails(loginDetails: any): Observable<any> {
     return this.http.post<Login[]>('/service/login', loginDetails);
-   }
+  }
 
-   enterSignupDetails(signupDetails: any): Observable<any> {
+  enterSignupDetails(signupDetails: any): Observable<any> {
     return this.http.post<Login[]>('/service/signup', signupDetails);
-   }
+  }
+
+  private countriesUrl = 'https://restcountries.com/v3.1/all';
+
+  getCountries(): Promise<Country[]> {
+    return this.http.get<Country[]>(this.countriesUrl).toPromise() as Promise<
+      Country[]
+    >;
+  }
 }

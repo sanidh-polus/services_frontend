@@ -42,6 +42,20 @@ export class SignupComponent {
     return digitCount === 10;
   }
 
+  ngOnInit(): void {
+    this.data_service
+      .getCountries()
+      .then((countries) => {
+        // console.log("Country Name: ", countries[0].name["common"]);
+        countries.forEach((country, index) => {
+          console.log(`Country ${index+1}: ${country.name["common"]}`);
+      });
+      })
+      .catch((error) => {
+        console.error('Error fetching countries:', error);
+      });
+  }
+
   signup(): void {
     let signupBody = {
       firstname: this.firstName,
