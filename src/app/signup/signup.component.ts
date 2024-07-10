@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { NgFor, NgIf } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 
-import { DataService } from '../service/data.service';
+import { LoginSignupService } from '../service/login_signup.service';
 
 @Component({
 	selector: 'app-signup',
@@ -14,7 +14,7 @@ import { DataService } from '../service/data.service';
     styleUrl: './signup.component.css',
 })
 export class SignupComponent implements OnInit {
-    constructor(private data_service: DataService) {}
+    constructor(private login_signup_service: LoginSignupService) {}
 
     errorMessage = '';
     firstName = '';
@@ -39,7 +39,7 @@ export class SignupComponent implements OnInit {
     }
 
     getAllCountries(): void {
-        this.data_service.getCountries().subscribe({
+        this.login_signup_service.getCountries().subscribe({
             next: (response) => {
                 // console.log('Response: ', response);
                 response.forEach((country: any) => {
@@ -127,7 +127,7 @@ export class SignupComponent implements OnInit {
         console.log('Confirm Password: ' + this.confirmPassword);
 
         // You can perform further validation or processing here
-        this.data_service.enterSignupDetails(SIGNUP_BODY).subscribe({
+        this.login_signup_service.enterSignupDetails(SIGNUP_BODY).subscribe({
             next: (response) => {
                 console.log('Response: ', response);
                 console.log('Status: Success');

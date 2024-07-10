@@ -28,7 +28,7 @@ interface Country {
 @Injectable({
   providedIn: 'root',
 })
-export class DataService {
+export class LoginSignupService {
   // apiUrl = 'http://10.199.100.140:8080/service/login';
   // proxyUrl = '/api'+'/service/login';
 

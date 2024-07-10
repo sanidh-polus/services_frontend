@@ -4,7 +4,7 @@ import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 
-import { DataService } from '../service/data.service';
+import { LoginSignupService } from '../service/login_signup.service';
 
 // interface Login {
 //     email: string;
@@ -19,7 +19,7 @@ import { DataService } from '../service/data.service';
     styleUrl: './login.component.css'
 })
 export class LoginComponent {
-    constructor(private data_service: DataService) {}
+    constructor(private login_signup_service: LoginSignupService) {}
     
     email = '';
     password = '';
@@ -63,7 +63,7 @@ export class LoginComponent {
         console.log('Password: ' + this.password);
         
         // You can perform further validation or processing here
-        this.data_service.checkLoginDetails(LOGIN_BODY).subscribe({
+        this.login_signup_service.checkLoginDetails(LOGIN_BODY).subscribe({
             next: (response) => {
                 console.log('Response: ', response);
                 console.log('Status: Success');
