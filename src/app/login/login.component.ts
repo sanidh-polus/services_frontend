@@ -35,27 +35,27 @@ export class LoginComponent {
 
     public login(): void {
         const LOGIN_BODY = {
-        "email": this.email,
-        "userpassword": this.password
+            "email": this.email,
+            "userpassword": this.password
         }
 
         // TypeScript code
         if (this.email == '' || this.password == '') {
-        // alert('Please enter valid details');
-        this.errorMessage = 'Please enter valid details';
-        return;
+            // alert('Please enter valid details');
+            this.errorMessage = 'Please enter valid details';
+            return;
         }
 
         if (!this.isValidEmailFormat(this.email)) {
-        // alert('Enter a valid email');
-        this.errorMessage = 'Enter a valid email';
-        return;
+            // alert('Enter a valid email');
+            this.errorMessage = 'Enter a valid email';
+            return;
         }
 
-        // if (password.length < 8) {
-        //   alert('Enter a valid password');
-        //   this.errorMessage  = 'Enter a valid password';
-        //   return;
+        // if (this.password.length < 8) {
+        //     alert('Enter a valid password');
+        //     this.errorMessage  = 'Enter a valid password';
+        //     return;
         // }
 
         // Example: Just log the values to console
@@ -71,18 +71,18 @@ export class LoginComponent {
             error: (e: HttpErrorResponse) => {
                 console.log(e);
                 if (e.status == 200) {
-                console.log('Status: Correct details');
-                return;
+                    console.log('Status: Correct details');
+                    return;
                 }
                 if (e.status == 401) {
-                console.log('Status: Invalid credentials');
-                this.errorMessage  = 'Invalid credentials';
-                return;
+                    console.log('Status: Invalid credentials');
+                    this.errorMessage  = 'Invalid credentials';
+                    return;
                 }
                 if (e.status == 500) {
-                console.log('Status: Cannot check data, server error');
-                this.errorMessage  = 'Cannot check data, server error';
-                return;
+                    console.log('Status: Cannot check data, server error');
+                    this.errorMessage  = 'Cannot check data, server error';
+                    return;
                 }
                 console.log('Error: ', e.status, e.error);
             },
@@ -95,11 +95,11 @@ export class LoginComponent {
     // Function to toggle password visibility
     public togglePasswordVisibility(): void {
         if (this.passwordType === 'password') {
-        this.passwordType = 'text';
-        this.togglePasswordClass = 'bi-eye';
+            this.passwordType = 'text';
+            this.togglePasswordClass = 'bi-eye';
         } else {
-        this.passwordType = 'password';
-        this.togglePasswordClass = 'bi-eye-slash';
+            this.passwordType = 'password';
+            this.togglePasswordClass = 'bi-eye-slash';
         }
     }
 }

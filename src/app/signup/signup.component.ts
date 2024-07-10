@@ -135,14 +135,14 @@ export class SignupComponent implements OnInit {
             error: (e: HttpErrorResponse) => {
                 console.log(e);
                 if (e.status == 401) {
-                console.log('Status: Error signing up');
-                this.errorMessage = 'Error signing up';
-                return;
+                    console.log('Status: Error signing up');
+                    this.errorMessage = 'Error signing up';
+                    return;
                 }
                 if (e.status == 500) {
-                console.log('Status: Cannot check data, server error');
-                this.errorMessage = 'Cannot check data, server error';
-                return;
+                    console.log('Status: Cannot check data, server error');
+                    this.errorMessage = 'Cannot check data, server error';
+                    return;
                 }
                 console.log('Error: ', e.status, e.error);
             },
@@ -154,15 +154,16 @@ export class SignupComponent implements OnInit {
     // Function to toggle password visibility
     public togglePasswordVisibility(field: string): void {
         if (field === 'password') {
-        this.passwordType =
-            this.passwordType === 'password' ? 'text' : 'password';
-        this.togglePasswordClass =
-            this.passwordType === 'password' ? 'bi-eye-slash' : 'bi-eye';
-        } else if (field === 'confirmPassword') {
-        this.confirmPasswordType =
-            this.confirmPasswordType === 'password' ? 'text' : 'password';
-        this.toggleConfirmPasswordClass =
-            this.confirmPasswordType === 'password' ? 'bi-eye-slash' : 'bi-eye';
+            this.passwordType =
+                this.passwordType === 'password' ? 'text' : 'password';
+            this.togglePasswordClass =
+                this.passwordType === 'password' ? 'bi-eye-slash' : 'bi-eye';
+            } 
+        else if (field === 'confirmPassword') {
+            this.confirmPasswordType =
+                this.confirmPasswordType === 'password' ? 'text' : 'password';
+            this.toggleConfirmPasswordClass =
+                this.confirmPasswordType === 'password' ? 'bi-eye-slash' : 'bi-eye';
         }
     }
 }
