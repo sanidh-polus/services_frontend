@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { NgFor } from '@angular/common';
@@ -13,26 +13,26 @@ import { DataService } from '../service/data.service';
     templateUrl: './signup.component.html',
     styleUrl: './signup.component.css',
 })
-export class SignupComponent {
+export class SignupComponent implements OnInit {
     constructor(private data_service: DataService) {}
 
-    errorMessage: string = '';
-    firstName: string = '';
-    lastName: string = '';
-    designation: string = '';
-    email: string = '';
-    phoneNumber: string = '';
-    country: string = '';
-    state: string = '';
-    address: string = '';
-    password: string = '';
-    confirmPassword: string = '';
-    passwordType: string = 'password';
-    togglePasswordClass: string = 'bi-eye-slash';
-    confirmPasswordType: string = 'password';
-    toggleConfirmPasswordClass: string = 'bi-eye-slash';
+    errorMessage = '';
+    firstName = '';
+    lastName = '';
+    designation = '';
+    email = '';
+    phoneNumber = '';
+    country = '';
+    state = '';
+    address = '';
+    password = '';
+    confirmPassword = '';
+    passwordType = 'password';
+    togglePasswordClass = 'bi-eye-slash';
+    confirmPasswordType = 'password';
+    toggleConfirmPasswordClass = 'bi-eye-slash';
     countryNames: string[] = [];
-    searchText: string = '';
+    searchText = '';
 
     ngOnInit(): void {
         this.getAllCountries();
@@ -41,7 +41,7 @@ export class SignupComponent {
     getAllCountries(): void {
         this.data_service.getCountries().subscribe({
             next: (response) => {
-                // console.log('Response: ', response);
+                console.log('Response: ', response);
                 response.forEach((country: any) => {
                 // console.log(country.name["common"]);
                 this.countryNames.push(country.name['common']);

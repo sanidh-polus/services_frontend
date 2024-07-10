@@ -22,10 +22,10 @@ export class LoginComponent {
     constructor(private data_service: DataService) {}
     
     email = '';
-    password: string = '';
-    errorMessage: string = '';
-    passwordType: string = 'password';
-    togglePasswordClass: string = 'bi-eye-slash';
+    password = '';
+    errorMessage = '';
+    passwordType = 'password';
+    togglePasswordClass = 'bi-eye-slash';
 
     private isValidEmailFormat(email: string): boolean {
         // Regular expression for basic email validation
