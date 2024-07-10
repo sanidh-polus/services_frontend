@@ -34,13 +34,16 @@ export class SignupComponent {
   searchText: string = '';
 
   ngOnInit(): void {
-    // You can perform further validation or processing here
+    this.getAllCountries();
+  }
+
+  getAllCountries(): void {
     this.data_service.getCountries().subscribe({
       next: (response) => {
         // console.log('Response: ', response);
         response.forEach((country: any) => {
           // console.log(country.name["common"]);
-          this.countryNames.push(country.name["common"]);
+          this.countryNames.push(country.name['common']);
         });
         console.log(this.countryNames.sort());
       },
@@ -50,9 +53,14 @@ export class SignupComponent {
     });
   }
 
-  getFilteredCountryNames() {
+  /**
+   * Description:
+   * Trying to filter the countries.
+   */
+  getFilteredCountryNames(): string[] {
     const filterValue = this.searchText.toLowerCase();
-    return this.countryNames.filter(country =>
+    console.log(this.searchText);
+    return this.countryNames.filter((country) =>
       country.toLowerCase().includes(filterValue)
     );
   }

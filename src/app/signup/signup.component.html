@@ -37,10 +37,11 @@
                 <div class="row mb-3" id="country-state-row">
                     <div class="col-md-6" id="country-div">
                         <label for="inputCountry" class="form-label" id="country-label">Country</label>
-                        <select type="text" class="form-control" id="inputCountry" placeholder="Country" tabindex="0"
-                            name="country" [(ngModel)]="country">
+                        <input type="text" class="form-control" id="inputCountry" placeholder="Search Country"
+                            [(ngModel)]="searchText" name="searchText">
+                        <select class="form-control" id="selectCountry" [(ngModel)]="country">
                             <option value="">Select your country</option>
-                            <option *ngFor="let countryName of countryNames" [value]="countryName">
+                            <option *ngFor="let countryName of getFilteredCountryNames()" [value]="countryName">
                                 {{ countryName }}
                             </option>
                         </select>
