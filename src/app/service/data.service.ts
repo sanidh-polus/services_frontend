@@ -7,6 +7,18 @@ interface Login {
   password: string;
 }
 
+interface Signup {
+  firstname: string;
+  lastname: string;
+  designation: string;
+  email: string;
+  userPassword: string;
+  country: string;
+  state: string;
+  address: string;
+  phoneNo: string;
+}
+
 interface Country {
   name: {
     common: string;
@@ -27,14 +39,12 @@ export class DataService {
   }
 
   enterSignupDetails(signupDetails: any): Observable<any> {
-    return this.http.post<Login[]>('/service/signup', signupDetails);
+    return this.http.post<Signup[]>('/service/signup', signupDetails);
   }
 
   private countriesUrl = 'https://restcountries.com/v3.1/all';
 
-  getCountries(): Promise<Country[]> {
-    return this.http.get<Country[]>(this.countriesUrl).toPromise() as Promise<
-      Country[]
-    >;
+  getCountries(): Observable<any> {
+    return this.http.get<Country[]>(this.countriesUrl);
   }
 }

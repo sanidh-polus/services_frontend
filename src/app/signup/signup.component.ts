@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { NgFor } from '@angular/common';
 
 import { DataService } from '../service/data.service';
 
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, FormsModule],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, FormsModule, NgFor],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.css',
 })
@@ -30,6 +31,31 @@ export class SignupComponent {
   confirmPasswordType: string = 'password';
   toggleConfirmPasswordClass: string = 'bi-eye-slash';
   countryNames: string[] = [];
+  searchText: string = '';
+
+  ngOnInit(): void {
+    // You can perform further validation or processing here
+    this.data_service.getCountries().subscribe({
+      next: (response) => {
+        // console.log('Response: ', response);
+        response.forEach((country: any) => {
+          // console.log(country.name["common"]);
+          this.countryNames.push(country.name["common"]);
+        });
+        console.log(this.countryNames.sort());
+      },
+      error: (e: any) => {
+        console.log(e);
+      },
+    });
+  }
+
+  getFilteredCountryNames() {
+    const filterValue = this.searchText.toLowerCase();
+    return this.countryNames.filter(country =>
+      country.toLowerCase().includes(filterValue)
+    );
+  }
 
   isValidEmailFormat(email: string): boolean {
     // Regular expression for basic email validation
@@ -41,23 +67,6 @@ export class SignupComponent {
     const digitsOnly = inputString.replace(/\D/g, '');
     const digitCount = digitsOnly.length;
     return digitCount === 10;
-  }
-
-  ngOnInit(): void {
-    this.data_service
-      .getCountries()
-      .then((countries) => {
-        // console.log("Countries: ", countries);
-        // console.log("Country Name: ", countries[0].name["common"]);
-        countries.forEach((country, index) => {
-          //console.log(`Country ${index+1}: ${country.name["common"]}`);
-          this.countryNames.push(country.name["common"]);
-        });
-        console.log(this.countryNames);
-      })
-      .catch((error) => {
-        console.error('Error fetching countries:', error);
-      });
   }
 
   signup(): void {
@@ -123,10 +132,6 @@ export class SignupComponent {
       },
       error: (e: any) => {
         console.log(e);
-        if (e.status == 200) {
-          console.log('Status: Correct details');
-          return;
-        }
         if (e.status == 401) {
           console.log('Status: Error signing up');
           this.errorMessage = 'Error signing up';

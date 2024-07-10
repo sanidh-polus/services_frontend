@@ -37,8 +37,13 @@
                 <div class="row mb-3" id="country-state-row">
                     <div class="col-md-6" id="country-div">
                         <label for="inputCountry" class="form-label" id="country-label">Country</label>
-                        <input type="text" class="form-control" id="inputCountry" placeholder="Country" tabindex="0"
-                            name="country" [(ngModel)]="country"/>
+                        <select type="text" class="form-control" id="inputCountry" placeholder="Country" tabindex="0"
+                            name="country" [(ngModel)]="country">
+                            <option value="">Select your country</option>
+                            <option *ngFor="let countryName of countryNames" [value]="countryName">
+                                {{ countryName }}
+                            </option>
+                        </select>
                     </div>
                     <div class="col-md-6" id="state-div">
                         <label for="inputState" class="form-label" id="state-label">State</label>
