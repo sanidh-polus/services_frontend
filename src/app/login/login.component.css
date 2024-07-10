@@ -1,36 +1,36 @@
 .login-body {
-  background-color: #eee;
+    background-color: #eee;
 }
 
 .gradient-custom-2 {
-  min-height: auto;
-  background: linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
+    min-height: auto;
+    background: linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
 }
 
 .card-body img {
-  width: 200px;
+    width: 200px;
 }
 
 .form-outline {
-  position: relative;
+    position: relative;
 }
 
 .form-outline .show-password {
-  position: absolute;
-  top: 50%;
-  right: 1px;
-  transform: translateY(-50%);
-  cursor: pointer;
+    position: absolute;
+    top: 50%;
+    right: 1px;
+    transform: translateY(-50%);
+    cursor: pointer;
 }
 
 a:hover,
 a:focus {
-  color: red;
+    color: red;
 }
 
 @media (min-width: 768px) {
-  .gradient-custom-2 {
-    border-top-right-radius: 0.3rem;
-    border-bottom-right-radius: 0.3rem;
-  }
+    .gradient-custom-2 {
+        border-top-right-radius: 0.3rem;
+        border-bottom-right-radius: 0.3rem;
+    }
 }

@@ -60,9 +60,9 @@ export class SignupComponent {
     getFilteredCountryNames(): string[] {
         const FILTER_VALUE = this.searchText.toLowerCase();
         console.log('Search Text:', this.searchText);
-        console.log('Filtered Countries: ', this.countryNames.filter((country) =>
-            country.toLowerCase().includes(FILTER_VALUE)
-            ));
+        // console.log('Filtered Countries: ', this.countryNames.filter((country) =>
+        //     country.toLowerCase().includes(FILTER_VALUE)
+        //     ));
         return this.countryNames.filter((country) =>
         country.toLowerCase().includes(FILTER_VALUE)
         );
