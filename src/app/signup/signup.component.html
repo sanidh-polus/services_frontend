@@ -39,7 +39,7 @@
                         <label for="inputCountry" class="form-label" id="country-label">Country</label>
                         <input type="text" class="form-control" id="inputCountry" placeholder="Search Country"
                             [(ngModel)]="searchText" name="searchText">
-                        <select class="form-control" id="selectCountry" [(ngModel)]="country">
+                        <select class="form-control" id="selectCountry" [(ngModel)]="country" name="country">
                             <option value="">Select your country</option>
                             <option *ngFor="let countryName of getFilteredCountryNames()" [value]="countryName">
                                 {{ countryName }}
