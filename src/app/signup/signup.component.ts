@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { NgFor } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 
 import { DataService } from '../service/data.service';
 
@@ -47,7 +48,7 @@ export class SignupComponent {
                 });
                 // console.log(this.countryNames.sort());
             },
-            error: (e: any) => {
+            error: (e: HttpErrorResponse) => {
                 console.log(e);
             },
         });
@@ -64,7 +65,7 @@ export class SignupComponent {
         //     country.toLowerCase().includes(FILTER_VALUE)
         //     ));
         return this.countryNames.filter((country) =>
-        country.toLowerCase().includes(FILTER_VALUE)
+        country.toLowerCase().startsWith(FILTER_VALUE)
         );
     }
 
@@ -81,7 +82,7 @@ export class SignupComponent {
     }
 
     signup(): void {
-        let signupBody = {
+        const SIGNUP_BODY = {
             firstname: this.firstName,
             lastname: this.lastName,
             designation: this.designation,
@@ -93,18 +94,9 @@ export class SignupComponent {
             phoneNo: this.phoneNumber,
         };
 
-        if (
-            this.email == '' ||
-            this.password == '' ||
-            this.firstName == '' ||
-            this.lastName == '' ||
-            this.designation == '' ||
-            this.phoneNumber == '' ||
-            this.country == '' ||
-            this.state == '' ||
-            this.address == '' ||
-            this.confirmPassword == ''
-        ) {
+        if (this.email == '' || this.password == '' || this.firstName == '' || this.lastName == '' || 
+            this.designation == '' || this.phoneNumber == '' || this.country == '' || this.state == '' ||
+            this.address == '' || this.confirmPassword == '') {
             // alert('Please enter all details');
             this.errorMessage = 'Please enter all details';
             return;
@@ -136,12 +128,12 @@ export class SignupComponent {
         console.log('Confirm Password: ' + this.confirmPassword);
 
         // You can perform further validation or processing here
-        this.data_service.enterSignupDetails(signupBody).subscribe({
+        this.data_service.enterSignupDetails(SIGNUP_BODY).subscribe({
             next: (response) => {
                 console.log('Response: ', response);
                 console.log('Status: Success');
             },
-            error: (e: any) => {
+            error: (e: HttpErrorResponse) => {
                 console.log(e);
                 if (e.status == 401) {
                 console.log('Status: Error signing up');

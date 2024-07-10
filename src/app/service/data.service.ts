@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 interface Login {
   email: string;
-  password: string;
+  userpassword: string;
 }
 
 interface Signup {
@@ -34,11 +34,11 @@ export class DataService {
 
   constructor(private http: HttpClient) {}
 
-  checkLoginDetails(loginDetails: any): Observable<any> {
+  checkLoginDetails(loginDetails: Login): Observable<any> {
     return this.http.post<Login[]>('/service/login', loginDetails);
   }
 
-  enterSignupDetails(signupDetails: any): Observable<any> {
+  enterSignupDetails(signupDetails: Signup): Observable<any> {
     return this.http.post<Signup[]>('/service/signup', signupDetails);
   }
 

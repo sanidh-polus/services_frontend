@@ -2,13 +2,14 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
 
 import { DataService } from '../service/data.service';
 
-interface Login {
-    email: string;
-    password: string;
-}
+// interface Login {
+//     email: string;
+//     password: string;
+// }
 
 @Component({
     selector: 'app-login',
@@ -20,7 +21,7 @@ interface Login {
 export class LoginComponent {
     constructor(private data_service: DataService) {}
     
-    email: string = '';
+    email = '';
     password: string = '';
     errorMessage: string = '';
     passwordType: string = 'password';
@@ -33,7 +34,7 @@ export class LoginComponent {
     }
 
     public login(): void {
-        let loginBody = {
+        const LOGIN_BODY = {
         "email": this.email,
         "userpassword": this.password
         }
@@ -62,12 +63,12 @@ export class LoginComponent {
         console.log('Password: ' + this.password);
         
         // You can perform further validation or processing here
-        this.data_service.checkLoginDetails(loginBody).subscribe({
+        this.data_service.checkLoginDetails(LOGIN_BODY).subscribe({
             next: (response) => {
                 console.log('Response: ', response);
                 console.log('Status: Success');
             },
-            error: (e: any) => {
+            error: (e: HttpErrorResponse) => {
                 console.log(e);
                 if (e.status == 200) {
                 console.log('Status: Correct details');
