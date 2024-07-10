@@ -37,14 +37,16 @@
                 <div class="row mb-3" id="country-state-row">
                     <div class="col-md-6 country" id="country-div">
                         <label for="inputCountry" class="form-label" id="country-label">Country</label>
-                        <input type="text" class="form-control" id="inputCountry" placeholder="Search Country"
-                            [(ngModel)]="searchText" name="searchText">
-                        <select class="form-control" id="selectCountry" [(ngModel)]="country" name="country">
-                            <option value="">Select your country</option>
+                        <input class="form-control" id="inputCountry" list="countries" 
+                            placeholder="Search Country" [(ngModel)]="searchText" name="searchText" />
+                        <datalist id="countries" [(ngModel)]="country" name="country">
                             <option *ngFor="let countryName of getFilteredCountryNames()" [value]="countryName">
                                 {{ countryName }}
                             </option>
-                        </select>
+                        </datalist>
+                        <div *ngIf="getFilteredCountryNames().length === 0">
+                            <p class="text-danger no-countries">No countries available</p>
+                        </div>
                     </div>
                     <div class="col-md-6" id="state-div">
                         <label for="inputState" class="form-label" id="state-label">State</label>

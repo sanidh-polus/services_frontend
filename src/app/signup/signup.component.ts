@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { DataService } from '../service/data.service';
@@ -9,7 +9,7 @@ import { DataService } from '../service/data.service';
 @Component({
 	selector: 'app-signup',
 	standalone: true,
-    imports: [RouterOutlet, RouterLink, RouterLinkActive, FormsModule, NgFor],
+    imports: [RouterOutlet, RouterLink, RouterLinkActive, FormsModule, NgFor, NgIf],
     templateUrl: './signup.component.html',
     styleUrl: './signup.component.css',
 })
@@ -41,12 +41,11 @@ export class SignupComponent implements OnInit {
     getAllCountries(): void {
         this.data_service.getCountries().subscribe({
             next: (response) => {
-                console.log('Response: ', response);
+                // console.log('Response: ', response);
                 response.forEach((country: any) => {
                 // console.log(country.name["common"]);
                 this.countryNames.push(country.name['common']);
                 });
-                // console.log(this.countryNames.sort());
             },
             error: (e: HttpErrorResponse) => {
                 console.log(e);
@@ -60,13 +59,13 @@ export class SignupComponent implements OnInit {
    */
     getFilteredCountryNames(): string[] {
         const FILTER_VALUE = this.searchText.toLowerCase();
-        console.log('Search Text:', this.searchText);
+        // console.log('Search Text:', this.searchText);
         // console.log('Filtered Countries: ', this.countryNames.filter((country) =>
         //     country.toLowerCase().includes(FILTER_VALUE)
         //     ));
         return this.countryNames.filter((country) =>
         country.toLowerCase().startsWith(FILTER_VALUE)
-        );
+        ).sort();
     }
 
     isValidEmailFormat(email: string): boolean {

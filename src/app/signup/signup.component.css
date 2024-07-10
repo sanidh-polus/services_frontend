@@ -35,6 +35,10 @@
     cursor: pointer;
 } */
 
+.no-countries {
+    margin-bottom: -4px;
+}
+
 .sign-up-group {
     display: flex;
     justify-content: right;
@@ -44,13 +48,6 @@
 
 .sign-up-group .btn {
      margin-left: 20px;
-}
-
-.country select {
-    position: relative;
-    bottom: 30px;
-    z-index: -1;
-    margin-bottom: -30px;
 }
 
 a:hover,
