@@ -36,11 +36,11 @@
                             <div class="form-outline mb-3" id="password-login">
                                 <input type="{{ passwordType }}" id="password" class="form-control" name="password" 
                                     placeholder="Enter password" tabindex="0" [(ngModel)]="password"/>
-                                <span class="show-password btn btn-outline-secondary" id="showPassword"
+                                <button class="show-password btn btn-outline-secondary" id="showPassword"
                                     tabindex="0" aria-label="Show or Hide Password"
                                     title="Show or Hide Password" (click)="togglePasswordVisibility()">
                                     <i class="{{ togglePasswordClass }}" id="togglePasswordButton"></i>
-                                </span>
+                                </button>
                             </div>
                             <p class="text-danger text-center" id="error-text" tabindex="0">{{ errorMessage }}</p>
                             <div class="text-center" id="login-button-div">
