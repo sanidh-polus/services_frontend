@@ -121,12 +121,10 @@ export class SignupComponent implements OnInit {
             return;
         }
 
-        // Example: Just log the values to console
         console.log('Username: ' + this.email);
         console.log('Password: ' + this.password);
         console.log('Confirm Password: ' + this.confirmPassword);
 
-        // You can perform further validation or processing here
         this.login_signup_service.enterSignupDetails(SIGNUP_BODY).subscribe({
             next: (response) => {
                 console.log('Response: ', response);
@@ -147,7 +145,6 @@ export class SignupComponent implements OnInit {
                 console.log('Error: ', e.status, e.error);
             },
         });
-        // Example: Redirect to another page after successful login
         // window.location.href = 'dashboard.html';
     }
 

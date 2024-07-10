@@ -39,7 +39,6 @@ export class LoginComponent {
             "userpassword": this.password
         }
 
-        // TypeScript code
         if (this.email == '' || this.password == '') {
             // alert('Please enter valid details');
             this.errorMessage = 'Please enter valid details';
@@ -57,12 +56,9 @@ export class LoginComponent {
         //     this.errorMessage  = 'Enter a valid password';
         //     return;
         // }
-
-        // Example: Just log the values to console
         console.log('Username: ' + this.email);
         console.log('Password: ' + this.password);
         
-        // You can perform further validation or processing here
         this.login_signup_service.checkLoginDetails(LOGIN_BODY).subscribe({
             next: (response) => {
                 console.log('Response: ', response);
@@ -87,8 +83,6 @@ export class LoginComponent {
                 console.log('Error: ', e.status, e.error);
             },
         });
-
-        // Example: Redirect to another page after successful login
         // window.location.href = 'dashboard.html';
   }
 
