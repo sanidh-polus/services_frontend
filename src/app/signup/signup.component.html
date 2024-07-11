@@ -45,14 +45,14 @@
                                 <i class="dropdown-toggle" id="dropdown-toggle-icon"></i>
                             </button>
                         </div>
-                        <datalist id="countries" [(ngModel)]="country" name="country">
+                        <datalist id="countries">
                             <option *ngFor="let countryName of getFilteredCountryNames()" [value]="countryName">
                                 {{ countryName }}
                             </option>
                         </datalist>
-                        <div *ngIf="getFilteredCountryNames().length === 0">
-                            <p class="text-danger no-countries">No countries available</p>
-                        </div>
+                        <p class="text-danger no-countries" *ngIf="getFilteredCountryNames().length === 0">
+                            No countries available
+                        </p>
                     </div>
                     <div class="col-md-6" id="state-div">
                         <label for="inputState" class="form-label" id="state-label">State</label>

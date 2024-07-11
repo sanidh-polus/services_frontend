@@ -93,6 +93,8 @@ export class SignupComponent implements OnInit {
             phoneNo: this.phoneNumber,
         };
 
+        this.country = this.searchText;
+
         if (this.email == '' || this.password == '' || this.firstName == '' || this.lastName == '' || 
             this.designation == '' || this.phoneNumber == '' || this.country == '' || this.state == '' ||
             this.address == '' || this.confirmPassword == '') {
@@ -122,8 +124,9 @@ export class SignupComponent implements OnInit {
         }
 
         console.log('Username: ' + this.email);
-        console.log('Password: ' + this.password);
-        console.log('Confirm Password: ' + this.confirmPassword);
+        // console.log('Password: ' + this.password);
+        // console.log('Confirm Password: ' + this.confirmPassword);
+        console.log('Country: ', this.country);
 
         this.login_signup_service.enterSignupDetails(SIGNUP_BODY).subscribe({
             next: (response) => {
