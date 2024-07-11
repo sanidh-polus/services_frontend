@@ -42,9 +42,7 @@ export class LoginSignupService {
     return this.http.post<Signup[]>('/service/signup', signupDetails);
   }
 
-  private countriesUrl = 'https://restcountries.com/v3.1/all';
-
   getCountries(): Observable<any> {
-    return this.http.get<Country[]>(this.countriesUrl);
+    return this.http.get<Country[]>('/service/countries');
   }
 }

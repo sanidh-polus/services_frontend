@@ -44,7 +44,7 @@ export class SignupComponent implements OnInit {
                 // console.log('Response: ', response);
                 response.forEach((country: any) => {
                 // console.log(country.name["common"]);
-                this.countryNames.push(country.name['common']);
+                this.countryNames.push(country.countryName);
                 });
             },
             error: (e: HttpErrorResponse) => {
