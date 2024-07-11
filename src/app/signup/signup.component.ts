@@ -15,7 +15,7 @@ import { LoginSignupService } from '../service/login_signup.service';
     styleUrl: './signup.component.css',
 })
 export class SignupComponent implements OnInit {
-    constructor(private login_signup_service: LoginSignupService, private router: Router) {}
+    constructor(private LOGIN_SIGNUP_SERVICE: LoginSignupService, private ROUTER: Router) {}
 
     errorMessage = '';
     firstName = '';
@@ -39,8 +39,8 @@ export class SignupComponent implements OnInit {
         this.getAllCountries();
     }
 
-    getAllCountries(): void {
-        this.login_signup_service.getCountries().subscribe({
+    public getAllCountries(): void {
+        this.LOGIN_SIGNUP_SERVICE.getCountries().subscribe({
             next: (response) => {
                 // console.log('Response: ', response);
                 response.forEach((country: any) => {
@@ -58,7 +58,7 @@ export class SignupComponent implements OnInit {
    * Description:
    * Trying to filter the countries.
    */
-    getFilteredCountryNames(): string[] {
+    public getFilteredCountryNames(): string[] {
         const FILTER_VALUE = this.searchText.toLowerCase();
         // console.log('Search Text:', this.searchText);
         return this.countryNames.filter((country) =>
@@ -66,19 +66,19 @@ export class SignupComponent implements OnInit {
         ).sort();
     }
 
-    isValidEmailFormat(email: string): boolean {
-        // Regular expression for basic email validation
+    // Regular expression for basic email validation
+    private isValidEmailFormat(email: string): boolean {
         const EMAIL_REGEX = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
         return EMAIL_REGEX.test(email);
     }
 
-    countDigitsWithSpaces(inputString: string) {
+    private countDigitsWithSpaces(inputString: string) {
         const DIGITS_ONLY = inputString.replace(/\D/g, '');
         const DIGIT_COUNT = DIGITS_ONLY.length;
         return DIGIT_COUNT === 10;
     }
 
-    signup(): void {
+    public signup(): void {
         const SIGNUP_BODY = {
             firstname: this.firstName,
             lastname: this.lastName,
@@ -96,13 +96,11 @@ export class SignupComponent implements OnInit {
         if (this.email == '' || this.password == '' || this.firstName == '' || this.lastName == '' || 
             this.designation == '' || this.phoneNumber == '' || this.country == '' || this.state == '' ||
             this.address == '' || this.confirmPassword == '') {
-            // alert('Please enter all details');
             this.errorMessage = 'Please enter all details';
             return;
         }
 
         if (this.isValidEmailFormat(this.email) == false) {
-            // alert('Enter a valid email');
             this.errorMessage = 'Enter a valid email';
             return;
         }
@@ -110,28 +108,26 @@ export class SignupComponent implements OnInit {
         // const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
 
         if (this.password.length < 8) {
-            // alert('Password should contain at least 8 characters');
             this.errorMessage = 'Password should contain at least 8 characters';
             return;
         }
 
         if (this.password != this.confirmPassword) {
-            // alert('Password do not match');
             this.errorMessage = 'Passwords do not match';
             return;
         }
 
-        console.log('Username: ' + this.email);
         // console.log('Password: ' + this.password);
         // console.log('Confirm Password: ' + this.confirmPassword);
-        console.log('Country: ', this.country);
+        // console.log('Username: ' + this.email);
+        // console.log('Country: ', this.country);
 
-        this.login_signup_service.enterSignupDetails(SIGNUP_BODY).subscribe({
+        this.LOGIN_SIGNUP_SERVICE.enterSignupDetails(SIGNUP_BODY).subscribe({
             next: (response) => {
                 console.log('Response: ', response);
                 console.log('Status: Success');
                 swal('Successfully Signed Up', ' ', 'success');
-                this.router.navigate(['login']);
+                this.ROUTER.navigate(['login']);
             },
             error: (e: HttpErrorResponse) => {
                 console.log(e);
@@ -148,7 +144,6 @@ export class SignupComponent implements OnInit {
                 console.log('Error: ', e.status, e.error);
             },
         });
-        // window.location.href = 'dashboard.html';
     }
 
     // Function to toggle password visibility

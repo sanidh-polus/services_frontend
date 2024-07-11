@@ -20,7 +20,7 @@ import { LoginSignupService } from '../service/login_signup.service';
     styleUrl: './login.component.css'
 })
 export class LoginComponent {
-    constructor(private login_signup_service: LoginSignupService, private router: Router) {}
+    constructor(private LOGIN_SIGNUP_SERVICE: LoginSignupService, private ROUTER: Router) {}
     
     email = '';
     password = '';
@@ -28,8 +28,8 @@ export class LoginComponent {
     passwordType = 'password';
     togglePasswordClass = 'bi-eye-slash';
 
+    // Regular expression for basic email validation
     private isValidEmailFormat(email: string): boolean {
-        // Regular expression for basic email validation
         const EMAIL_REGEX = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
         return EMAIL_REGEX.test(email);
     }
@@ -41,31 +41,28 @@ export class LoginComponent {
         }
 
         if (this.email == '' || this.password == '') {
-            // alert('Please enter valid details');
             this.errorMessage = 'Please enter valid details';
             return;
         }
 
         if (!this.isValidEmailFormat(this.email)) {
-            // alert('Enter a valid email');
             this.errorMessage = 'Enter a valid email';
             return;
         }
 
         // if (this.password.length < 8) {
-        //     alert('Enter a valid password');
         //     this.errorMessage  = 'Enter a valid password';
         //     return;
         // }
         console.log('Username: ' + this.email);
         console.log('Password: ' + this.password);
         
-        this.login_signup_service.checkLoginDetails(LOGIN_BODY).subscribe({
+        this.LOGIN_SIGNUP_SERVICE.checkLoginDetails(LOGIN_BODY).subscribe({
             next: (response) => {
                 console.log('Response: ', response);
                 console.log('Status: Success');
                 swal('Successfully Logged In', ' ', 'success');
-                this.router.navigate(['/user/home']);
+                this.ROUTER.navigate(['/user/home']);
             },
             error: (e: HttpErrorResponse) => {
                 console.log(e);
@@ -86,8 +83,7 @@ export class LoginComponent {
                 console.log('Error: ', e.status, e.error);
             },
         });
-        // window.location.href = 'dashboard.html';
-  }
+    }
 
     // Function to toggle password visibility
     public togglePasswordVisibility(): void {
