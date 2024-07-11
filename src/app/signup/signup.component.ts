@@ -6,11 +6,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import swal from 'sweetalert';
 
 import { LoginSignupService } from '../service/login_signup.service';
-
-interface Country {
-    countryName: string,
-    countryCode: string
-}
+import { Country } from './Country';
 
 @Component({
 	selector: 'app-signup',
@@ -91,6 +87,7 @@ export class SignupComponent implements OnInit {
     }
 
     public signup(): void {
+        this.errorMessage = '';
         const SIGNUP_BODY = {
             firstname: this.firstName,
             lastname: this.lastName,
@@ -103,7 +100,6 @@ export class SignupComponent implements OnInit {
             phoneNo: this.phoneNumber,
         };
         this.country = this.searchText;
-        this.code = this.countries.find(i => i.countryName === this.country)!.countryCode;
         // console.log('Country Details: ', this.countries.find(i => i.countryName === this.country));
 
         if (this.email == '' || this.password == '' || this.firstName == '' || this.lastName == '' || 
@@ -113,6 +109,8 @@ export class SignupComponent implements OnInit {
             return;
         }
 
+        this.code = this.countries.find(i => i.countryName === this.country)!.countryCode;
+        
         if (!this.isValidEmailFormat(this.email)) {
             this.errorMessage = 'Enter a valid email (example@domain.com';
             return;
@@ -139,7 +137,7 @@ export class SignupComponent implements OnInit {
         // console.log('Username: ' + this.email);
         console.log('Country: ', this.country);
         console.log('Country Code: ', this.code);
-        
+
         this.LOGIN_SIGNUP_SERVICE.enterSignupDetails(SIGNUP_BODY).subscribe({
             next: (response) => {
                 console.log('Response: ', response);
@@ -149,6 +147,10 @@ export class SignupComponent implements OnInit {
             },
             error: (e: HttpErrorResponse) => {
                 console.log(e);
+                if (e.status == 400) {
+                    console.log('Status: Duplicate entry');
+                    this.errorMessage = 'Check email, duplicate entry';
+                }
                 if (e.status == 401) {
                     console.log('Status: Error signing up');
                     this.errorMessage = 'Error signing up';

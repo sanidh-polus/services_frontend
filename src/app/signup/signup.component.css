@@ -52,7 +52,7 @@
 
 a:hover,
 a:focus {
-    color: red;
+    color: rgb(19, 75, 94);
 }
 
 @media (max-width: 992px) {

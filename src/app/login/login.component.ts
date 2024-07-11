@@ -7,11 +7,6 @@ import swal from 'sweetalert';
 
 import { LoginSignupService } from '../service/login_signup.service';
 
-// interface Login {
-//     email: string;
-//     password: string;
-// }
-
 @Component({
     selector: 'app-login',
     standalone: true,
