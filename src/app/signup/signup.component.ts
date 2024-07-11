@@ -36,7 +36,19 @@ export class SignupComponent implements OnInit {
     countryNames: string[] = [];
     searchText = '';
     countries: Country[] = [];
-    code = '';
+    country_code = '';
+    errors = {
+        "email": "",
+        "fname": "",
+        "lname": "",
+        "designation": "",
+        "password": "",
+        "country": "",
+        "state": "",
+        "address": "",
+        "phone": "",
+        "confirmPassword": ""
+    }
 
     ngOnInit(): void {
         this.getAllCountries();
@@ -105,14 +117,14 @@ export class SignupComponent implements OnInit {
         if (this.email == '' || this.password == '' || this.firstName == '' || this.lastName == '' || 
             this.designation == '' || this.phoneNumber == '' || this.country == '' || this.state == '' ||
             this.address == '' || this.confirmPassword == '') {
-            this.errorMessage = 'Please enter all details';
+            this.errorMessage = '** Please enter all details **';
             return;
         }
 
-        this.code = this.countries.find(i => i.countryName === this.country)!.countryCode;
+        this.country_code = this.countries.find(i => i.countryName === this.country)!.countryCode;
         
         if (!this.isValidEmailFormat(this.email)) {
-            this.errorMessage = 'Enter a valid email (example@domain.com';
+            this.errorMessage = 'Enter a valid email (example@domain.com)';
             return;
         }
 
@@ -136,7 +148,7 @@ export class SignupComponent implements OnInit {
         // console.log('Confirm Password: ' + this.confirmPassword);
         // console.log('Username: ' + this.email);
         console.log('Country: ', this.country);
-        console.log('Country Code: ', this.code);
+        console.log('Country Code: ', this.country_code);
 
         this.LOGIN_SIGNUP_SERVICE.enterSignupDetails(SIGNUP_BODY).subscribe({
             next: (response) => {

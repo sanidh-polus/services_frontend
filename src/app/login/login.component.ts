@@ -36,17 +36,17 @@ export class LoginComponent {
         }
 
         if (this.email == '' || this.password == '') {
-            this.errorMessage = 'Please enter valid details';
+            this.errorMessage = '** Please enter all details **';
             return;
         }
 
         if (!this.isValidEmailFormat(this.email)) {
-            this.errorMessage = 'Enter a valid email';
+            this.errorMessage = 'Enter a valid email (example@domain.com)';
             return;
         }
 
         if (this.password.length < 8) {
-            this.errorMessage  = 'Enter a valid password';
+            this.errorMessage  = 'Enter a valid password (more than 8 characters)';
             return;
         }
         console.log('Username: ' + this.email);
