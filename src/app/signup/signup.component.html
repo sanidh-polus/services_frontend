@@ -37,8 +37,14 @@
                 <div class="row mb-3" id="country-state-row">
                     <div class="col-md-6 country" id="country-div">
                         <label for="inputCountry" class="form-label" id="country-label">Country</label>
-                        <input class="form-control" id="inputCountry" list="countries" 
-                            placeholder="Search Country" [(ngModel)]="searchText" name="searchText" />
+                        <div class="input-group">
+                            <input class="form-control" id="inputCountry" list="countries" 
+                                placeholder="Search Country" [(ngModel)]="searchText" name="searchText" />
+                            <button class="btn btn-outline-secondary" id="dropdownMenuButton"
+                                type="button" tabindex="-1">
+                                <i class="dropdown-toggle" id="dropdown-toggle-icon"></i>
+                            </button>
+                        </div>
                         <datalist id="countries" [(ngModel)]="country" name="country">
                             <option *ngFor="let countryName of getFilteredCountryNames()" [value]="countryName">
                                 {{ countryName }}
