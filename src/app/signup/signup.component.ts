@@ -3,6 +3,7 @@ import { RouterOutlet, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { NgFor, NgIf } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
+import swal from 'sweetalert';
 
 import { LoginSignupService } from '../service/login_signup.service';
 
@@ -60,9 +61,6 @@ export class SignupComponent implements OnInit {
     getFilteredCountryNames(): string[] {
         const FILTER_VALUE = this.searchText.toLowerCase();
         // console.log('Search Text:', this.searchText);
-        // console.log('Filtered Countries: ', this.countryNames.filter((country) =>
-        //     country.toLowerCase().includes(FILTER_VALUE)
-        //     ));
         return this.countryNames.filter((country) =>
         country.toLowerCase().startsWith(FILTER_VALUE)
         ).sort();
@@ -132,6 +130,7 @@ export class SignupComponent implements OnInit {
             next: (response) => {
                 console.log('Response: ', response);
                 console.log('Status: Success');
+                swal('Successfully Signed Up', ' ', 'success');
             },
             error: (e: HttpErrorResponse) => {
                 console.log(e);

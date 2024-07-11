@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { RouterOutlet, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
+import swal from 'sweetalert';
 
 import { LoginSignupService } from '../service/login_signup.service';
 
@@ -63,6 +64,7 @@ export class LoginComponent {
             next: (response) => {
                 console.log('Response: ', response);
                 console.log('Status: Success');
+                swal('Successfully Logged In', ' ', 'success');
             },
             error: (e: HttpErrorResponse) => {
                 console.log(e);
