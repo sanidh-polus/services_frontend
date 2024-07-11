@@ -7,11 +7,7 @@ import swal from 'sweetalert';
 
 import { LoginSignupService } from '../service/login_signup.service';
 import { Country } from './Country';
-
-interface Errors {
-    field: string;
-    message: string;
-}
+import { Errors } from './Errors';
 
 @Component({
 	selector: 'app-signup',
@@ -100,6 +96,8 @@ export class SignupComponent implements OnInit {
     public signup(): void {
         this.errorMessage = '';
         
+        this.errors = [];
+
         const SIGNUP_BODY = {
             firstname: this.firstName,
             lastname: this.lastName,
@@ -117,60 +115,71 @@ export class SignupComponent implements OnInit {
    
         if (this.email === '') {
             this.errors.push({ field: 'email', message: 'Please enter email' });
+        } else if (!this.isValidEmailFormat(this.email)) {
+            this.errors.push({ field: 'email', message: 'Please enter a valid email (example@domain.com)' });
+        } else {
+            this.errors.push({ field: 'email', message: '' });
         }
         if (this.firstName === '') {
             this.errors.push({ field: 'firstName', message: 'Please enter first name' });
+        } else {
+            this.errors.push({ field: 'firstName', message: '' });
         }
         if (this.lastName === '') {
             this.errors.push({ field: 'lastName', message: 'Please enter last name' });
-        } 
+        } else {
+            this.errors.push({ field: 'lastName', message: '' });
+        }
         if (this.designation === '') {
             this.errors.push({ field: 'designation', message: 'Please enter designation' });
-        } 
+        } else {
+            this.errors.push({ field: 'designation', message: '' });
+        }
         if (this.password === '') {
             this.errors.push({ field: 'password', message: 'Please enter password' });
-        } 
+        } else if (this.password.length < 8) {
+            this.errors.push({ field: 'password', message: 'Password should contain at least 8 characters' });
+        } else {
+            this.errors.push({ field: 'password', message: '' });
+        }
         if (this.country === '') {
             this.errors.push({ field: 'country', message: 'Please enter country' });
-        } 
+        } else {
+            this.errors.push({ field: 'country', message: '' });
+        }
         if (this.state === '') {
             this.errors.push({ field: 'state', message: 'Please enter state' });
-        } 
+        } else {
+            this.errors.push({ field: 'state', message: '' });
+        }
         if (this.address === '') {
             this.errors.push({ field: 'address', message: 'Please enter address' });
-        } 
+        } else {
+            this.errors.push({ field: 'address', message: '' });
+        }
         if (this.phoneNumber === '') {
             this.errors.push({ field: 'phoneNumber', message: 'Please enter phone number' });
-        } 
+        } else if (!this.countDigitsWithSpaces(this.phoneNumber)) {
+            this.errors.push({ field: 'phoneNumber', message: 'Enter a valid phone number (10 digits)' });
+        } else {
+            this.errors.push({ field: 'phoneNumber', message: '' });
+        }
         if (this.confirmPassword === '') {
             this.errors.push({ field: 'confirmPassword', message: 'Please enter password confirmation' });
-        }
-    
-        if(this.country != '') {
-            this.country_code = this.countries.find(i => i.countryName === this.country)!.countryCode;
-        }
-
-        if (!this.isValidEmailFormat(this.email)) {
-            this.errorMessage = 'Enter a valid email (example@domain.com)';
-            return;
-        }
-
-        if (!this.countDigitsWithSpaces(this.phoneNumber)) {
-            this.errorMessage = 'Enter a valid phone number (10 digits)';
-            return;
+        } else {
+            this.errors.push({ field: 'confirmPassword', message: '' });
         }
 
         // const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
-        if (this.password.length < 8) {
-            this.errorMessage = 'Password should contain at least 8 characters';
-            return;
-        }
-
         if (this.password != this.confirmPassword) {
             this.errorMessage = 'Passwords do not match';
             return;
         }
 
+        if (this.countries.length !== 0) {
+             console.log(this.countries);
+            this.country_code = this.countries.find(i => i.countryName === this.country)!.countryCode;
+        }
         // console.log('Password: ' + this.password);
         // console.log('Confirm Password: ' + this.confirmPassword);
         // console.log('Username: ' + this.email);
