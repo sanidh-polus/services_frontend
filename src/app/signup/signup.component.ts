@@ -99,13 +99,17 @@ export class SignupComponent implements OnInit {
             return;
         }
 
-        if (this.isValidEmailFormat(this.email) == false) {
-            this.errorMessage = 'Enter a valid email';
+        if (!this.isValidEmailFormat(this.email)) {
+            this.errorMessage = 'Enter a valid email (example@domain.com';
+            return;
+        }
+
+        if (!this.countDigitsWithSpaces(this.phoneNumber)) {
+            this.errorMessage = 'Enter a valid phone number (10 digits)';
             return;
         }
 
         // const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
-
         if (this.password.length < 8) {
             this.errorMessage = 'Password should contain at least 8 characters';
             return;

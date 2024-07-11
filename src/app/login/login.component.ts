@@ -50,10 +50,10 @@ export class LoginComponent {
             return;
         }
 
-        // if (this.password.length < 8) {
-        //     this.errorMessage  = 'Enter a valid password';
-        //     return;
-        // }
+        if (this.password.length < 8) {
+            this.errorMessage  = 'Enter a valid password';
+            return;
+        }
         console.log('Username: ' + this.email);
         console.log('Password: ' + this.password);
         
