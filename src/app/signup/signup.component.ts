@@ -7,6 +7,11 @@ import swal from 'sweetalert';
 
 import { LoginSignupService } from '../service/login_signup.service';
 
+interface Country {
+    countryName: string,
+    countryCode: string
+}
+
 @Component({
 	selector: 'app-signup',
 	standalone: true,
@@ -34,6 +39,8 @@ export class SignupComponent implements OnInit {
     toggleConfirmPasswordClass = 'bi-eye-slash';
     countryNames: string[] = [];
     searchText = '';
+    countries: Country[] = [];
+    code = '';
 
     ngOnInit(): void {
         this.getAllCountries();
@@ -46,7 +53,12 @@ export class SignupComponent implements OnInit {
                 response.forEach((country: any) => {
                     // console.log(country.name["common"]);
                     this.countryNames.push(country.countryName);
+                    this.countries.push({
+                        countryName: country.countryName, 
+                        countryCode: country.countryCode
+                    })
                 });
+                // console.log(this.countries);
             },
             error: (e: HttpErrorResponse) => {
                 console.log(e);
@@ -91,6 +103,8 @@ export class SignupComponent implements OnInit {
             phoneNo: this.phoneNumber,
         };
         this.country = this.searchText;
+        this.code = this.countries.find(i => i.countryName === this.country)!.countryCode;
+        // console.log('Country Details: ', this.countries.find(i => i.countryName === this.country));
 
         if (this.email == '' || this.password == '' || this.firstName == '' || this.lastName == '' || 
             this.designation == '' || this.phoneNumber == '' || this.country == '' || this.state == '' ||
@@ -124,7 +138,8 @@ export class SignupComponent implements OnInit {
         // console.log('Confirm Password: ' + this.confirmPassword);
         // console.log('Username: ' + this.email);
         console.log('Country: ', this.country);
-
+        console.log('Country Code: ', this.code);
+        
         this.LOGIN_SIGNUP_SERVICE.enterSignupDetails(SIGNUP_BODY).subscribe({
             next: (response) => {
                 console.log('Response: ', response);

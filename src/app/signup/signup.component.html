@@ -45,7 +45,7 @@
                                 <i class="dropdown-toggle" id="dropdown-toggle-icon"></i>
                             </button>
                         </div>
-                        <datalist id="countries">
+                        <datalist id="countries" name="country">
                             <option *ngFor="let countryName of getFilteredCountryNames()" [value]="countryName">
                                 {{ countryName }}
                             </option>
