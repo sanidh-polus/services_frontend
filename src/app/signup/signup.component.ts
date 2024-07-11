@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
+import { RouterOutlet, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { NgFor, NgIf } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -9,7 +9,7 @@ import { LoginSignupService } from '../service/login_signup.service';
 @Component({
 	selector: 'app-signup',
 	standalone: true,
-    imports: [RouterOutlet, RouterLink, RouterLinkActive, FormsModule, NgFor, NgIf],
+    imports: [RouterOutlet, RouterLink, FormsModule, NgFor, NgIf],
     templateUrl: './signup.component.html',
     styleUrl: './signup.component.css',
 })
@@ -44,7 +44,7 @@ export class SignupComponent implements OnInit {
                 // console.log('Response: ', response);
                 response.forEach((country: any) => {
                 // console.log(country.name["common"]);
-                this.countryNames.push(country.countryName);
+                this.countryNames.push(country.name["common"]);
                 });
             },
             error: (e: HttpErrorResponse) => {
