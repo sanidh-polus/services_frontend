@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterOutlet, RouterLink } from '@angular/router';
+import { Router, RouterOutlet, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { NgFor, NgIf } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -15,7 +15,7 @@ import { LoginSignupService } from '../service/login_signup.service';
     styleUrl: './signup.component.css',
 })
 export class SignupComponent implements OnInit {
-    constructor(private login_signup_service: LoginSignupService) {}
+    constructor(private login_signup_service: LoginSignupService, private router: Router) {}
 
     errorMessage = '';
     firstName = '';
@@ -44,8 +44,8 @@ export class SignupComponent implements OnInit {
             next: (response) => {
                 // console.log('Response: ', response);
                 response.forEach((country: any) => {
-                // console.log(country.name["common"]);
-                this.countryNames.push(country.name["common"]);
+                    // console.log(country.name["common"]);
+                    this.countryNames.push(country.name["common"]);
                 });
             },
             error: (e: HttpErrorResponse) => {
@@ -62,7 +62,7 @@ export class SignupComponent implements OnInit {
         const FILTER_VALUE = this.searchText.toLowerCase();
         // console.log('Search Text:', this.searchText);
         return this.countryNames.filter((country) =>
-        country.toLowerCase().startsWith(FILTER_VALUE)
+            country.toLowerCase().startsWith(FILTER_VALUE)
         ).sort();
     }
 
@@ -131,6 +131,7 @@ export class SignupComponent implements OnInit {
                 console.log('Response: ', response);
                 console.log('Status: Success');
                 swal('Successfully Signed Up', ' ', 'success');
+                this.router.navigate(['login']);
             },
             error: (e: HttpErrorResponse) => {
                 console.log(e);

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { RouterOutlet, RouterLink } from '@angular/router';
+import { Router, RouterOutlet, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import swal from 'sweetalert';
@@ -20,7 +20,7 @@ import { LoginSignupService } from '../service/login_signup.service';
     styleUrl: './login.component.css'
 })
 export class LoginComponent {
-    constructor(private login_signup_service: LoginSignupService) {}
+    constructor(private login_signup_service: LoginSignupService, private router: Router) {}
     
     email = '';
     password = '';
@@ -65,6 +65,7 @@ export class LoginComponent {
                 console.log('Response: ', response);
                 console.log('Status: Success');
                 swal('Successfully Logged In', ' ', 'success');
+                this.router.navigate(['/user/home']);
             },
             error: (e: HttpErrorResponse) => {
                 console.log(e);
