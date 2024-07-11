@@ -1,55 +1,50 @@
 <section class="login-body" id="login-box-main" tabindex="0" aria-label="Login Page Body" role="login-body">
-    <div class="container p-4 d-flex justify-content-center" id="login-main-container">
-        <div class="card rounded-3 col-8 " id="login-card">
-            <div class="col d-flex align-items-center" id="login-box">
-                <div class="card-body p-4" id="login-details">
-                    <div class="text-center" id="app-image">
-                        <img 
-                            src="https://www.manageengine.com/products/service-desk/itsm/images/service-request-process.png"
-                            alt="Image, ringing for a service like at a hotel" id="bell-ring-image" tabindex="0"
-                            title="Image, ringing for a service like at a hotel" />
-                        <h4 class="m-3" id="app-heading" tabindex="0">Service App</h4>
-                    </div>
-                    <form id="login-form">
-                        <p id="login-heading" tabindex="0">
-                            <b>Please login to your account</b>
-                        </p>
-                        <label class="form-label" for="email" id="email-label">Email</label>
-                        <div class="form-outline mb-3" id="email-input">
-                            <input type="email" id="email" class="form-control" name="email"
-                                placeholder="Enter email address" tabindex="0" [(ngModel)]="email"/>
-                        </div>
-                        <label class="form-label" for="password" id="password-label">Password</label>
-                        <div class="form-outline mb-3" id="password-login">
-                            <input type="{{ passwordType }}" id="password" class="form-control" name="password" 
-                                placeholder="Enter password" tabindex="0" [(ngModel)]="password"/>
-                            <button class="show-password btn btn-outline-secondary" id="showPassword"
-                                tabindex="0" aria-label="Show or Hide Password"
-                                title="Show or Hide Password" (click)="togglePasswordVisibility()">
-                                <i class="{{ togglePasswordClass }}" id="togglePasswordButton"></i>
-                            </button>
-                        </div>
-                        <p class="text-danger text-center" id="error-text" tabindex="0">{{ errorMessage }}</p>
-                        <div class="text-center" id="login-button-div">
-                            <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-2" 
-                                type="button" id="login-button" tabindex="0" aria-label="Login Button"
-                                role="button" (click)="login()">
-                                Log In
-                            </button>
-                            <br />
-                        </div>
-                        <div class="d-flex flex-column align-items-center justify-content-center sign-up-group" 
-                            id="sign-up-div">
-                            <p class="mb-0" id="sign-up-text" tabindex="0">Don't have an account?</p>
-                            <a class="link-underline link-underline-opacity-0" id="sign-up-link" 
-                                tabindex="0" aria-label="Sign Up Link" role="link" title="Sign Up Link" 
-                                routerLink="/signup">
-                                Create new account
-                            </a>
-                        </div>
-                    </form>
-                </div>
+    <div class="container p-5 d-flex justify-content-center" id="login-main-container">
+        <div class="form-container border rounded bg-white col-8" id="login-form-box">
+            <div class="text-center" id="app-image">
+                <img src="https://www.manageengine.com/products/service-desk/itsm/images/service-request-process.png"
+                    alt="Image, ringing for a service like at a hotel" id="bell-ring-image" tabindex="0"
+                    title="Image, ringing for a service like at a hotel" />
+                <h4 class="m-3" id="app-heading" tabindex="0">Service App</h4>
             </div>
+            <form id="login-form">
+                <p id="login-heading" tabindex="0">
+                    <b>Please login to your account</b>
+                </p>
+                <label class="form-label" for="email" id="email-label">Email</label>
+                <div class="form-outline mb-3" id="email-input">
+                    <input type="email" id="email" class="form-control" name="email"
+                        placeholder="Enter email address" tabindex="0" [(ngModel)]="email"/>
+                </div>
+                <label class="form-label" for="password" id="password-label">Password</label>
+                <div class="form-outline mb-3" id="password-login">
+                    <input type="{{ passwordType }}" id="password" class="form-control" name="password" 
+                        placeholder="Enter password" tabindex="0" [(ngModel)]="password"/>
+                    <button class="show-password btn btn-outline-secondary" id="showPassword"
+                        tabindex="0" aria-label="Show or Hide Password"
+                        title="Show or Hide Password" (click)="togglePasswordVisibility()">
+                        <i class="{{ togglePasswordClass }}" id="togglePasswordButton"></i>
+                    </button>
+                </div>
+                <p class="text-danger text-center" id="error-text" tabindex="0">{{ errorMessage }}</p>
+                <div class="text-center" id="login-button-div">
+                    <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-2" 
+                        type="button" id="login-button" tabindex="0" aria-label="Login Button"
+                        role="button" (click)="login()">
+                        Log In
+                    </button>
+                    <br />
+                </div>
+                <div class="d-flex flex-column align-items-center justify-content-center sign-up-group" 
+                    id="sign-up-div">
+                    <p class="mb-0" id="sign-up-text" tabindex="0">Don't have an account?</p>
+                    <a class="link-underline link-underline-opacity-0" id="sign-up-link" 
+                        tabindex="0" aria-label="Sign Up Link" role="link" title="Sign Up Link" 
+                        routerLink="/signup">
+                        Create new account
+                    </a>
+                </div>
+            </form>
         </div>
     </div>
 </section>

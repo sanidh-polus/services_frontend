@@ -1,5 +1,12 @@
 .login-body {
     background-color: #eee;
+    height: 100%;
+}
+
+.form-container {
+    max-width: 1000px;
+    margin: auto;
+    padding: 20px;
 }
 
 .gradient-custom-2 {
@@ -7,7 +14,7 @@
     background: linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
 }
 
-.card-body img {
+.text-center img {
     width: 200px;
 }
 
