@@ -45,7 +45,7 @@ export class SignupComponent implements OnInit {
                 // console.log('Response: ', response);
                 response.forEach((country: any) => {
                     // console.log(country.name["common"]);
-                    this.countryNames.push(country.name["common"]);
+                    this.countryNames.push(country.countryName);
                 });
             },
             error: (e: HttpErrorResponse) => {
@@ -90,7 +90,6 @@ export class SignupComponent implements OnInit {
             address: this.address,
             phoneNo: this.phoneNumber,
         };
-
         this.country = this.searchText;
 
         if (this.email == '' || this.password == '' || this.firstName == '' || this.lastName == '' || 
@@ -120,7 +119,7 @@ export class SignupComponent implements OnInit {
         // console.log('Password: ' + this.password);
         // console.log('Confirm Password: ' + this.confirmPassword);
         // console.log('Username: ' + this.email);
-        // console.log('Country: ', this.country);
+        console.log('Country: ', this.country);
 
         this.LOGIN_SIGNUP_SERVICE.enterSignupDetails(SIGNUP_BODY).subscribe({
             next: (response) => {

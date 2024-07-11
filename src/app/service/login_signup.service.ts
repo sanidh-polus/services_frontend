@@ -31,7 +31,7 @@ interface Country {
 export class LoginSignupService {
     // apiUrl = 'http://10.199.100.140:8080/service/login';
     // proxyUrl = '/api'+'/service/login';
-    private countriesUrl = 'https://restcountries.com/v3.1/all';
+    // private countriesUrl = 'https://restcountries.com/v3.1/all';
 
     constructor(private http: HttpClient) {}
 
@@ -44,6 +44,6 @@ export class LoginSignupService {
     }
 
     getCountries(): Observable<any> {
-        return this.http.get<Country[]>(this.countriesUrl);
+        return this.http.get<Country[]>('/service/countries');
     }
 }
