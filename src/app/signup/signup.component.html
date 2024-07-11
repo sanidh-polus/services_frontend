@@ -5,36 +5,41 @@
                 <h1 class="display-6 bold text-center" tabindex="0" id="sign-up-heading">
                     <b>Create a New Account</b>
                 </h1>
-                <div class="row mb-3" id="first-last-name-row">
+                <div class="row" id="name-desigation-row">
                     <div class="col-md-4" id="first-name-div">
                         <label for="inputFirstName" class="form-label" id="first-name-label">First Name</label>
                         <input type="text" class="form-control" id="inputFirstName" placeholder="First Name" 
                             tabindex="0" name="firstName" [(ngModel)]="firstName"/>
+                        <p class="text-danger" id="error-text" tabindex="0">{{ findError('firstName') }}</p>
                     </div>
                     <div class="col-md-4" id="last-name-div">
                         <label for="inputLastName" class="form-label" id="last-name-label">Last Name</label>
                         <input type="text" class="form-control" id="inputLastName" placeholder="Last Name" 
                             tabindex="0" name="lastName" [(ngModel)]="lastName"/>
+                        <p class="text-danger" id="error-text" tabindex="0">{{ findError('lastName') }}</p>
                     </div>
                     <div class="col-md-4" id="designation-div">
                         <label for="inputDesignation" class="form-label" id="designation-div">Designation</label>
-                    <input type="text" class="form-control" id="inputDesignation" placeholder="Software Engineer" 
-                        tabindex="0" name="designation" [(ngModel)]="designation"/>
+                        <input type="text" class="form-control" id="inputDesignation" placeholder="Software Engineer" 
+                            tabindex="0" name="designation" [(ngModel)]="designation"/>
+                        <p class="text-danger" id="error-text" tabindex="0">{{ findError('designation') }}</p>
                     </div>
                 </div>
-                <div class="row mb-3" id="email-phone-row">
+                <div class="row" id="email-phone-row">
                     <div class="col-md-6" id="email-div">
                         <label for="inputEmail" class="form-label" id="email-label">Email</label>
                         <input type="email" class="form-control" id="inputEmail" placeholder="Email" tabindex="0" 
                             name="email" [(ngModel)]="email"/>
+                        <p class="text-danger" id="error-text" tabindex="0">{{ findError('email') }}</p>
                     </div>
                     <div class="col-md-6" id="phone-div">
                         <label for="inputPhoneNumber" class="form-label" id="phone-label">Phone Number</label>
                         <input type="text" class="form-control" id="inputPhoneNumber" placeholder="Phone Number" 
                             tabindex="0" name="phoneNumber" [(ngModel)]="phoneNumber"/>
+                        <p class="text-danger" id="error-text" tabindex="0">{{ findError('phoneNumber') }}</p>
                     </div>
                 </div>
-                <div class="row mb-3" id="country-state-row">
+                <div class="row" id="country-state-row">
                     <div class="col-md-6 country" id="country-div">
                         <label for="inputCountry" class="form-label" id="country-label">Country</label>
                         <div class="input-group">
@@ -53,19 +58,22 @@
                         <p class="text-danger no-countries" *ngIf="getFilteredCountryNames().length === 0">
                             No countries available
                         </p>
+                        <p class="text-danger" id="error-text" tabindex="0">{{ findError('country') }}</p>
                     </div>
                     <div class="col-md-6" id="state-div">
                         <label for="inputState" class="form-label" id="state-label">State</label>
                         <input type="text" class="form-control" id="inputState" placeholder="State" tabindex="0" 
                             name="state" [(ngModel)]="state"/>
+                        <p class="text-danger" id="error-text" tabindex="0">{{ findError('state') }}</p>
                     </div>
                 </div>
-                <div class="mb-3" id="address-div">
+                <div class="row" id="address-div">
                     <label for="inputAddress" class="form-label" id="address-label">Address</label>
                     <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St" tabindex="0"
                         name="address" [(ngModel)]="address"/>
+                        <p class="text-danger" id="error-text" tabindex="0">{{ findError('address') }}</p>
                 </div>
-                <div class="row mb-3" id="pass-confirm-pass-row">
+                <div class="row" id="pass-confirm-pass-row">
                     <div class="col-md-6 form-outline" id="password-div">
                         <label for="inputPassword" class="form-label" id="password-label">Password</label>
                         <div class="input-group" id="password-input-group">
@@ -77,6 +85,7 @@
                                 <i id="toggleInputPasswordButton" class="{{ togglePasswordClass }}"></i>
                             </button>
                         </div>
+                        <p class="text-danger" id="error-text" tabindex="0">{{ findError('password') }}</p>
                     </div>
                     <div class="col-md-6 form-outline" id="confirm-password-div">
                         <label for="inputConfirmPassword" class="form-label" id="confirm-password-label">
@@ -91,6 +100,7 @@
                                 <i id="toggleInputConfirmPasswordButton" class="{{ toggleConfirmPasswordClass }}"></i>
                             </button>
                         </div>
+                        <p class="text-danger" id="error-text" tabindex="0">{{ findError('confirmPassword') }}</p>
                     </div>
                 </div>
                 <p class="text-danger" id="error-text" tabindex="0"><b>{{ errorMessage }}</b></p>

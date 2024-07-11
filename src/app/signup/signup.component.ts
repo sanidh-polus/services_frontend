@@ -8,6 +8,11 @@ import swal from 'sweetalert';
 import { LoginSignupService } from '../service/login_signup.service';
 import { Country } from './Country';
 
+interface Errors {
+    field: string;
+    message: string;
+}
+
 @Component({
 	selector: 'app-signup',
 	standalone: true,
@@ -37,18 +42,7 @@ export class SignupComponent implements OnInit {
     searchText = '';
     countries: Country[] = [];
     country_code = '';
-    errors = {
-        "email": "",
-        "fname": "",
-        "lname": "",
-        "designation": "",
-        "password": "",
-        "country": "",
-        "state": "",
-        "address": "",
-        "phone": "",
-        "confirmPassword": ""
-    }
+    errors: Errors[] = [];
 
     ngOnInit(): void {
         this.getAllCountries();
@@ -98,8 +92,14 @@ export class SignupComponent implements OnInit {
         return DIGIT_COUNT === 10;
     }
 
+    public findError(inputField: string) {
+        // console.log(this.errors);
+        return this.errors.find(error => error.field === inputField)?.message;
+    }
+
     public signup(): void {
         this.errorMessage = '';
+        
         const SIGNUP_BODY = {
             firstname: this.firstName,
             lastname: this.lastName,
@@ -114,15 +114,42 @@ export class SignupComponent implements OnInit {
         this.country = this.searchText;
         // console.log('Country Details: ', this.countries.find(i => i.countryName === this.country));
 
-        if (this.email == '' || this.password == '' || this.firstName == '' || this.lastName == '' || 
-            this.designation == '' || this.phoneNumber == '' || this.country == '' || this.state == '' ||
-            this.address == '' || this.confirmPassword == '') {
-            this.errorMessage = '** Please enter all details **';
-            return;
+   
+        if (this.email === '') {
+            this.errors.push({ field: 'email', message: 'Please enter email' });
+        }
+        if (this.firstName === '') {
+            this.errors.push({ field: 'firstName', message: 'Please enter first name' });
+        }
+        if (this.lastName === '') {
+            this.errors.push({ field: 'lastName', message: 'Please enter last name' });
+        } 
+        if (this.designation === '') {
+            this.errors.push({ field: 'designation', message: 'Please enter designation' });
+        } 
+        if (this.password === '') {
+            this.errors.push({ field: 'password', message: 'Please enter password' });
+        } 
+        if (this.country === '') {
+            this.errors.push({ field: 'country', message: 'Please enter country' });
+        } 
+        if (this.state === '') {
+            this.errors.push({ field: 'state', message: 'Please enter state' });
+        } 
+        if (this.address === '') {
+            this.errors.push({ field: 'address', message: 'Please enter address' });
+        } 
+        if (this.phoneNumber === '') {
+            this.errors.push({ field: 'phoneNumber', message: 'Please enter phone number' });
+        } 
+        if (this.confirmPassword === '') {
+            this.errors.push({ field: 'confirmPassword', message: 'Please enter password confirmation' });
+        }
+    
+        if(this.country != '') {
+            this.country_code = this.countries.find(i => i.countryName === this.country)!.countryCode;
         }
 
-        this.country_code = this.countries.find(i => i.countryName === this.country)!.countryCode;
-        
         if (!this.isValidEmailFormat(this.email)) {
             this.errorMessage = 'Enter a valid email (example@domain.com)';
             return;

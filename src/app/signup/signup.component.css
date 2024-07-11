@@ -67,10 +67,6 @@ a:focus {
     p {
         padding-top: 4px;
     }
-
-    .text-danger {
-        padding-bottom: 5px;
-    }
 }
 
 /* Adjustments for smaller screens */
