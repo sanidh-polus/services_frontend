@@ -29,24 +29,27 @@ export class LoginComponent {
         return EMAIL_REGEX.test(email);
     }
 
+    private checkLoginErrors(): boolean {
+        if (this.email == '' || this.password == '') {
+            this.errorMessage = 'Please enter all details';
+            return false;
+        }
+        if (!this.isValidEmailFormat(this.email)) {
+            this.errorMessage = 'Enter a valid email (example@domain.com)';
+            return false;
+        }
+        if (this.password.length < 8) {
+            this.errorMessage  = 'Enter a valid password (more than 8 characters)';
+            return false;
+        }
+        return true;
+    }
     public login(): void {
         const LOGIN_BODY = {
             "email": this.email,
             "userpassword": this.password
         }
-
-        if (this.email == '' || this.password == '') {
-            this.errorMessage = '** Please enter all details **';
-            return;
-        }
-
-        if (!this.isValidEmailFormat(this.email)) {
-            this.errorMessage = 'Enter a valid email (example@domain.com)';
-            return;
-        }
-
-        if (this.password.length < 8) {
-            this.errorMessage  = 'Enter a valid password (more than 8 characters)';
+        if(!this.checkLoginErrors()) {
             return;
         }
         console.log('Username: ' + this.email);

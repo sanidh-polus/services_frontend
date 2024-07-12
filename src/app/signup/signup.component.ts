@@ -44,7 +44,7 @@ export class SignupComponent implements OnInit {
         this.getAllCountries();
     }
 
-    public getAllCountries(): void {
+    private getAllCountries(): void {
         this.LOGIN_SIGNUP_SERVICE.getCountries().subscribe({
             next: (response) => {
                 // console.log('Response: ', response);
@@ -93,24 +93,7 @@ export class SignupComponent implements OnInit {
         return this.errors.find(error => error.field === inputField)?.message;
     }
 
-    public signup(): void {
-        this.errorMessage = '';
-        this.errors = [];
-        const SIGNUP_BODY = {
-            firstname: this.firstName,
-            lastname: this.lastName,
-            designation: this.designation,
-            email: this.email,
-            userPassword: this.password,
-            country: this.country,
-            state: this.state,
-            address: this.address,
-            phoneNo: this.phoneNumber,
-        };
-        this.country = this.searchText;
-        // console.log('Country Details: ', this.countries.find(i => i.countryName === this.country));
-
-   
+    private checkSignupErrors() {
         if (this.email === '') {
             this.errors.push({ field: 'email', message: 'Please enter email' });
         } else if (!this.isValidEmailFormat(this.email)) {
@@ -147,24 +130,38 @@ export class SignupComponent implements OnInit {
         if (this.confirmPassword === '') {
             this.errors.push({ field: 'confirmPassword', message: 'Please enter password confirmation' });
         }
-
         // const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
         if (this.password != this.confirmPassword) {
             this.errorMessage = 'Passwords do not match';
             return;
         }
+    }
+    public signup(): void {
+        this.errorMessage = '';
+        this.errors = [];
+        const SIGNUP_BODY = {
+            firstname: this.firstName,
+            lastname: this.lastName,
+            designation: this.designation,
+            email: this.email,
+            userPassword: this.password,
+            country: this.country,
+            state: this.state,
+            address: this.address,
+            phoneNo: this.phoneNumber,
+        };
+        this.country = this.searchText;
+
+        this.checkSignupErrors();
 
         if (this.countries.length !== 0) {
-             console.log(this.countries);
+            console.log('Selected Country Details: ', this.countries);
             this.country_code = this.countries.find(i => i.countryName === this.country)!.countryCode;
         }
-        // console.log('Password: ' + this.password);
-        // console.log('Confirm Password: ' + this.confirmPassword);
-        // console.log('Username: ' + this.email);
         console.log('Country: ', this.country);
         console.log('Country Code: ', this.country_code);
 
-        if (this.errors.length === 0) {
+        if (this.errors.length === 0 && this.errorMessage === '') {
             this.LOGIN_SIGNUP_SERVICE.enterSignupDetails(SIGNUP_BODY).subscribe({
                 next: (response) => {
                     console.log('Response: ', response);
