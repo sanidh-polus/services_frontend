@@ -58,27 +58,25 @@ export class LoginComponent {
         this.LOGIN_SIGNUP_SERVICE.checkLoginDetails(LOGIN_BODY).subscribe({
             next: (response) => {
                 console.log('Response: ', response);
-                console.log('Status: Success');
                 swal('Successfully Logged In', ' ', 'success');
                 this.ROUTER.navigate(['/user/home']);
             },
             error: (e: HttpErrorResponse) => {
                 console.log(e);
-                if (e.status == 200) {
-                    console.log('Status: Correct details');
-                    return;
-                }
+                console.log('Error: ', e.status, e.error);
                 if (e.status == 401) {
-                    console.log('Status: Invalid credentials');
+                    // console.log('Status: Invalid credentials');
                     this.errorMessage  = 'Invalid credentials';
                     return;
                 }
+                if (e.status == 404) {
+                    this.ROUTER.navigate(['error']);
+                }
                 if (e.status == 500) {
-                    console.log('Status: Cannot check data, server error');
+                    // console.log('Status: Cannot check data, server error');
                     this.errorMessage  = 'Cannot check data, server error';
                     return;
                 }
-                console.log('Error: ', e.status, e.error);
             },
         });
     }

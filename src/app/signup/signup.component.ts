@@ -165,27 +165,29 @@ export class SignupComponent implements OnInit {
             this.LOGIN_SIGNUP_SERVICE.enterSignupDetails(SIGNUP_BODY).subscribe({
                 next: (response) => {
                     console.log('Response: ', response);
-                    console.log('Status: Success');
                     swal('Successfully Signed Up', ' ', 'success');
                     this.ROUTER.navigate(['login']);
                 },
                 error: (e: HttpErrorResponse) => {
                     console.log(e);
+                    console.log('Error: ', e.status, e.error);
                     if (e.status == 400) {
-                        console.log('Status: Duplicate entry');
+                        // console.log('Status: Duplicate entry');
                         this.errorMessage = 'Check email, duplicate entry';
                     }
                     if (e.status == 401) {
-                        console.log('Status: Error signing up');
+                        // console.log('Status: Error signing up');
                         this.errorMessage = 'Error signing up';
                         return;
                     }
+                    if (e.status == 404) {
+                        this.ROUTER.navigate(['error']);
+                    }
                     if (e.status == 500) {
-                        console.log('Status: Cannot check data, server error');
+                        // console.log('Status: Cannot check data, server error');
                         this.errorMessage = 'Cannot check data, server error';
                         return;
                     }
-                    console.log('Error: ', e.status, e.error);
                 },
             });
         }
