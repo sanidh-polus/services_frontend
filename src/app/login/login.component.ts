@@ -4,8 +4,8 @@ import { Router, RouterOutlet, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import swal from 'sweetalert';
-
-import { LoginSignupService } from '../service/login_signup.service';
+import { Login } from './Login';
+import { LoginSignUpService } from '../service/login_signup/login_signup.service';
 
 @Component({
     selector: 'app-login',
@@ -14,11 +14,15 @@ import { LoginSignupService } from '../service/login_signup.service';
     templateUrl: './login.component.html',
     styleUrl: './login.component.css'
 })
+
 export class LoginComponent {
-    constructor(private LOGIN_SIGNUP_SERVICE: LoginSignupService, private ROUTER: Router) {}
-    
-    email = '';
-    password = '';
+
+    constructor( private _loginSignUpService: LoginSignUpService, 
+                private _router: Router) {
+                    this.loginData = new Login();
+                }
+
+    loginData: Login;
     errorMessage = '';
     passwordType = 'password';
     togglePasswordClass = 'bi-eye-slash';
@@ -30,55 +34,59 @@ export class LoginComponent {
     }
 
     private checkLoginErrors(): boolean {
-        if (this.email == '' || this.password == '') {
+        if (this.loginData.email === '' || this.loginData.userpassword === '') {
             this.errorMessage = 'Please enter all details';
             return false;
         }
-        if (!this.isValidEmailFormat(this.email)) {
+        if (!this.isValidEmailFormat(this.loginData.email)) {
             this.errorMessage = 'Enter a valid email (example@domain.com)';
             return false;
         }
-        if (this.password.length < 8) {
+        if (this.loginData.userpassword.length < 8) {
             this.errorMessage  = 'Enter a valid password (more than 8 characters)';
             return false;
         }
         return true;
     }
-    public login(): void {
+
+    private loginService(): void {
         const LOGIN_BODY = {
-            "email": this.email,
-            "userpassword": this.password
+            "email": this.loginData.email,
+            "userPassword": this.loginData.userpassword
         }
-        if(!this.checkLoginErrors()) {
-            return;
-        }
-        console.log('Username: ' + this.email);
-        console.log('Password: ' + this.password);
-        
-        this.LOGIN_SIGNUP_SERVICE.checkLoginDetails(LOGIN_BODY).subscribe({
+
+        this._loginSignUpService.checkLoginDetails(LOGIN_BODY).subscribe({
             next: (response) => {
                 console.log('Response: ', response);
                 swal('Successfully Logged In', ' ', 'success');
-                this.ROUTER.navigate(['/user/home']);
+                this._router.navigate(['/user/home']);
             },
             error: (e: HttpErrorResponse) => {
                 console.log(e);
                 console.log('Error: ', e.status, e.error);
-                if (e.status == 401) {
+                if (e.status === 401) {
                     // console.log('Status: Invalid credentials');
                     this.errorMessage  = 'Invalid credentials';
                     return;
                 }
-                if (e.status == 404) {
-                    this.ROUTER.navigate(['error']);
+                if (e.status === 404) {
+                    this._router.navigate(['error']);
                 }
-                if (e.status == 500) {
-                    // console.log('Status: Cannot check data, server error');
-                    this.errorMessage  = 'Cannot check data, server error';
+                if (e.status === 500) {
+                    // console.log('Status: Cannot check data, server error OR Invalid credentials');
+                    this.errorMessage  = 'Invalid credentials OR Server error';
                     return;
                 }
             },
         });
+    }
+
+    public login(): void {
+        if (!this.checkLoginErrors()) {
+            return;
+        }
+        
+        this.loginService();
     }
 
     // Function to toggle password visibility
@@ -86,7 +94,8 @@ export class LoginComponent {
         if (this.passwordType === 'password') {
             this.passwordType = 'text';
             this.togglePasswordClass = 'bi-eye';
-        } else {
+        } 
+        else {
             this.passwordType = 'password';
             this.togglePasswordClass = 'bi-eye-slash';
         }

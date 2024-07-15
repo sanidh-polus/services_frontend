@@ -1,26 +1,13 @@
 .login-body {
-    background-color: #eee;
+    background-color: lightblue;
     height: 100vh;
 }
 
-.form-container {
-    max-width: 1000px;
-    margin: auto;
-    padding: 20px;
-}
+.form-container { max-width: 1000px; }
 
-.gradient-custom-2 {
-    min-height: auto;
-    background: linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
-}
+.text-center img { width: 200px; }
 
-.text-center img {
-    width: 200px;
-}
-
-.form-outline {
-    position: relative;
-}
+.form-outline { position: relative; }
 
 .form-outline .show-password {
     position: absolute;
@@ -31,13 +18,4 @@
 }
 
 a:hover,
-a:focus {
-    color: rgb(19, 75, 94);
-}
-
-@media (min-width: 768px) {
-    .gradient-custom-2 {
-        border-top-right-radius: 0.3rem;
-        border-bottom-right-radius: 0.3rem;
-    }
-}
+a:focus { color: rgb(19, 75, 94); }

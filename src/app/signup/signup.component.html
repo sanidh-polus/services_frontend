@@ -1,6 +1,6 @@
 <section class="signup-body" id="signup-box-main" tabindex="0" aria-label="Signup Page Body" role="signup-body">
-    <div class="container p-3" id="signup-box-container">
-        <div class="form-container" id="signup-form-box">
+    <div class="container p-2" id="signup-box-container">
+        <div class="form-container m-auto p-4" id="signup-form-box">
             <form class="border rounded p-3 bg-white" id="signup-form">
                 <h1 class="display-6 bold text-center" tabindex="0" id="sign-up-heading">
                     <b>Create a New Account</b>
@@ -9,34 +9,49 @@
                     <div class="col-md-4" id="first-name-div">
                         <label for="inputFirstName" class="form-label" id="first-name-label">First Name</label>
                         <input type="text" class="form-control" id="inputFirstName" placeholder="First Name" 
-                            tabindex="0" name="firstName" [(ngModel)]="firstName"/>
-                        <p class="text-danger" id="error-text" tabindex="0">{{ findError('firstName') }}</p>
+                            tabindex="0" name="firstName" [(ngModel)]="signUpData.firstName" 
+                            [ngClass]="{'error-border': findError('firstName') !== undefined }" />
+                        <p class="text-danger" id="error-text" tabindex="0">
+                            {{ findError('firstName') }}
+                        </p>
                     </div>
                     <div class="col-md-4" id="last-name-div">
                         <label for="inputLastName" class="form-label" id="last-name-label">Last Name</label>
                         <input type="text" class="form-control" id="inputLastName" placeholder="Last Name" 
-                            tabindex="0" name="lastName" [(ngModel)]="lastName"/>
-                        <p class="text-danger" id="error-text" tabindex="0">{{ findError('lastName') }}</p>
+                            tabindex="0" name="lastName" [(ngModel)]="signUpData.lastName"
+                            [ngClass]="{'error-border': findError('lastName') !== undefined }" />
+                        <p class="text-danger" id="error-text" tabindex="0">
+                            {{ findError('lastName') }}
+                        </p>
                     </div>
                     <div class="col-md-4" id="designation-div">
                         <label for="inputDesignation" class="form-label" id="designation-div">Designation</label>
                         <input type="text" class="form-control" id="inputDesignation" placeholder="Software Engineer" 
-                            tabindex="0" name="designation" [(ngModel)]="designation"/>
-                        <p class="text-danger" id="error-text" tabindex="0">{{ findError('designation') }}</p>
+                            tabindex="0" name="designation" [(ngModel)]="signUpData.designation"
+                            [ngClass]="{'error-border': findError('designation') !== undefined }" />
+                        <p class="text-danger" id="error-text" tabindex="0">
+                            {{ findError('designation') }}
+                        </p>
                     </div>
                 </div>
                 <div class="row" id="email-phone-row">
                     <div class="col-md-6" id="email-div">
                         <label for="inputEmail" class="form-label" id="email-label">Email</label>
                         <input type="email" class="form-control" id="inputEmail" placeholder="Email" tabindex="0" 
-                            name="email" [(ngModel)]="email"/>
-                        <p class="text-danger" id="error-text" tabindex="0">{{ findError('email') }}</p>
+                            [ngClass]="{'error-border': findError('email') !== undefined }" name="email" 
+                            [(ngModel)]="signUpData.email" />
+                        <p class="text-danger" id="error-text" tabindex="0">
+                            {{ findError('email') }}
+                        </p>
                     </div>
                     <div class="col-md-6" id="phone-div">
                         <label for="inputPhoneNumber" class="form-label" id="phone-label">Phone Number</label>
                         <input type="text" class="form-control" id="inputPhoneNumber" placeholder="Phone Number" 
-                            tabindex="0" name="phoneNumber" [(ngModel)]="phoneNumber"/>
-                        <p class="text-danger" id="error-text" tabindex="0">{{ findError('phoneNumber') }}</p>
+                            tabindex="0" name="phoneNumber" [(ngModel)]="signUpData.phoneNumber"
+                            [ngClass]="{'error-border': findError('phoneNumber') !== undefined }" />
+                        <p class="text-danger" id="error-text" tabindex="0">
+                            {{ findError('phoneNumber') }}
+                        </p>
                     </div>
                 </div>
                 <div class="row" id="country-state-row">
@@ -44,10 +59,11 @@
                         <label for="inputCountry" class="form-label" id="country-label">Country</label>
                         <div class="input-group">
                             <input class="form-control" id="inputCountry" list="countries" 
-                                placeholder="Search Country" [(ngModel)]="searchText" name="searchText" />
-                            <button class="btn btn-outline-secondary" id="dropdownMenuButton"
-                                type="button" tabindex="-1">
-                                <i class="dropdown-toggle" id="dropdown-toggle-icon"></i>
+                                placeholder="Search Country" [(ngModel)]="searchText" name="searchText" 
+                                [ngClass]="{'error-border': findError('country') !== undefined }" />
+                            <button class="btn btn-outline-secondary" id="dropdownMenuButton" type="button"
+                                tabindex="-1">                     
+                                <i class="dropdown-toggle" id="dropdown-toggle-icon"></i>	                               
                             </button>
                         </div>
                         <datalist id="countries" name="country">
@@ -55,63 +71,80 @@
                                 {{ countryName }}
                             </option>
                         </datalist>
-                        <p class="text-danger no-countries" *ngIf="getFilteredCountryNames().length === 0">
+                        <p class="text-danger mb-0" *ngIf="getFilteredCountryNames().length === 0">
                             No countries available
                         </p>
-                        <p class="text-danger" id="error-text" tabindex="0">{{ findError('country') }}</p>
+                        <p class="text-danger" id="error-text" tabindex="0">
+                            {{ findError('country') }}
+                        </p>
                     </div>
                     <div class="col-md-6" id="state-div">
                         <label for="inputState" class="form-label" id="state-label">State</label>
                         <input type="text" class="form-control" id="inputState" placeholder="State" tabindex="0" 
-                            name="state" [(ngModel)]="state"/>
-                        <p class="text-danger" id="error-text" tabindex="0">{{ findError('state') }}</p>
+                        [ngClass]="{'error-border': findError('state') !== undefined }" name="state" 
+                        [(ngModel)]="signUpData.state" />
+                        <p class="text-danger" id="error-text" tabindex="0">
+                            {{ findError('state') }}
+                        </p>
                     </div>
                 </div>
                 <div class="row" id="address-div">
                     <label for="inputAddress" class="form-label" id="address-label">Address</label>
-                    <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St" tabindex="0"
-                        name="address" [(ngModel)]="address"/>
-                        <p class="text-danger" id="error-text" tabindex="0">{{ findError('address') }}</p>
+                    <div id="address-input-row">
+                        <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St" tabindex="0"
+                        [ngClass]="{'error-border': findError('address') !== undefined }" name="address" 
+                        [(ngModel)]="signUpData.address" />
+                            <p class="text-danger" id="error-text" tabindex="0">
+                                {{ findError('address') }}
+                            </p>
+                    </div>
                 </div>
                 <div class="row" id="pass-confirm-pass-row">
                     <div class="col-md-6 form-outline" id="password-div">
                         <label for="inputPassword" class="form-label" id="password-label">Password</label>
                         <div class="input-group" id="password-input-group">
                             <input type="{{ passwordType }}" class="form-control" id="inputPassword" 
-                                placeholder="Password" tabindex="0" name="password" [(ngModel)]="password"/>
+                                placeholder="Password" tabindex="0" name="password" [(ngModel)]="signUpData.password"
+                                [ngClass]="{'error-border': findError('password') !== undefined }" />
                             <button class="btn btn-outline-secondary" type="button" id="password-toggle-button" 
                                 tabindex="0" aria-label="Show or Hide Password" title="Show or Hide Password"
                                 (click)="togglePasswordVisibility('password')">
                                 <i id="toggleInputPasswordButton" class="{{ togglePasswordClass }}"></i>
                             </button>
                         </div>
-                        <p class="text-danger" id="error-text" tabindex="0">{{ findError('password') }}</p>
+                        <p class="text-danger" id="error-text" tabindex="0">
+                            {{ findError('password') }}
+                        </p>
                     </div>
                     <div class="col-md-6 form-outline" id="confirm-password-div">
                         <label for="inputConfirmPassword" class="form-label" id="confirm-password-label">
                             Confirm Password</label>
                         <div class="input-group" id="confirm-password-group">
                             <input type="{{ confirmPasswordType }}" class="form-control" id="inputConfirmPassword" 
-                                placeholder="Password" tabindex="0" name="confirmPassword" 
-                                [(ngModel)]="confirmPassword"/>
+                                placeholder="Password" tabindex="0" name="confirmPassword" [(ngModel)]="confirmPassword"
+                                 [ngClass]="{'error-border': findError('confirmPassword') !== undefined }" />
                             <button class="btn btn-outline-secondary" type="button" id="confirm-password-toggle-button"
                                 tabindex="0" aria-label="Show or Hide Password" title="Show or Hide Password"
                                 (click)="togglePasswordVisibility('confirmPassword')">
                                 <i id="toggleInputConfirmPasswordButton" class="{{ toggleConfirmPasswordClass }}"></i>
                             </button>
                         </div>
-                        <p class="text-danger" id="error-text" tabindex="0">{{ findError('confirmPassword') }}</p>
+                        <p class="text-danger" id="error-text" tabindex="0">
+                            {{ findError('confirmPassword') }}
+                        </p>
                     </div>
                 </div>
-                <p class="text-danger" id="error-text" tabindex="0"><b>{{ errorMessage }}</b></p>
-                <div class="sign-up-group" id="signup-div">
-                    <div class="d-flex flex-row" id="login-div">
+                <p class="text-danger final-error" id="final-error-text" tabindex="0">
+                    <b>{{ errorMessage }}</b>
+                </p>
+                <div class="sign-up-group d-flex flex-column align-items-center justify-content-center" id="signup-div">
+                    <button type="button" class="btn btn-primary h-25" id="sign-up-button"
+                        tabindex="0" aria-label="Signup Button" (click)="signUp()">Sign Up</button>
+                    <div class="d-flex flex-column flex-md-row align-items-center" id="login-div">
                         <p class="mb-0 me-2" id="login-text" tabindex="0">Already have an account?</p>
                         <a class="link-underline link-underline-opacity-0" id="login-link" tabindex="0" 
                             aria-label="Login Link" role="link" title="Login Link" routerLink="/login">Login</a>
                     </div>
-                    <button type="button" class="btn btn-primary btn-block gradient-custom-2" id="sign-up-button"
-                        tabindex="0" aria-label="Signup Button" role="button" (click)="signup()">Sign Up</button>
                 </div>
             </form>
         </div>

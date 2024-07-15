@@ -1,34 +1,32 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterOutlet, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { NgFor, NgIf } from '@angular/common';
+import { NgClass, NgFor, NgIf } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import swal from 'sweetalert';
-
-import { LoginSignupService } from '../service/login_signup.service';
+import { Signup } from './Signup';
 import { Country } from './Country';
-import { Errors } from './Errors';
+import { LoginSignUpService } from '../service/login_signup/login_signup.service';
 
 @Component({
 	selector: 'app-signup',
 	standalone: true,
-    imports: [RouterOutlet, RouterLink, FormsModule, NgFor, NgIf],
+    imports: [RouterOutlet, RouterLink, FormsModule, NgFor, NgIf, NgClass],
     templateUrl: './signup.component.html',
     styleUrl: './signup.component.css',
 })
-export class SignupComponent implements OnInit {
-    constructor(private LOGIN_SIGNUP_SERVICE: LoginSignupService, private ROUTER: Router) {}
 
+export class SignUpComponent implements OnInit {
+
+    constructor(private _loginSignUpService: LoginSignUpService, 
+                private _router: Router) {
+                    this.signUpData = new Signup();
+                }
+
+    signUpData: Signup;
+    countries: Country[] = [];
     errorMessage = '';
-    firstName = '';
-    lastName = '';
-    designation = '';
-    email = '';
-    phoneNumber = '';
-    country = '';
-    state = '';
-    address = '';
-    password = '';
     confirmPassword = '';
     passwordType = 'password';
     togglePasswordClass = 'bi-eye-slash';
@@ -36,26 +34,21 @@ export class SignupComponent implements OnInit {
     toggleConfirmPasswordClass = 'bi-eye-slash';
     countryNames: string[] = [];
     searchText = '';
-    countries: Country[] = [];
-    country_code = '';
-    errors: Errors[] = [];
+    errorsMap = new Map<string, string>();
 
     ngOnInit(): void {
         this.getAllCountries();
     }
 
     private getAllCountries(): void {
-        this.LOGIN_SIGNUP_SERVICE.getCountries().subscribe({
+        this._loginSignUpService.getCountries().subscribe({
             next: (response) => {
                 // console.log('Response: ', response);
                 response.forEach((country: any) => {
                     // console.log(country.name["common"]);
                     this.countryNames.push(country.countryName);
-                    this.countries.push({
-                        countryName: country.countryName, 
-                        countryCode: country.countryCode
-                    })
                 });
+                this.countries = response;
                 // console.log(this.countries);
             },
             error: (e: HttpErrorResponse) => {
@@ -66,14 +59,13 @@ export class SignupComponent implements OnInit {
 
   /**
    * Description:
-   * Trying to filter the countries.
+   * Filtering the countries.
    */
     public getFilteredCountryNames(): string[] {
         const FILTER_VALUE = this.searchText.toLowerCase();
         // console.log('Search Text:', this.searchText);
         return this.countryNames.filter((country) =>
-            country.toLowerCase().startsWith(FILTER_VALUE)
-        ).sort();
+            country.toLowerCase().startsWith(FILTER_VALUE)).sort();
     }
 
     // Regular expression for basic email validation
@@ -82,115 +74,111 @@ export class SignupComponent implements OnInit {
         return EMAIL_REGEX.test(email);
     }
 
-    private countDigitsWithSpaces(inputString: string) {
+    private countDigitsWithSpaces(inputString: string): boolean {
         const DIGITS_ONLY = inputString.replace(/\D/g, '');
         const DIGIT_COUNT = DIGITS_ONLY.length;
         return DIGIT_COUNT === 10;
     }
 
-    public findError(inputField: string) {
-        // console.log(this.errors);
-        return this.errors.find(error => error.field === inputField)?.message;
+    public findError(inputField: string): string | undefined {
+        // console.log(this.errorsMap);
+        return this.errorsMap.get(inputField);
     }
 
-    private checkSignupErrors() {
-        if (this.email === '') {
-            this.errors.push({ field: 'email', message: 'Please enter email' });
-        } else if (!this.isValidEmailFormat(this.email)) {
-            this.errors.push({ field: 'email', message: 'Please enter a valid email (example@domain.com)' });
-        } 
-        if (this.firstName === '') {
-            this.errors.push({ field: 'firstName', message: 'Please enter first name' });
+    private checkSignUpErrors(): boolean {
+        this.signUpData.email === '' ? this.errorsMap.set("email", "Please enter email") : null;
+        this.signUpData.password === '' ? this.errorsMap.set('password', 'Please enter password') : null;
+        this.signUpData.phoneNumber === '' ? this.errorsMap.set('phoneNumber', 'Please enter phone number') : null;
+        this.signUpData.firstName === '' ? this.errorsMap.set('firstName', 'Please enter first name') : null;
+        this.signUpData.lastName === '' ? this.errorsMap.set('lastName', 'Please enter last name') : null;
+        this.signUpData.designation === '' ? this.errorsMap.set('designation', 'Please enter designation') : null;
+        this.signUpData.country.countryName === '' ? this.errorsMap.set('country', 'Please enter country') : null;
+        this.signUpData.state === '' ? this.errorsMap.set('state', 'Please enter state') : null;
+        this.signUpData.address === '' ? this.errorsMap.set('address', 'Please enter address') : null;
+        this.confirmPassword === '' ? this.errorsMap.set('confirmPassword', 'Please enter password confirmation') : null;
+    
+        if (!this.isValidEmailFormat(this.signUpData.email) && this.signUpData.email !== '') {
+            this.errorsMap.set('email', 'Please enter a valid email (example@domain.com)');
         }
-        if (this.lastName === '') {
-            this.errors.push({ field: 'lastName', message: 'Please enter last name' });
+        if (this.signUpData.password.length < 8  && this.signUpData.password !== '') {
+            this.errorsMap.set('password', 'Password should contain at least 8 characters');
         }
-        if (this.designation === '') {
-            this.errors.push({ field: 'designation', message: 'Please enter designation' });
-        }
-        if (this.password === '') {
-            this.errors.push({ field: 'password', message: 'Please enter password' });
-        } else if (this.password.length < 8) {
-            this.errors.push({ field: 'password', message: 'Password should contain at least 8 characters' });
-        }
-        if (this.country === '') {
-            this.errors.push({ field: 'country', message: 'Please enter country' });
-        }
-        if (this.state === '') {
-            this.errors.push({ field: 'state', message: 'Please enter state' });
-        } 
-        if (this.address === '') {
-            this.errors.push({ field: 'address', message: 'Please enter address' });
-        }
-        if (this.phoneNumber === '') {
-            this.errors.push({ field: 'phoneNumber', message: 'Please enter phone number' });
-        } else if (!this.countDigitsWithSpaces(this.phoneNumber)) {
-            this.errors.push({ field: 'phoneNumber', message: 'Enter a valid phone number (10 digits)' });
-        }
-        if (this.confirmPassword === '') {
-            this.errors.push({ field: 'confirmPassword', message: 'Please enter password confirmation' });
+        if (!this.countDigitsWithSpaces(this.signUpData.phoneNumber)  && this.signUpData.phoneNumber !== '') {
+            this.errorsMap.set('phoneNumber', 'Enter a valid phone number (10 digits)');
         }
         // const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
-        if (this.password != this.confirmPassword) {
+        if (this.signUpData.password !== '' && this.confirmPassword !== '' && 
+                this.signUpData.password != this.confirmPassword) {
             this.errorMessage = 'Passwords do not match';
-            return;
+        }
+        if (this.errorsMap.size === 0 && this.errorMessage === '') {
+            return true;
+        }
+        else {
+            return false;
         }
     }
-    public signup(): void {
-        this.errorMessage = '';
-        this.errors = [];
+
+    private signUpService(): void {
         const SIGNUP_BODY = {
-            firstname: this.firstName,
-            lastname: this.lastName,
-            designation: this.designation,
-            email: this.email,
-            userPassword: this.password,
-            country: this.country,
-            state: this.state,
-            address: this.address,
-            phoneNo: this.phoneNumber,
+            "firstname": this.signUpData.firstName,
+            "lastname": this.signUpData.lastName,
+            "designation": this.signUpData.designation,
+            "email": this.signUpData.email,
+            "userPassword": this.signUpData.password,
+            "country": this.signUpData.country,
+            "state": this.signUpData.state,
+            "address": this.signUpData.address,
+            "phoneNo": this.signUpData.phoneNumber,
         };
-        this.country = this.searchText;
 
-        this.checkSignupErrors();
+        this._loginSignUpService.enterSignUpDetails(SIGNUP_BODY).subscribe({
+            next: (response) => {
+                console.log('Response: ', response);
+                swal('Successfully Signed Up', ' ', 'success');
+                this._router.navigate(['login']);
+            },
+            error: (e: HttpErrorResponse) => {
+                console.log(e);
+                console.log('Error: ', e.status, e.statusText);
+                if (e.status === 400) {
+                    // console.log('Status: Bad request, duplicate entry');
+                    this.errorMessage = 'Check email, duplicate entry';
+                }
+                if (e.status === 401) {
+                    // console.log('Status: Error signing up');
+                    this.errorMessage = 'Error signing up';
+                    return;
+                }
+                if (e.status === 404) {
+                    this._router.navigate(['error']);
+                }
+                if (e.status === 500) {
+                    // console.log('Status: Cannot check data, server error');
+                    this.errorMessage = 'Cannot check data, server error';
+                    return;
+                }
+            },
+        });
+    }
 
+    public signUp(): void {
+        this.errorMessage = '';
+        this.errorsMap = new Map<string, string>();
+        this.signUpData.country.countryName = this.searchText;
+
+        if (!this.checkSignUpErrors()) {
+            return;
+        }
+
+        // console.log('Country Details: ', this.countries);
         if (this.countries.length !== 0) {
-            console.log('Selected Country Details: ', this.countries);
-            this.country_code = this.countries.find(i => i.countryName === this.country)!.countryCode;
+            this.signUpData.country = this.countries.find(i => i.countryName === this.signUpData.country.countryName)!;
         }
-        console.log('Country: ', this.country);
-        console.log('Country Code: ', this.country_code);
+        // console.log('Country: ', this.signUpData.country);
+        // console.log('Country Code: ', this.signUpData.country.countryCode);
 
-        if (this.errors.length === 0 && this.errorMessage === '') {
-            this.LOGIN_SIGNUP_SERVICE.enterSignupDetails(SIGNUP_BODY).subscribe({
-                next: (response) => {
-                    console.log('Response: ', response);
-                    swal('Successfully Signed Up', ' ', 'success');
-                    this.ROUTER.navigate(['login']);
-                },
-                error: (e: HttpErrorResponse) => {
-                    console.log(e);
-                    console.log('Error: ', e.status, e.error);
-                    if (e.status == 400) {
-                        // console.log('Status: Duplicate entry');
-                        this.errorMessage = 'Check email, duplicate entry';
-                    }
-                    if (e.status == 401) {
-                        // console.log('Status: Error signing up');
-                        this.errorMessage = 'Error signing up';
-                        return;
-                    }
-                    if (e.status == 404) {
-                        this.ROUTER.navigate(['error']);
-                    }
-                    if (e.status == 500) {
-                        // console.log('Status: Cannot check data, server error');
-                        this.errorMessage = 'Cannot check data, server error';
-                        return;
-                    }
-                },
-            });
-        }
+        this.signUpService();
     }
 
     // Function to toggle password visibility
