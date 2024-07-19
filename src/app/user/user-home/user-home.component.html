@@ -1,0 +1,39 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark p-3">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Service Requests App</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" 
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbar">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link active" href="#">Home <span class="visually-hidden">(current)</span></a>
+                <a class="nav-item nav-link" href="#">In-Progress Requests</a>
+                <a class="nav-item nav-link" href="#">Assigned Requests</a>
+                <a class="nav-item nav-link" href="#">Approved Requests</a>
+                <a class="nav-item nav-link" href="#">Rejected Requests</a>
+                <a class="nav-item nav-link" href="#">Profile</a>
+                <a class="nav-item nav-link" href="#">Logout</a>
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="m-5">
+    <h1 class="display-2">Create a Request</h1>
+    <form class="col-6">
+        <div class="form-group">
+            <label for="category">Select Category</label>
+            <select class="form-control bg-secondary text-white m-2" id="category">
+                <option>Category 1</option>
+                <option>Category 2</option>
+                <option>Category 3</option>
+                <option>Category 4</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="description">Request Description</label>
+            <textarea class="form-control bg-secondary text-white m-2" id="description" rows="3"></textarea>
+        </div>
+        <button type="button" class="btn btn-primary m-2">Submit</button>
+    </form>
+</div>

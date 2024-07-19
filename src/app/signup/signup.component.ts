@@ -1,31 +1,32 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { Component, OnInit } from '@angular/core';
-import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterOutlet, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { NgFor, NgIf } from '@angular/common';
+import { NgClass, NgFor, NgIf } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-
-import { DataService } from '../service/data.service';
+import swal from 'sweetalert';
+import { Signup } from './Signup';
+import { Country } from './Country';
+import { LoginSignUpService } from '../service/login_signup/login_signup.service';
 
 @Component({
 	selector: 'app-signup',
 	standalone: true,
-    imports: [RouterOutlet, RouterLink, RouterLinkActive, FormsModule, NgFor, NgIf],
+    imports: [RouterOutlet, RouterLink, FormsModule, NgFor, NgIf, NgClass],
     templateUrl: './signup.component.html',
     styleUrl: './signup.component.css',
 })
-export class SignupComponent implements OnInit {
-    constructor(private data_service: DataService) {}
 
+export class SignUpComponent implements OnInit {
+
+    constructor(private _loginSignUpService: LoginSignUpService, 
+                private _router: Router) {
+                    this.signUpData = new Signup();
+                }
+
+    signUpData: Signup;
+    countries: Country[] = [];
     errorMessage = '';
-    firstName = '';
-    lastName = '';
-    designation = '';
-    email = '';
-    phoneNumber = '';
-    country = '';
-    state = '';
-    address = '';
-    password = '';
     confirmPassword = '';
     passwordType = 'password';
     togglePasswordClass = 'bi-eye-slash';
@@ -33,19 +34,22 @@ export class SignupComponent implements OnInit {
     toggleConfirmPasswordClass = 'bi-eye-slash';
     countryNames: string[] = [];
     searchText = '';
+    errorsMap = new Map<string, string>();
 
     ngOnInit(): void {
         this.getAllCountries();
     }
 
-    getAllCountries(): void {
-        this.data_service.getCountries().subscribe({
+    private getAllCountries(): void {
+        this._loginSignUpService.getCountries().subscribe({
             next: (response) => {
                 // console.log('Response: ', response);
                 response.forEach((country: any) => {
-                // console.log(country.name["common"]);
-                this.countryNames.push(country.name['common']);
+                    // console.log(country.name["common"]);
+                    this.countryNames.push(country.countryName);
                 });
+                this.countries = response;
+                // console.log(this.countries);
             },
             error: (e: HttpErrorResponse) => {
                 console.log(e);
@@ -55,114 +59,141 @@ export class SignupComponent implements OnInit {
 
   /**
    * Description:
-   * Trying to filter the countries.
+   * Filtering the countries.
    */
-    getFilteredCountryNames(): string[] {
+    public getFilteredCountryNames(): string[] {
         const FILTER_VALUE = this.searchText.toLowerCase();
         // console.log('Search Text:', this.searchText);
-        // console.log('Filtered Countries: ', this.countryNames.filter((country) =>
-        //     country.toLowerCase().includes(FILTER_VALUE)
-        //     ));
         return this.countryNames.filter((country) =>
-        country.toLowerCase().startsWith(FILTER_VALUE)
-        ).sort();
+            country.toLowerCase().startsWith(FILTER_VALUE)).sort();
     }
 
-    isValidEmailFormat(email: string): boolean {
-        // Regular expression for basic email validation
+    // Regular expression for basic email validation
+    private isValidEmailFormat(email: string): boolean {
         const EMAIL_REGEX = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
         return EMAIL_REGEX.test(email);
     }
 
-    countDigitsWithSpaces(inputString: string) {
+    private countDigitsWithSpaces(inputString: string): boolean {
         const DIGITS_ONLY = inputString.replace(/\D/g, '');
         const DIGIT_COUNT = DIGITS_ONLY.length;
         return DIGIT_COUNT === 10;
     }
 
-    signup(): void {
+    public findError(inputField: string): string | undefined {
+        // console.log(this.errorsMap);
+        return this.errorsMap.get(inputField);
+    }
+
+    private checkSignUpErrors(): boolean {
+        this.signUpData.email === '' ? this.errorsMap.set("email", "Please enter email") : null;
+        this.signUpData.password === '' ? this.errorsMap.set('password', 'Please enter password') : null;
+        this.signUpData.phoneNumber === '' ? this.errorsMap.set('phoneNumber', 'Please enter phone number') : null;
+        this.signUpData.firstName === '' ? this.errorsMap.set('firstName', 'Please enter first name') : null;
+        this.signUpData.lastName === '' ? this.errorsMap.set('lastName', 'Please enter last name') : null;
+        this.signUpData.designation === '' ? this.errorsMap.set('designation', 'Please enter designation') : null;
+        this.signUpData.country.countryName === '' ? this.errorsMap.set('country', 'Please enter country') : null;
+        this.signUpData.state === '' ? this.errorsMap.set('state', 'Please enter state') : null;
+        this.signUpData.address === '' ? this.errorsMap.set('address', 'Please enter address') : null;
+        this.confirmPassword === '' ? this.errorsMap.set('confirmPassword', 'Please enter password confirmation') : null;
+    
+        if (!this.isValidEmailFormat(this.signUpData.email) && this.signUpData.email !== '') {
+            this.errorsMap.set('email', 'Please enter a valid email (example@domain.com)');
+        }
+        if (this.signUpData.password.length < 8  && this.signUpData.password !== '') {
+            this.errorsMap.set('password', 'Password should contain at least 8 characters');
+        }
+        if (!this.countDigitsWithSpaces(this.signUpData.phoneNumber)  && this.signUpData.phoneNumber !== '') {
+            this.errorsMap.set('phoneNumber', 'Enter a valid phone number (10 digits)');
+        }
+        // const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+        if (this.signUpData.password !== '' && this.confirmPassword !== '' && 
+                this.signUpData.password != this.confirmPassword) {
+            this.errorMessage = 'Passwords do not match';
+        }
+        if (this.errorsMap.size === 0 && this.errorMessage === '') {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    private signUpService(): void {
         const SIGNUP_BODY = {
-            firstname: this.firstName,
-            lastname: this.lastName,
-            designation: this.designation,
-            email: this.email,
-            userPassword: this.password,
-            country: this.country,
-            state: this.state,
-            address: this.address,
-            phoneNo: this.phoneNumber,
+            "firstname": this.signUpData.firstName,
+            "lastname": this.signUpData.lastName,
+            "designation": this.signUpData.designation,
+            "email": this.signUpData.email,
+            "userPassword": this.signUpData.password,
+            "country": this.signUpData.country,
+            "state": this.signUpData.state,
+            "address": this.signUpData.address,
+            "phoneNo": this.signUpData.phoneNumber,
         };
 
-        if (this.email == '' || this.password == '' || this.firstName == '' || this.lastName == '' || 
-            this.designation == '' || this.phoneNumber == '' || this.country == '' || this.state == '' ||
-            this.address == '' || this.confirmPassword == '') {
-            // alert('Please enter all details');
-            this.errorMessage = 'Please enter all details';
-            return;
-        }
-
-        if (this.isValidEmailFormat(this.email) == false) {
-            // alert('Enter a valid email');
-            this.errorMessage = 'Enter a valid email';
-            return;
-        }
-
-        // const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
-
-        if (this.password.length < 8) {
-            // alert('Password should contain at least 8 characters');
-            this.errorMessage = 'Password should contain at least 8 characters';
-            return;
-        }
-
-        if (this.password != this.confirmPassword) {
-            // alert('Password do not match');
-            this.errorMessage = 'Passwords do not match';
-            return;
-        }
-
-        // Example: Just log the values to console
-        console.log('Username: ' + this.email);
-        console.log('Password: ' + this.password);
-        console.log('Confirm Password: ' + this.confirmPassword);
-
-        // You can perform further validation or processing here
-        this.data_service.enterSignupDetails(SIGNUP_BODY).subscribe({
+        this._loginSignUpService.enterSignUpDetails(SIGNUP_BODY).subscribe({
             next: (response) => {
                 console.log('Response: ', response);
-                console.log('Status: Success');
+                swal('Successfully Signed Up', ' ', 'success');
+                this._router.navigate(['login']);
             },
             error: (e: HttpErrorResponse) => {
                 console.log(e);
-                if (e.status == 401) {
-                console.log('Status: Error signing up');
-                this.errorMessage = 'Error signing up';
-                return;
+                console.log('Error: ', e.status, e.statusText);
+                if (e.status === 400) {
+                    // console.log('Status: Bad request, duplicate entry');
+                    this.errorMessage = 'Check email, duplicate entry';
                 }
-                if (e.status == 500) {
-                console.log('Status: Cannot check data, server error');
-                this.errorMessage = 'Cannot check data, server error';
-                return;
+                if (e.status === 401) {
+                    // console.log('Status: Error signing up');
+                    this.errorMessage = 'Error signing up';
+                    return;
                 }
-                console.log('Error: ', e.status, e.error);
+                if (e.status === 404) {
+                    this._router.navigate(['error']);
+                }
+                if (e.status === 500) {
+                    // console.log('Status: Cannot check data, server error');
+                    this.errorMessage = 'Cannot check data, server error';
+                    return;
+                }
             },
         });
-        // Example: Redirect to another page after successful login
-        // window.location.href = 'dashboard.html';
+    }
+
+    public signUp(): void {
+        this.errorMessage = '';
+        this.errorsMap = new Map<string, string>();
+        this.signUpData.country.countryName = this.searchText;
+
+        if (!this.checkSignUpErrors()) {
+            return;
+        }
+
+        // console.log('Country Details: ', this.countries);
+        if (this.countries.length !== 0) {
+            this.signUpData.country = this.countries.find(i => i.countryName === this.signUpData.country.countryName)!;
+        }
+        // console.log('Country: ', this.signUpData.country);
+        // console.log('Country Code: ', this.signUpData.country.countryCode);
+
+        this.signUpService();
     }
 
     // Function to toggle password visibility
     public togglePasswordVisibility(field: string): void {
         if (field === 'password') {
-        this.passwordType =
-            this.passwordType === 'password' ? 'text' : 'password';
-        this.togglePasswordClass =
-            this.passwordType === 'password' ? 'bi-eye-slash' : 'bi-eye';
-        } else if (field === 'confirmPassword') {
-        this.confirmPasswordType =
-            this.confirmPasswordType === 'password' ? 'text' : 'password';
-        this.toggleConfirmPasswordClass =
-            this.confirmPasswordType === 'password' ? 'bi-eye-slash' : 'bi-eye';
+            this.passwordType =
+                this.passwordType === 'password' ? 'text' : 'password';
+            this.togglePasswordClass =
+                this.passwordType === 'password' ? 'bi-eye-slash' : 'bi-eye';
+            } 
+        else if (field === 'confirmPassword') {
+            this.confirmPasswordType =
+                this.confirmPasswordType === 'password' ? 'text' : 'password';
+            this.toggleConfirmPasswordClass =
+                this.confirmPasswordType === 'password' ? 'bi-eye-slash' : 'bi-eye';
         }
     }
 }
