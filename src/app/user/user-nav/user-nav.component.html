@@ -1,0 +1,30 @@
+<nav class="navbar navbar-expand-lg navbar-light p-3 sticky-top" id="navbar" aria-label="Navbar" tabindex="0">
+    <h1 class="navbar-brand display-6" id="app-title" tabindex="0"><b>Service Requests App</b></h1>
+    <button class="navbar-toggler" id="nav-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-div" 
+        aria-expanded="false" aria-label="Toggle navigation" tabindex="0">
+        <span class="navbar-toggler-icon" id="nav-toggle-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbar-div">
+        <div class="navbar-nav d-flex flex-sm-row flex-column" id="navbar-links">
+            <a class="nav-item nav-link px-2" id="home-link" routerLinkActive="active" (click)="setActive('home')" 
+                [routerLink]="['/user/nav/home']" tabindex="0">Home</a>
+            <a class="nav-item nav-link px-2" id="in-progress-requests-link" routerLinkActive="active" 
+                (click)="setActive('in-progress')" [routerLink]="['/user/nav/in-progress']" tabindex="0">In-Progress</a>
+            <a class="nav-item nav-link px-2" id="assigned-requests-link" [class.active]="currentActive === 'assigned'" 
+                (click)="setActive('assigned')" [routerLink]="['/user/nav/home']" tabindex="0">Assigned</a>
+            <a class="nav-item nav-link px-2" id="approved-requests-link" [class.active]="currentActive === 'approved'" 
+                (click)="setActive('approved')" [routerLink]="['/user/nav/home']" tabindex="0">Approved</a>
+            <a class="nav-item nav-link px-2" id="rejected-requests-link" [class.active]="currentActive === 'rejected'"
+                (click)="setActive('rejected')" [routerLink]="['/user/nav/home']" tabindex="0">Rejected</a>
+            <a class="nav-item nav-link px-2" id="profile-link" aria-label="profile" [class.active]="currentActive === 'profile'" 
+                (click)="setActive('profile')" [routerLink]="['/user/nav/home']" tabindex="0">
+                <i class="bi bi-person-fill"></i>
+            </a>
+            <a class="nav-item nav-link logout mx-2" id="logout-link" aria-label="logout" (click)="logout()" 
+                (keyup)="logout()" tabindex="0">
+                <i class="bi bi-box-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+</nav>
+<router-outlet></router-outlet>

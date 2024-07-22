@@ -1,0 +1,14 @@
+.active {
+    background-color: #d7c0ae;
+    font-weight: bold;
+}
+
+nav { background-color: #bf9270; }
+
+.navbar-brand {
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 24px;
+    color: #333; 
+}
+
+.logout { cursor: pointer; }

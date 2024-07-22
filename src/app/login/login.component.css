@@ -1,7 +1,4 @@
-.login-body {
-    background-color: lightblue;
-    height: 100vh;
-}
+.main-color { background-color: #d7c0ae; }
 
 .form-container { max-width: 1000px; }
 
@@ -17,5 +14,9 @@
     cursor: pointer;
 }
 
+.error-border { border: 1px solid #f00; }
+
 a:hover,
-a:focus { color: rgb(19, 75, 94); }
+a:focus { color: #134b5e; }
+
+.btn-color { background-color: #555; }

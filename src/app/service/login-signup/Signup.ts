@@ -1,12 +1,10 @@
-import { Country } from "./Country";
-
 export interface SignUp {
-    firstname: string;
-    lastname: string;
+    firstName: string;
+    lastName: string;
     designation: string;
     email: string;
-    userPassword: string;
-    country: Country;
+    password: string;
+    countryCode: string;
     state: string;
     address: string;
     phoneNo: string;
