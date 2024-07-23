@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { NgClass, NgFor, NgIf } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import swal from 'sweetalert';
-import { Signup } from './Signup';
+import { SignupData } from './SignupData';
 import { Country } from './Country';
 import { LoginSignUpService } from '../service/login-signup/login_signup.service';
 
@@ -22,16 +22,16 @@ export class SignUpComponent implements OnInit {
     constructor(private _loginSignUpService: LoginSignUpService, 
                 private _router: Router) {}
 
-    signUpData: Signup = new Signup();
-    countries: Country[] = [];
     errorMessage = '';
     confirmPassword = '';
     passwordType = 'password';
     togglePasswordClass = 'bi-eye-slash';
     confirmPasswordType = 'password';
     toggleConfirmPasswordClass = 'bi-eye-slash';
-    countryNames: string[] = [];
     searchText = '';
+    countries: Country[] = [];
+    countryNames: string[] = [];
+    signUpData: SignupData = new SignupData();
     errorsMap = new Map<string, string>();
 
     ngOnInit(): void {
@@ -121,7 +121,7 @@ export class SignUpComponent implements OnInit {
             "firstName": this.signUpData.firstName,
             "lastName": this.signUpData.lastName,
             "designation": this.signUpData.designation,
-            "email": this.signUpData.email,
+            "emailAddress": this.signUpData.email,
             "password": this.signUpData.password,
             "countryCode": this.signUpData.countryCode,
             "state": this.signUpData.state,
@@ -137,7 +137,7 @@ export class SignUpComponent implements OnInit {
                     text: ' ',
                     icon: 'success',
                     buttons: [false],
-                    timer: 1000
+                    timer: 2000
                 });
                 this._router.navigate(['login']);
             },

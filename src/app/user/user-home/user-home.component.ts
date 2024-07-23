@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 import swal from 'sweetalert';
 import { UserHomeService } from '../../service/user-home/user-home.service';
 import { NewRequest } from './NewRequest';
@@ -11,14 +12,14 @@ declare let bootstrap: any;
 
 @Component({
   selector: 'app-user-home',
-  standalone: false,
   templateUrl: './user-home.component.html',
   styleUrl: './user-home.component.css'
 })
 export class UserHomeComponent implements OnInit {
 
-    constructor(private _loginSignupService: LoginSignUpService,
-                private _userHomeService: UserHomeService) {}
+    constructor(private _loginSignUpService: LoginSignUpService,
+                private _userHomeService: UserHomeService,
+                private _router: Router) {}
 
     @ViewChild('carousel') carouselElement!: ElementRef; 
     newRequest: NewRequest = new NewRequest();
@@ -27,16 +28,16 @@ export class UserHomeComponent implements OnInit {
     categoryNames: string[] = [];
     categories = new Map<string, number>();
     categoryDetails: CategoryDetails[] = [];
-    isFirstView = true;
-    serverHealth = false;
     requestFormData = {
         category: '',
         description: ''
     };
     errorsMap = new Map<string, string>();
+    showAlert = true; 
 
     ngOnInit(): void {
-        const CURRENT_USER = this._loginSignupService.getCurrentUser();
+        const CURRENT_USER = this._loginSignUpService.getCurrentUser();
+        console.log(CURRENT_USER)
         if (CURRENT_USER !== null) {
             this.firstName = CURRENT_USER.firstName;
             this.newRequest.personId = CURRENT_USER.personid;
@@ -47,7 +48,7 @@ export class UserHomeComponent implements OnInit {
             localStorage.setItem('firstTime', 'true');
         }
         else {
-            this.isFirstView = false;
+            this.showAlert = false;
         }
     }
 
@@ -66,13 +67,13 @@ export class UserHomeComponent implements OnInit {
     private getAllCategories(): void {
         this._userHomeService.getCategories().subscribe({
             next: (response) => {
-                this.serverHealth = true;
+                console.log(response);
                 this.categoryDetails = response;
                 response.forEach((category: any) => {
                     this.categories.set(category.categoryName, category.categoryId);
                     this.categoryNames.push(category.categoryName);
                 });
-                this.categoryNames.sort((a, b) => a.length - b.length);
+                this.categoryNames.sort((a, b) => b.length - a.length);
             },
             error: (e: HttpErrorResponse) => {
                 console.log(e);
@@ -127,9 +128,10 @@ export class UserHomeComponent implements OnInit {
                     text: ' ',
                     icon: 'success',
                     buttons: [false],
-                    timer: 1000
+                    timer: 2000
                 });
                 this.resetForm();
+                this._router.navigate(['/user/nav/in-progress']);
             },
             error: (e: HttpErrorResponse) => {
                 console.log(e);

@@ -3,7 +3,14 @@
     font-weight: bold;
 }
 
-nav { background-color: #bf9270; }
+nav { 
+    background-color: #bf9270; 
+    transition: transform 0.3s ease-in-out;
+}
+
+.nav-item:hover { background-color: #914f1e; }
+
+.active:hover { background-color: #d7c0ae; }
 
 .navbar-brand {
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -12,3 +19,5 @@ nav { background-color: #bf9270; }
 }
 
 .logout { cursor: pointer; }
+
+.navbar-hidden { transform: translateY(-100%); }

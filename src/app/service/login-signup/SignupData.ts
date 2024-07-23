@@ -1,8 +1,8 @@
-export interface SignUp {
+export interface SignupData {
     firstName: string;
     lastName: string;
     designation: string;
-    email: string;
+    emailAddress: string;
     password: string;
     countryCode: string;
     state: string;

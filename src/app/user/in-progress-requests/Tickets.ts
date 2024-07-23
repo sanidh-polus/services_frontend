@@ -1,10 +1,17 @@
 export class Tickets {
     ticketId: number;
-    categoryId: number;
+    categoryId: number | undefined;
     ticketDescription: string;
     categoryName: string;
     ticketCreatedTime: string;
-    assignedTo: string | null; 
+    assignedTo: {
+        designation: string,
+        email: string,
+        firstName: string, 
+        id: number,
+        lastName: string
+    } | null;
+    ticketUpdatedAt: string;
 
     constructor() {
         this.ticketId = 0;
@@ -12,6 +19,7 @@ export class Tickets {
         this.ticketDescription = '';
         this.categoryName = '';
         this.ticketCreatedTime = '';
-        this.assignedTo = '';
+        this.assignedTo = null;
+        this.ticketUpdatedAt = '';
     }
 }

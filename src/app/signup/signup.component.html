@@ -7,8 +7,10 @@
                 </h1>
                 <div class="row mt-2" id="name-desigation-row">
                     <div class="col-md-4" id="first-name-div">
-                        <label for="input-first-name" class="form-label" id="first-name-label">First Name</label>
-                        <input type="text" class="form-control" id="input-first-name" placeholder="First Name" 
+                        <label class="form-label" id="first-name-label" for="input-first-name">
+                            First Name <span class="text-danger">*</span>
+                        </label>
+                        <input class="form-control" id="input-first-name" type="text" placeholder="First Name" 
                             tabindex="0" name="firstName" [(ngModel)]="signUpData.firstName" 
                             [ngClass]="{'error-border': errorsMap.has('firstName') }" />
                         <p class="text-danger" id="first-name-error-text" tabindex="0">
@@ -16,8 +18,10 @@
                         </p>
                     </div>
                     <div class="col-md-4" id="last-name-div">
-                        <label for="input-last-name" class="form-label" id="last-name-label">Last Name</label>
-                        <input type="text" class="form-control" id="input-last-name" placeholder="Last Name" 
+                        <label class="form-label" id="last-name-label" for="input-last-name">
+                            Last Name <span class="text-danger">*</span>
+                        </label>
+                        <input class="form-control" id="input-last-name" type="text" placeholder="Last Name" 
                             tabindex="0" name="lastName" [(ngModel)]="signUpData.lastName"
                             [ngClass]="{'error-border': errorsMap.has('lastName') }" />
                         <p class="text-danger" id="last-name-error-text" tabindex="0">
@@ -25,8 +29,10 @@
                         </p>
                     </div>
                     <div class="col-md-4" id="designation-div">
-                        <label for="input-designation" class="form-label" id="designation-div">Designation</label>
-                        <input type="text" class="form-control" id="input-designation" placeholder="Software Engineer" 
+                        <label class="form-label" id="designation-div" for="input-designation">
+                            Designation <span class="text-danger">*</span>
+                        </label>
+                        <input class="form-control" id="input-designation" placeholder="Software Engineer" type="text" 
                             tabindex="0" name="designation" [(ngModel)]="signUpData.designation"
                             [ngClass]="{'error-border': errorsMap.has('designation') }" />
                         <p class="text-danger" id="designation-error-text" tabindex="0">
@@ -36,8 +42,10 @@
                 </div>
                 <div class="row" id="email-phone-row">
                     <div class="col-md-6" id="email-div">
-                        <label for="input-email" class="form-label" id="email-label">Email</label>
-                        <input type="email" class="form-control" id="input-email" placeholder="Email" tabindex="0" 
+                        <label class="form-label" id="email-label" for="input-email">
+                            Email <span class="text-danger">*</span>
+                        </label>
+                        <input class="form-control" id="input-email" type="email" placeholder="Email" tabindex="0" 
                             [ngClass]="{'error-border': errorsMap.has('email') }" name="email" 
                             [(ngModel)]="signUpData.email" />
                         <p class="text-danger" id="email-error-text" tabindex="0">
@@ -45,8 +53,10 @@
                         </p>
                     </div>
                     <div class="col-md-6" id="phone-div">
-                        <label for="input-phone-number" class="form-label" id="phone-label">Phone Number</label>
-                        <input type="text" class="form-control" id="input-phone-number" placeholder="Phone Number" 
+                        <label class="form-label" id="phone-label" for="input-phone-number">
+                            Phone Number <span class="text-danger">*</span>
+                        </label>
+                        <input class="form-control" id="input-phone-number" type="text" placeholder="Phone Number" 
                             tabindex="0" name="phoneNumber" [(ngModel)]="signUpData.phoneNumber"
                             [ngClass]="{'error-border': errorsMap.has('phoneNumber') }" />
                         <p class="text-danger" id="phone-number-error-text" tabindex="0">
@@ -56,12 +66,14 @@
                 </div>
                 <div class="row" id="country-state-row">
                     <div class="col-md-6 country" id="country-div">
-                        <label for="input-country" class="form-label" id="country-label">Country</label>
-                        <div class="input-group">
+                        <label class="form-label" id="country-label" for="input-country">
+                            Country <span class="text-danger">*</span>
+                        </label>
+                        <div class="form-outline">
                             <input class="form-control" id="input-country" list="countries" 
                                 placeholder="Search Country" [(ngModel)]="searchText" name="searchText" 
                                 [ngClass]="{'error-border': errorsMap.has('country') }" />
-                            <button class="btn btn-outline-secondary" id="country-dropdown-icon" tabindex="-1">                     
+                            <button class="btn show-icon" id="country-dropdown-icon" tabindex="-1">                     
                                 <i class="dropdown-toggle" id="dropdown-toggle-icon"></i>	                               
                             </button>
                         </div>
@@ -79,54 +91,62 @@
                         </p>
                     </div>
                     <div class="col-md-6" id="state-div">
-                        <label for="input-state" class="form-label" id="state-label">State</label>
-                        <input type="text" class="form-control" id="input-state" placeholder="State" tabindex="0" 
-                        [ngClass]="{'error-border': errorsMap.has('state') }" name="state" 
-                        [(ngModel)]="signUpData.state" />
+                        <label class="form-label" id="state-label" for="input-state">
+                            State <span class="text-danger">*</span>
+                        </label>
+                        <input class="form-control" id="input-state" type="text" placeholder="State" tabindex="0" 
+                            [ngClass]="{'error-border': errorsMap.has('state') }" name="state" 
+                            [(ngModel)]="signUpData.state" />
                         <p class="text-danger" id="state-error-text" tabindex="0">
                             {{ errorsMap.get('state') }}
                         </p>
                     </div>
                 </div>
                 <div class="row" id="address-div">
-                    <label for="input-address" class="form-label" id="address-label">Address</label>
+                    <label class="form-label" id="address-label" for="input-address">
+                        Address <span class="text-danger">*</span>
+                    </label>
                     <div id="address-input-row">
-                        <input type="text" class="form-control" id="input-address" placeholder="1234 Main St" tabindex="0"
-                        [ngClass]="{'error-border': errorsMap.has('address') }" name="address" 
-                        [(ngModel)]="signUpData.address" />
-                            <p class="text-danger" id="address-error-text" tabindex="0">
-                                {{ errorsMap.get('address') }}
-                            </p>
+                        <textarea class="form-control" id="input-address" type="text" placeholder="1234 Main St" 
+                            tabindex="0" [ngClass]="{'error-border': errorsMap.has('address') }" name="address" 
+                            [(ngModel)]="signUpData.address">
+                        </textarea>
+                        <p class="text-danger" id="address-error-text" tabindex="0">
+                            {{ errorsMap.get('address') }}
+                        </p>
                     </div>
                 </div>
                 <div class="row" id="password-confirm-password-row">
-                    <div class="col-md-6 form-outline" id="password-div">
-                        <label for="input-password" class="form-label" id="password-label">Password</label>
-                        <div class="input-group" id="password-input-group">
-                            <input type="{{ passwordType }}" class="form-control" id="input-password" 
+                    <div class="col-md-6" id="password-div">
+                        <label class="form-label" id="password-label" for="input-password">
+                            Password <span class="text-danger">*</span>
+                        </label>
+                        <div class="form-outline" id="password-input-group">
+                            <input class="form-control" id="input-password" type="{{ passwordType }}"
                                 placeholder="Password" tabindex="0" name="password" [(ngModel)]="signUpData.password"
                                 [ngClass]="{'error-border': errorsMap.has('password') }" />
-                            <button class="btn btn-outline-secondary" type="button" id="password-toggle-button" 
+                            <button class="btn show-icon" type="button" id="password-toggle-button" 
                                 tabindex="0" aria-label="Show or Hide Password" title="Show or Hide Password"
                                 (click)="togglePasswordVisibility('password')">
-                                <i id="toggle-input-password-button" class="{{ togglePasswordClass }}"></i>
+                                <i class="{{ togglePasswordClass }}" id="toggle-input-password-button"></i>
                             </button>
                         </div>
                         <p class="text-danger" id="password-error-text" tabindex="0">
                             {{ errorsMap.get('password') }}
                         </p>
                     </div>
-                    <div class="col-md-6 form-outline" id="confirm-password-div">
-                        <label for="input-confirm-password" class="form-label" id="confirm-password-label">
-                            Confirm Password</label>
-                        <div class="input-group" id="confirm-password-group">
-                            <input type="{{ confirmPasswordType }}" class="form-control" id="input-confirm-password" 
+                    <div class="col-md-6" id="confirm-password-div">
+                        <label class="form-label" id="confirm-password-label" for="input-confirm-password">
+                            Confirm Password <span class="text-danger">*</span>
+                        </label>
+                        <div class="form-outline" id="confirm-password-input-group">
+                            <input class="form-control" id="input-confirm-password" type="{{ confirmPasswordType }}"
                                 placeholder="Password" tabindex="0" name="confirmPassword" [(ngModel)]="confirmPassword"
-                                 [ngClass]="{'error-border': errorsMap.has('confirmPassword') }" />
-                            <button class="btn btn-outline-secondary" type="button" id="confirm-password-toggle-button"
+                                [ngClass]="{'error-border': errorsMap.has('confirmPassword') }" />
+                            <button class="btn show-icon" type="button" id="confirm-password-toggle-button"
                                 tabindex="0" aria-label="Show or Hide Password" title="Show or Hide Password"
                                 (click)="togglePasswordVisibility('confirmPassword')">
-                                <i id="toggle-input-confirm-password-button" class="{{ toggleConfirmPasswordClass }}"></i>
+                                <i class="{{ toggleConfirmPasswordClass }}" id="toggle-input-confirm-password-button"></i>
                             </button>
                         </div>
                         <p class="text-danger" id="confirm-password-error-text" tabindex="0">

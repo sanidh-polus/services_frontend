@@ -21,12 +21,13 @@ export class LoginComponent {
     constructor( private _loginSignUpService: LoginSignUpService, 
                 private _router: Router) {}
 
-    loginData: LoginData = new LoginData();
+    
     errorMessage = '';
     passwordType = 'password';
     togglePasswordClass = 'bi-eye-slash';
     errorsMap = new Map<string, string>();
-
+    loginData: LoginData = new LoginData();
+    
     private isValidEmailFormat(email: string): boolean {
         const EMAIL_REGEX = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
         return EMAIL_REGEX.test(email);
@@ -51,7 +52,7 @@ export class LoginComponent {
 
     private loginService(): void {
         const LOGIN_BODY = {
-            "email": this.loginData.email,
+            "emailAddress": this.loginData.email,
             "password": this.loginData.password
         }
 
@@ -63,7 +64,7 @@ export class LoginComponent {
                     text: ' ',
                     icon: 'success',
                     buttons: [false],
-                    timer: 1000
+                    timer: 2000
                 });
                 this._router.navigate(['/user']);
             },

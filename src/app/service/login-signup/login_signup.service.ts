@@ -4,8 +4,8 @@ import { Observable } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
-import { Login } from './Login';
-import { SignUp } from './Signup';
+import { LoginData } from './LoginData';
+import { SignupData } from './SignupData';
 import { Country } from './Country';
 
 @Injectable({
@@ -22,7 +22,7 @@ export class LoginSignUpService {
         this.currentUser = new BehaviorSubject<any>(JSON.parse(localStorage.getItem('currentUser')!));
     }
 
-    public checkLoginDetails(loginDetails: Login): Observable<any> {
+    public checkLoginDetails(loginDetails: LoginData): Observable<any> {
         return this._http.post<any>('/service/login', loginDetails)
             .pipe(
                 tap(user => {
@@ -36,8 +36,8 @@ export class LoginSignUpService {
         return this.currentUser.value;
     }
 
-    public enterSignUpDetails(signUpDetails: SignUp): Observable<SignUp[]> {
-        return this._http.post<SignUp[]>('/service/signup', signUpDetails);
+    public enterSignUpDetails(signUpDetails: SignupData): Observable<SignupData[]> {
+        return this._http.post<SignupData[]>('/service/signup', signUpDetails);
     }
 
     public getCountries(): Observable<Country[]> {
