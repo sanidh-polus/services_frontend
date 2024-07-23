@@ -3,6 +3,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Tickets } from './Tickets';
 import { UserHomeService } from '../../service/user-home/user-home.service';
 import { LoginSignUpService } from '../../service/login-signup/login_signup.service';
+import { TicketCountService } from '../../service/ticket-count/ticket-count.service';
 
 @Component({
   selector: 'app-rejected-requests',
@@ -12,7 +13,8 @@ import { LoginSignUpService } from '../../service/login-signup/login_signup.serv
 export class RejectedRequestsComponent implements OnInit {
     
     constructor(private _loginSignUpService: LoginSignUpService,
-                private _userHomeService: UserHomeService) {}
+                private _userHomeService: UserHomeService,
+                private _ticketCountService: TicketCountService) {}
 
     userId = 0;
     tickets: Tickets[] = [];
@@ -50,18 +52,12 @@ export class RejectedRequestsComponent implements OnInit {
         });
     }
 
-    private getRejectedTicketsCount(): Promise<number> {
-        return new Promise((resolve, reject) => {
-            this._userHomeService.getTicketCount(this.userId, 4).subscribe({
-                next: (response) => {
-                    console.log(response);
-                    resolve(response); 
-                },
-                error: (e: HttpErrorResponse) => {
-                    console.log(e);
-                    reject(e); 
-                },
-            });
-        });
+    private async getRejectedTicketsCount(): Promise<number> {
+        try {
+            return await this._ticketCountService.getTicketCount(this.userId, 4);
+        } catch (error) {
+            console.error('Error fetching pending tickets count:', error);
+            throw error; 
+        }
     }
 }

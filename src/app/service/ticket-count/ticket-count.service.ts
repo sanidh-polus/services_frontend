@@ -11,8 +11,8 @@ constructor(private _userHomeService: UserHomeService) {}
 
     async getTicketCount(userId: number, statusId: number): Promise<number> {
         try {
-            const count = await this.fetchTicketCount(userId, statusId);
-            return count;
+            const COUNT = await this.fetchTicketCount(userId, statusId);
+            return COUNT;
         } catch (error) {
             console.error(`Error fetching ticket count for status ${statusId}:`, error);
             throw error;
@@ -21,14 +21,14 @@ constructor(private _userHomeService: UserHomeService) {}
 
     private fetchTicketCount(userId: number, statusId: number): Promise<number> {
         return new Promise((resolve, reject) => {
-        this._userHomeService.getTicketCount(userId, statusId).subscribe({
-            next: (response: any) => {
-            resolve(response);
-            },
-            error: (e: HttpErrorResponse) => {
-            reject(e);
-            },
-        });
+            this._userHomeService.getTicketCount(userId, statusId).subscribe({
+                next: (response: any) => {
+                    resolve(response);
+                },
+                error: (e: HttpErrorResponse) => {
+                    reject(e);
+                },
+            });
         });
     }
 }

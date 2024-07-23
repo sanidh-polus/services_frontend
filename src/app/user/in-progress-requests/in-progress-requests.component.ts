@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { LoginSignUpService } from '../../service/login-signup/login_signup.service';
 import { UserHomeService } from '../../service/user-home/user-home.service';
 import { Tickets } from './Tickets';
+import { TicketCountService } from '../../service/ticket-count/ticket-count.service';
 
 @Component({
   selector: 'app-in-progress-requests',
@@ -14,7 +15,8 @@ import { Tickets } from './Tickets';
 export class InProgressRequestsComponent implements OnInit {
 
     constructor(private _loginSignUpService: LoginSignUpService,
-                private _userHomeService: UserHomeService) {}
+                private _userHomeService: UserHomeService,
+                private _ticketCountService: TicketCountService) {}
 
     firstName = '';
     userId = 0;
@@ -214,29 +216,22 @@ export class InProgressRequestsComponent implements OnInit {
         this.selectedAdmin = '';
     }
 
-    private pagination(): void {
-        this.getPendingTicketsCount().then((response: number) => {
-            this.totalTicketCount = response;
+    private async pagination(): Promise<void> {
+        try {
+            this.totalTicketCount = await this.getPendingTicketsCount();
             const TOTAL_PAGES = Math.ceil(this.totalTicketCount / this.ticketsPerPage);
             this.pages = Array.from({ length: TOTAL_PAGES }, (_, index) => index);
-        }).catch((error) => {
+        } catch (error) {
             console.error('Error fetching ticket count:', error);
-        });
-    }
-    
-
-    private getPendingTicketsCount(): Promise<number> {
-        return new Promise((resolve, reject) => {
-            this._userHomeService.getTicketCount(this.userId, 1).subscribe({
-                next: (response) => {
-                    console.log(response);
-                    resolve(response); 
-                },
-                error: (e: HttpErrorResponse) => {
-                    console.log(e);
-                    reject(e); 
-                },
-            });
-        });
+        }
+      }
+      
+    private async getPendingTicketsCount(): Promise<number> {
+        try {
+            return await this._ticketCountService.getTicketCount(this.userId, 1);
+        } catch (error) {
+            console.error('Error fetching pending tickets count:', error);
+            throw error; 
+        }
     }
 }
