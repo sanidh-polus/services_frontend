@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { NgClass, NgFor, NgIf } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import swal from 'sweetalert';
-import { Signup } from './Signup';
+import { SignupData } from './SignupData';
 import { Country } from './Country';
 import { LoginSignUpService } from '../service/login_signup/login_signup.service';
 
@@ -20,11 +20,9 @@ import { LoginSignUpService } from '../service/login_signup/login_signup.service
 export class SignUpComponent implements OnInit {
 
     constructor(private _loginSignUpService: LoginSignUpService, 
-                private _router: Router) {
-                    this.signUpData = new Signup();
-                }
+                private _router: Router) {}
 
-    signUpData: Signup;
+    signUpData: SignupData = new SignupData();
     countries: Country[] = [];
     errorMessage = '';
     confirmPassword = '';
@@ -43,13 +41,11 @@ export class SignUpComponent implements OnInit {
     private getAllCountries(): void {
         this._loginSignUpService.getCountries().subscribe({
             next: (response) => {
-                // console.log('Response: ', response);
                 response.forEach((country: any) => {
-                    // console.log(country.name["common"]);
+                    // console.log(country.name["common"]);         // For public countries REST API
                     this.countryNames.push(country.countryName);
                 });
                 this.countries = response;
-                // console.log(this.countries);
             },
             error: (e: HttpErrorResponse) => {
                 console.log(e);
@@ -63,12 +59,10 @@ export class SignUpComponent implements OnInit {
    */
     public getFilteredCountryNames(): string[] {
         const FILTER_VALUE = this.searchText.toLowerCase();
-        // console.log('Search Text:', this.searchText);
         return this.countryNames.filter((country) =>
             country.toLowerCase().startsWith(FILTER_VALUE)).sort();
     }
 
-    // Regular expression for basic email validation
     private isValidEmailFormat(email: string): boolean {
         const EMAIL_REGEX = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
         return EMAIL_REGEX.test(email);
@@ -78,11 +72,6 @@ export class SignUpComponent implements OnInit {
         const DIGITS_ONLY = inputString.replace(/\D/g, '');
         const DIGIT_COUNT = DIGITS_ONLY.length;
         return DIGIT_COUNT === 10;
-    }
-
-    public findError(inputField: string): string | undefined {
-        // console.log(this.errorsMap);
-        return this.errorsMap.get(inputField);
     }
 
     private checkSignUpErrors(): boolean {
@@ -121,12 +110,12 @@ export class SignUpComponent implements OnInit {
 
     private signUpService(): void {
         const SIGNUP_BODY = {
-            "firstname": this.signUpData.firstName,
-            "lastname": this.signUpData.lastName,
+            "firstName": this.signUpData.firstName,
+            "lastName": this.signUpData.lastName,
             "designation": this.signUpData.designation,
-            "email": this.signUpData.email,
-            "userPassword": this.signUpData.password,
-            "country": this.signUpData.country,
+            "emailAddress": this.signUpData.email,
+            "password": this.signUpData.password,
+            "countryCode": this.signUpData.country.countryCode,
             "state": this.signUpData.state,
             "address": this.signUpData.address,
             "phoneNo": this.signUpData.phoneNumber,
@@ -141,23 +130,10 @@ export class SignUpComponent implements OnInit {
             error: (e: HttpErrorResponse) => {
                 console.log(e);
                 console.log('Error: ', e.status, e.statusText);
-                if (e.status === 400) {
-                    // console.log('Status: Bad request, duplicate entry');
-                    this.errorMessage = 'Check email, duplicate entry';
-                }
-                if (e.status === 401) {
-                    // console.log('Status: Error signing up');
-                    this.errorMessage = 'Error signing up';
-                    return;
-                }
-                if (e.status === 404) {
-                    this._router.navigate(['error']);
-                }
-                if (e.status === 500) {
-                    // console.log('Status: Cannot check data, server error');
-                    this.errorMessage = 'Cannot check data, server error';
-                    return;
-                }
+                this.errorMessage = e.status === 400 ? 'Check email, duplicate entry' :
+                                    e.status === 500 ? 'Cannot check data, server error' :
+                                                        '';
+                e.status === 404 ? this._router.navigate(['error404']) : null;
             },
         });
     }
@@ -170,18 +146,12 @@ export class SignUpComponent implements OnInit {
         if (!this.checkSignUpErrors()) {
             return;
         }
-
-        // console.log('Country Details: ', this.countries);
         if (this.countries.length !== 0) {
             this.signUpData.country = this.countries.find(i => i.countryName === this.signUpData.country.countryName)!;
         }
-        // console.log('Country: ', this.signUpData.country);
-        // console.log('Country Code: ', this.signUpData.country.countryCode);
-
         this.signUpService();
     }
 
-    // Function to toggle password visibility
     public togglePasswordVisibility(field: string): void {
         if (field === 'password') {
             this.passwordType =
