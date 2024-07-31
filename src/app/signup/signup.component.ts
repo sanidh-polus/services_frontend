@@ -7,7 +7,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import swal from 'sweetalert';
 import { SignupData } from './SignupData';
 import { Country } from './Country';
-import { LoginSignUpService } from '../service/login_signup/login_signup.service';
+import { LoginSignUpService } from '../service/login-signup/login-signup.service';
 
 @Component({
 	selector: 'app-signup',

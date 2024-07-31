@@ -3,7 +3,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 
 import { TicketCountService } from './ticket-count.service'
-import { LoginSignUpService } from '../login_signup/login_signup.service';
+import { LoginSignUpService } from '../login-signup/login-signup.service';
 
 class MockLoginSignUpService {
     getCurrentUser() {

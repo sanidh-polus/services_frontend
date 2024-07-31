@@ -6,7 +6,7 @@ import swal from 'sweetalert';
 import { UserHomeService } from '../../service/user-home/user-home.service';
 import { NewRequest } from './NewRequest';
 import { CategoryDetails } from './CategoryDetails';
-import { LoginSignUpService } from '../../service/login_signup/login_signup.service';
+import { LoginSignUpService } from '../../service/login-signup/login-signup.service';
 import { TicketCountService } from '../../service/ticket-count/ticket-count.service';
 
 declare let bootstrap: any;
@@ -40,7 +40,7 @@ export class UserHomeComponent implements OnInit {
 
     ngOnInit(): void {
         const CURRENT_USER = this._loginSignUpService.getCurrentUser();
-        if (CURRENT_USER !== null) {
+        if (CURRENT_USER) {
             this.firstName = CURRENT_USER.firstName;
             this.newRequest.personId = CURRENT_USER.personid;
         }

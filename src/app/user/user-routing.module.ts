@@ -7,7 +7,7 @@ import { InProgressRequestsComponent } from './in-progress-requests/in-progress-
 import { AssignedRequestsComponent } from './assigned-requests/assigned-requests.component';
 import { ApprovedRequestsComponent } from './approved-requests/approved-requests.component';
 import { RejectedRequestsComponent } from './rejected-requests/rejected-requests.component';
-import { ProfileComponent } from './profile/profile.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'nav', pathMatch: 'full' },
@@ -18,7 +18,7 @@ const routes: Routes = [
         { path: 'assigned', component: AssignedRequestsComponent },
         { path: 'approved', component: ApprovedRequestsComponent},
         { path: 'rejected', component: RejectedRequestsComponent },
-        { path: 'profile', component: ProfileComponent }
+        { path: 'profile', component: UserProfileComponent }
     ]}
 ];
 

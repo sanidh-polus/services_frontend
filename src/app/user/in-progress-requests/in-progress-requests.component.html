@@ -10,8 +10,8 @@
             <div class="card" id="in-progress-card">
                 <div class="card-body main-color rounded shadow" id="in-progress-card-body">
                     <div class="d-flex flex-sm-row mb-2">
-                        <span class="badge bg-warning text-dark position-absolute top-0 end-0 me-4 mt-3">
-                            In-Progress</span>
+                        <span class="badge bg-warning text-dark position-absolute top-0 end-0 me-4 mt-3" 
+                            id="in-progress-badge">In-Progress</span>
                         <p class="mb-0" tabindex="0"><b>Ticket ID:</b> {{ ticket.ticketId }}</p>
                     </div>
                     <h5 class="card-title d-inline" id="ticket-{{ ticket.ticketId }}-category" tabindex="0">
@@ -21,7 +21,8 @@
                     <p class="text-muted" id="ticket-{{ ticket.ticketId }}-created-time" tabindex="0"><b>Created At:</b> 
                         {{ ticket?.ticketCreatedTime | date:'medium' }}</p>
                     <p class="text-muted" id="ticket-{{ ticket.ticketId }}-updated-time" tabindex="0"><b>Updated At:</b> 
-                        {{ ticket?.ticketUpdatedAt !== ticket?.ticketCreatedTime ? (ticket?.ticketUpdatedAt | date: 'medium') : 'No updates' }}</p>
+                        {{ ticket?.ticketUpdatedAt !== ticket?.ticketCreatedTime ? 
+                            (ticket?.ticketUpdatedAt | date: 'medium') : 'No updates' }}</p>
                     <div class="d-flex flex-col">
                         <button class="btn btn-primary btn-sm me-2" id="ticket-{{ ticket.ticketId }}-edit-button" 
                         type="button" data-bs-toggle="modal" data-bs-target="#edit-modal" (click)="openEditTicket(ticket)">
@@ -74,7 +75,7 @@
             <div class="modal-footer" id="edit-modal-footer">
                 <button class="btn cancel-color text-white" id="edit-cancel-button" type="button" data-bs-dismiss="modal">
                     Cancel</button>
-                <button class="btn btn-primary" type="button" edit="edit-submit-button" data-bs-dismiss="modal" 
+                <button class="btn btn-primary" type="button" id="edit-submit-button" data-bs-dismiss="modal" 
                     (click)="editTicket()">Edit</button>
             </div>
         </div>

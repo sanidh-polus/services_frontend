@@ -1,4 +1,5 @@
-<section class="post-body p-3" id="create-requests-page" aria-label="Create Request Page" tabindex="0">
+<section class="post-body p-3" id="create-requests-page" aria-label="Create Request Page" tabindex="0" 
+    *ngIf="newRequest.personId !== 0">
     <div class="alert alert-color alert-dismissible fade show text-center welcome-message" id="user-greeting" 
         tabindex="0" *ngIf="showAlert">
         Hi {{ firstName }}, Welcome to the Service Requests App!

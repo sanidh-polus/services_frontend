@@ -5,7 +5,7 @@ import { provideRouter } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
 import { UserHomeComponent } from './user-home.component';
-import { LoginSignUpService } from '../../service/login_signup/login_signup.service';
+import { LoginSignUpService } from '../../service/login-signup/login-signup.service';
 
 class MockLoginSignUpService {
     getCurrentUser() {

@@ -12,7 +12,11 @@ describe('LoginComponent', () => {
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             imports: [LoginComponent],
-            providers: [provideHttpClient(), provideHttpClientTesting(), provideRouter([])],
+            providers: [
+                provideHttpClient(), 
+                provideHttpClientTesting(), 
+                provideRouter([]),
+            ],
         }).compileComponents();
 
         fixture = TestBed.createComponent(LoginComponent);

@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable  } from 'rxjs';
 import { UserHomeService } from '../user-home/user-home.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { LoginSignUpService } from '../login_signup/login_signup.service';
+
+import { LoginSignUpService } from '../login-signup/login-signup.service';
 import { TicketsCount } from './TicketsCount';
 
 @Injectable({
@@ -20,13 +21,20 @@ export class TicketCountService {
 
     constructor( private _userHomeService: UserHomeService,
                  private _loginSignUpService: LoginSignUpService ) {
-                    this.userId = this._loginSignUpService.getCurrentUser().personid;
+                    if(this._loginSignUpService.getCurrentUser()) {
+                        this.userId = this._loginSignUpService.getCurrentUser().personid;
+                    }
                     this.fetchTicketCounts(); 
                 }
 
     public async fetchTicketCounts(): Promise<void> {
+        // console.log('Fetching ticket counts');
         try {
+            if(this._loginSignUpService.getCurrentUser()) {
+                this.userId = this._loginSignUpService.getCurrentUser().personid;
+            }
             const TICKETS_COUNT = await this.getTicketCount(this.userId);
+            // console.log('Ticket counts received for user', this.userId ,':', TICKETS_COUNT);
             
             this.inProgressTicketsCountSubject.next(TICKETS_COUNT.inProgressCount);
             this.assignedTicketsCountSubject.next(TICKETS_COUNT.assignedCount);

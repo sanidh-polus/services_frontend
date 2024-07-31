@@ -3,4 +3,7 @@ export interface TicketsCount {
     rejectedCount: number;
     approvedCount: number;
     assignedCount: number;
+    assignedToMeCount: number;
+    approvedByMeCount: number;
+    rejectedByMeCount: number;
 }
