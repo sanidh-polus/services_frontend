@@ -16,11 +16,7 @@
     border: none;
 }
 
-.error-border { border: 1px solid #f00; }
-
 a:hover,
-a:focus { color: #134b5e; }
-
-.btn-color { background-color: #555; }
+a:focus { color: rgb(19, 75, 94); }
 
 .btn-color:hover { background-color: #777; }

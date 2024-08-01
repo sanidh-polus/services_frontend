@@ -5,8 +5,8 @@ import { Router, RouterOutlet, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import swal from 'sweetalert';
-import { LoginData } from './LoginData';
-import { LoginSignUpService } from '../service/login-signup/login_signup.service';
+import { Login } from './Login';
+import { LoginSignUpService } from '../service/login_signup/login_signup.service';
 
 @Component({
     selector: 'app-login',
@@ -19,9 +19,11 @@ import { LoginSignUpService } from '../service/login-signup/login_signup.service
 export class LoginComponent {
 
     constructor( private _loginSignUpService: LoginSignUpService, 
-                private _router: Router) {}
+                private _router: Router) {
+                    this.loginData = new Login();
+                }
 
-    
+    loginData: Login;
     errorMessage = '';
     passwordType = 'password';
     togglePasswordClass = 'bi-eye-slash';
@@ -43,11 +45,11 @@ export class LoginComponent {
             this.errorMessage = 'Enter a valid email (example@domain.com)';
             this.errorsMap.set('email', 'true');
         }
-        else if (this.loginData.password.length < 8) {
-            this.errorMessage  = 'Enter a valid password (>= 8 characters)';
-            this.errorsMap.set('password', 'true');
+        if (this.loginData.userpassword.length < 8) {
+            this.errorMessage  = 'Enter a valid password (more than 8 characters)';
+            return false;
         }
-        return this.errorMessage !== '' ? false : true;
+        return true;
     }
 
     private loginService(): void {
@@ -59,14 +61,8 @@ export class LoginComponent {
         this._loginSignUpService.checkLoginDetails(LOGIN_BODY).subscribe({
             next: (response) => {
                 console.log('Response: ', response);
-                swal({
-                    title: 'Successfully Logged In',
-                    text: ' ',
-                    icon: 'success',
-                    buttons: [false],
-                    timer: 2000
-                });
-                this._router.navigate(['/user']);
+                swal('Successfully Logged In', ' ', 'success');
+                this._router.navigate(['/user/home']);
             },
             error: (e: HttpErrorResponse) => {
                 console.log(e);

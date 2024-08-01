@@ -12,6 +12,10 @@ export const routes: Routes = [
         path: 'user',
         loadChildren: () => import('./user/user.module').then(m => m.UserModule)
     },
-    { path: 'error404', component: Error404Component },
-    { path: '**', component: Error404Component}
+    {
+        path: 'admin',
+        loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
+    },
+    { path: 'error', component: Error404Component },
+    { path: '**', component: Error404Component},
 ];

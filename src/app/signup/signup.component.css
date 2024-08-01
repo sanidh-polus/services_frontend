@@ -15,21 +15,11 @@ input.form-control { height: 2rem; }
     top: 50%;
     right: 1px;
     transform: translateY(-50%);
-    cursor: pointer;
-    background-color: transparent; 
-    border: none;
-}
-
-.country .show-icon {
-    cursor: auto;
+    z-index: 1;
 }
 
 a:hover,
-a:focus { color: #134b5e; }
-
-.btn-color { background-color: #555; }
-
-.btn-color:hover { background-color: #777; }
+a:focus { color: rgb(19, 75, 94); }
 
 @media (max-width: 992px) {
 

@@ -7,7 +7,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import swal from 'sweetalert';
 import { SignupData } from './SignupData';
 import { Country } from './Country';
-import { LoginSignUpService } from '../service/login-signup/login_signup.service';
+import { LoginSignUpService } from '../service/login_signup/login_signup.service';
 
 @Component({
 	selector: 'app-signup',
@@ -22,6 +22,8 @@ export class SignUpComponent implements OnInit {
     constructor(private _loginSignUpService: LoginSignUpService, 
                 private _router: Router) {}
 
+    signUpData: Signup;
+    countries: Country[] = [];
     errorMessage = '';
     confirmPassword = '';
     passwordType = 'password';
@@ -42,7 +44,7 @@ export class SignUpComponent implements OnInit {
         this._loginSignUpService.getCountries().subscribe({
             next: (response) => {
                 response.forEach((country: any) => {
-                    // console.log(country.name["common"]);
+                    // console.log(country.name["common"]);         // For public countries REST API
                     this.countryNames.push(country.countryName);
                 });
                 this.countries = response;
@@ -121,9 +123,9 @@ export class SignUpComponent implements OnInit {
             "firstName": this.signUpData.firstName,
             "lastName": this.signUpData.lastName,
             "designation": this.signUpData.designation,
-            "emailAddress": this.signUpData.email,
-            "password": this.signUpData.password,
-            "countryCode": this.signUpData.countryCode,
+            "email": this.signUpData.email,
+            "userPassword": this.signUpData.password,
+            "country": this.signUpData.country,
             "state": this.signUpData.state,
             "address": this.signUpData.address,
             "phoneNo": this.signUpData.phoneNumber,

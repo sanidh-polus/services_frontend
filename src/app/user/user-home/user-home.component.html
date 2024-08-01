@@ -1,74 +1,39 @@
-<section class="post-body p-3" id="create-request-form" aria-label="Create Request Page" tabindex="0">
-    <div class="alert alert-color alert-dismissible fade show text-center welcome-message" id="user-greeting" 
-        tabindex="0" *ngIf="showAlert">
-        Hi {{ firstName }}, Welcome to the Service Requests App!
-        <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close" (click)="showAlert = false">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark p-3">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Service Requests App</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" 
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
         </button>
-    </div>
-    <div class="row d-flex flex-lg-row flex-column-reverse" [ngClass]="{'py-0': showAlert, 'py-5': !showAlert }">
-        <div class="col-lg-8 mt-lg-0 mt-4" id="request-div" tabindex="-1">
-            <div class="d-flex justify-content-center mt-4" tabindex="-1">    
-                <form class="col-9 p-4 border shadow rounded main-color" id="request-form" tabindex="0"
-                    aria-label="Create a request form">
-                    <h4 class="text-center" id="request-create-title" tabindex="0">Create a Request</h4>
-                    <div class="form-group" [class.mt-3]="categoryNames.length === 0" id="request-category-div">
-                        <label for="request-category" id="request-category-label" tabindex="0">
-                            Category <span class="text-danger">*</span>
-                        </label>
-                        <select class="form-select my-2" id="request-category" [(ngModel)]="requestFormData.category" 
-                            name="category" tabindex="0" (click)="setCarousel()" (keyup)="setCarousel()"
-                            [ngClass]="{'error-border': errorsMap.has('category') }">
-                            <option value="" disabled selected>Select a category</option>
-                            <option *ngFor="let category of categoryNames">{{ category }}</option>
-                        </select>
-                    </div>
-                    <div class="form-group" id="request-description-div">
-                        <label for="request-description" id="request-description-label" tabindex="0">
-                            Request Description <span class="text-danger">*</span>
-                        </label>
-                        <textarea class="form-control mt-2" id="request-description" placeholder="Enter a description"
-                            [(ngModel)]="requestFormData.description" rows="4" name="description" tabindex="0" 
-                            aria-label="Enter a description" [ngClass]="{'error-border': errorsMap.has('description') }">
-                        </textarea>
-                    </div>
-                    <p class="text-danger" id="create-request-error-text" aria-live="assertive" tabindex="0">
-                       <b>{{ errorMessage }}</b> 
-                    </p>
-                    <button class="btn btn-success mt-1" id="submit-button" type="button" (click)="createRequest()" 
-                        tabindex="0">
-                        Create
-                    </button>
-                </form>
-            </div>    
-        </div>  
-        <div class="col-lg-3 pt-4 d-flex justify-content-center align-items-center" id="categories-div" tabindex="0"
-            aria-label="Categories Description">
-            <div class="carousel slide carousel-dark" id="carousel-controls" #carousel>
-                <div class="carousel-inner main-color rounded" id="carousel-styles">
-                    <div class="carousel-item" *ngFor="let category of categoryDetails; let isFirstIndex=first" 
-                        [class.active]="isFirstIndex" id="carousel-item">
-                        <div class="p-5">
-                            <div class="carousel-content text-center" id="carousel-body">
-                                <h4 id="carousel-head" tabindex="0">{{ category?.categoryName }}</h4>
-                                <p class="mt-3" id="carousel-text" tabindex="0">{{ category?.categoryDescription }}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carousel-controls" 
-                    data-bs-slide="prev" id="carousel-previous-button" tabindex="0">
-                        <span class="carousel-control-prev-icon" aria-hidden="true" id="carousel-previous-icon"></span>
-                        <span class="visually-hidden" id="carousel-previous-text">Previous Category</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carousel-controls" 
-                    data-bs-slide="next" id="carousel-next-button" tabindex="0">
-                        <span class="carousel-control-next-icon" aria-hidden="true" id="carousel-next-icon"></span>
-                        <span class="visually-hidden" id="carousel-next-text">Next Category</span>
-                </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbar">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link active" href="#">Home <span class="visually-hidden">(current)</span></a>
+                <a class="nav-item nav-link" href="#">In-Progress Requests</a>
+                <a class="nav-item nav-link" href="#">Assigned Requests</a>
+                <a class="nav-item nav-link" href="#">Approved Requests</a>
+                <a class="nav-item nav-link" href="#">Rejected Requests</a>
+                <a class="nav-item nav-link" href="#">Profile</a>
+                <a class="nav-item nav-link" href="#">Logout</a>
             </div>
         </div>
     </div>
-</section>
-
-
-  
+</nav>
+<div class="m-5">
+    <h1 class="display-2">Create a Request</h1>
+    <form class="col-6">
+        <div class="form-group">
+            <label for="category">Select Category</label>
+            <select class="form-control bg-secondary text-white m-2" id="category">
+                <option>Category 1</option>
+                <option>Category 2</option>
+                <option>Category 3</option>
+                <option>Category 4</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="description">Request Description</label>
+            <textarea class="form-control bg-secondary text-white m-2" id="description" rows="3"></textarea>
+        </div>
+        <button type="button" class="btn btn-primary m-2">Submit</button>
+    </form>
+</div>
