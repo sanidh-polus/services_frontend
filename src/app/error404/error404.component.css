@@ -1,0 +1,15 @@
+.error {
+    background-color: #d7c0ae;
+    height: 100vh;
+    margin: 0;
+}
+
+img {
+    border-radius: 10%;
+    height: auto;
+}
+
+/* @media (max-width: 992px) {
+
+    .error { height: 100vh; }
+} */

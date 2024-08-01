@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 
 import { LoginComponent } from './login/login.component';
 import { SignUpComponent } from './signup/signup.component';
-import { ErrorComponent } from './error/error.component';
+import { Error404Component } from './error404/error404.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -12,6 +12,6 @@ export const routes: Routes = [
         path: 'user',
         loadChildren: () => import('./user/user.module').then(m => m.UserModule)
     },
-    { path: 'error', component: ErrorComponent },
-    { path: '**', component: ErrorComponent}
+    { path: 'error404', component: Error404Component },
+    { path: '**', component: Error404Component}
 ];

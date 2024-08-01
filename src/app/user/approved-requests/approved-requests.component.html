@@ -1,0 +1,20 @@
+<section class="px-5 py-4 approved-body" id="approved-requests" aria-label="Approved Requests Page" tabindex="0">
+    <h1 class="display-6">Approved Requests ({{ totalTicketCount }})</h1>
+    <div *ngIf="tickets === null || tickets.length === 0" class="alert alert-info" role="alert">
+        <b>No tickets approved yet</b>
+    </div>
+    <div class="row row-cols-1 row-cols-md-2 g-5 py-4">
+        <div *ngFor="let ticket of tickets" class="col">
+            <div class="card">
+                <div class="card-body main-color rounded shadow">
+                    <h5 class="card-title d-inline">{{ ticket?.categoryName }}</h5>
+                    <span class="badge bg-success position-absolute top-1 end-0 me-4">Approved</span>
+                    <p class="card-text">{{ ticket?.ticketDescription }}</p>
+                    <p class="text-muted"><b>Created At:</b> {{ ticket?.ticketCreatedTime | date:'medium' }}</p>
+                    <p class="text-muted"><b>Approved At:</b> {{ ticket?.ticketUpdatedAt | date:'medium' }}</p>
+                    <p class="text-muted"><b>Approved By:</b> {{ ticket?.assignedTo?.firstName + ' ' + ticket?.assignedTo?.lastName }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
