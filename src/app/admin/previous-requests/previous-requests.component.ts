@@ -2,7 +2,7 @@ import { Component, OnInit  } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { LoginSignUpService } from '../../service/login-signup/login-signup.service';
 import { AdminHomeService } from '../../service/admin-home/admin-home.service';
-import { Tickets } from './Tickets';
+import { AdminTickets } from './AdminTickets';
 
 @Component({
     selector: 'app-previous-requests',
@@ -15,7 +15,7 @@ export class PreviousRequestsComponent implements OnInit {
     userId = 0;
     pageNo = 0;
     size = 20;
-    tickets: Tickets[] = [];
+    tickets: AdminTickets[] = [];
     activeTab: 'approved' | 'rejected' = 'approved';
     
     constructor(private _loginSignUpService: LoginSignUpService,

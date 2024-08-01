@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Tickets } from './Tickets';
+import { AdminTickets } from './AdminTickets';
 
 @Component({
     selector: 'app-ticket-card',
@@ -12,6 +12,6 @@ import { Tickets } from './Tickets';
 
 export class TicketCardComponent {
     
-    @Input() ticket: Tickets = new Tickets();
+    @Input() ticket: AdminTickets = new AdminTickets();
     @Input() status: string = '';
 }

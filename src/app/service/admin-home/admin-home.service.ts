@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { Ticket } from './Ticket';
+import { AdminTicket } from './AdminTicket';
 
 @Injectable({
     providedIn: 'root'
@@ -12,8 +12,8 @@ export class AdminHomeService {
 
     constructor(private _http: HttpClient) {}
 
-    getAdminsAssignedTickets(pageDetails: any): Observable<Ticket[]> {
-        return this._http.post<Ticket[]>(`/service/admintickets`, pageDetails);
+    getAdminsAssignedTickets(pageDetails: any): Observable<AdminTicket[]> {
+        return this._http.post<AdminTicket[]>(`/service/admintickets`, pageDetails);
     }
 
     approveOrRejectTicket(ticketDetails: any): Observable<any> {

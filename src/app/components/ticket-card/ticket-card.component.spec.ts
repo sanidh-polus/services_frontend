@@ -18,6 +18,7 @@ describe('TicketCardComponent', () => {
         component.ticket = { 
             ticketId: 1,
             categoryId: 1,
+            fullName: '',
             ticketDescription: '',
             categoryName: '',
             ticketCreatedTime: '',

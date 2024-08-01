@@ -7,7 +7,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import swal from 'sweetalert';
 import { SignupData } from './SignupData';
 import { Country } from './Country';
-import { LoginSignUpService } from '../service/login_signup/login_signup.service';
+import { LoginSignUpService } from '../service/login-signup/login-signup.service';
 
 @Component({
 	selector: 'app-signup',
@@ -22,7 +22,7 @@ export class SignUpComponent implements OnInit {
     constructor(private _loginSignUpService: LoginSignUpService, 
                 private _router: Router) {}
 
-    signUpData: Signup;
+    signUpData: SignupData = new SignupData();
     countries: Country[] = [];
     errorMessage = '';
     confirmPassword = '';
@@ -30,10 +30,8 @@ export class SignUpComponent implements OnInit {
     togglePasswordClass = 'bi-eye-slash';
     confirmPasswordType = 'password';
     toggleConfirmPasswordClass = 'bi-eye-slash';
-    searchText = '';
-    countries: Country[] = [];
     countryNames: string[] = [];
-    signUpData: SignupData = new SignupData();
+    searchText = '';
     errorsMap = new Map<string, string>();
 
     ngOnInit(): void {
@@ -51,11 +49,6 @@ export class SignUpComponent implements OnInit {
             },
             error: (e: HttpErrorResponse) => {
                 console.log(e);
-                // swal({
-                //     title: "Server down",
-                //     text: "Please try again later",
-                //     icon: "error"
-                // });
             },
         });
     }
@@ -88,19 +81,11 @@ export class SignUpComponent implements OnInit {
         this.signUpData.firstName === '' ? this.errorsMap.set('firstName', 'Please enter first name') : null;
         this.signUpData.lastName === '' ? this.errorsMap.set('lastName', 'Please enter last name') : null;
         this.signUpData.designation === '' ? this.errorsMap.set('designation', 'Please enter designation') : null;
-        this.searchText === '' ? this.errorsMap.set('country', 'Please enter country') : null;
+        this.signUpData.country.countryName === '' ? this.errorsMap.set('country', 'Please enter country') : null;
         this.signUpData.state === '' ? this.errorsMap.set('state', 'Please enter state') : null;
         this.signUpData.address === '' ? this.errorsMap.set('address', 'Please enter address') : null;
         this.confirmPassword === '' ? this.errorsMap.set('confirmPassword', 'Please enter password confirmation') : null;
     
-        this.signUpData.email.length > 40 ? this.errorsMap.set("email", "Please enter a shorter email") : null;
-        this.signUpData.firstName.length > 30 ? this.errorsMap.set("firstName", "Please enter a shorter first name") : null;
-        this.signUpData.lastName.length > 30 ? this.errorsMap.set("lastName", "Please enter a shorter last name") : null;
-        this.signUpData.designation.length > 30 ? this.errorsMap.set("designation", "Please enter a shorter designation") : null;
-        this.signUpData.password.length > 30 ? this.errorsMap.set("password", "Please enter a shorter password") : null;
-        this.signUpData.state.length > 20 ? this.errorsMap.set("state", "Please enter a shorter state") : null;
-        this.signUpData.address.length > 30 ? this.errorsMap.set("address", "Please enter a shorter address") : null;
-
         if (!this.isValidEmailFormat(this.signUpData.email) && this.signUpData.email !== '') {
             this.errorsMap.set('email', 'Please enter a valid email (example@domain.com)');
         }
@@ -108,14 +93,19 @@ export class SignUpComponent implements OnInit {
             this.errorsMap.set('password', 'Password should contain at least 8 characters');
         }
         if (!this.countDigitsWithSpaces(this.signUpData.phoneNumber)  && this.signUpData.phoneNumber !== '') {
-            this.errorsMap.set('phoneNumber', 'Enter a valid phone number (10 digits only)');
+            this.errorsMap.set('phoneNumber', 'Enter a valid phone number (10 digits)');
         }
         // const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
         if (this.signUpData.password !== '' && this.confirmPassword !== '' && 
                 this.signUpData.password != this.confirmPassword) {
             this.errorMessage = 'Passwords do not match';
         }
-        return (this.errorsMap.size === 0 && this.errorMessage === '') ? true : false;
+        if (this.errorsMap.size === 0 && this.errorMessage === '') {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     private signUpService(): void {
@@ -123,9 +113,9 @@ export class SignUpComponent implements OnInit {
             "firstName": this.signUpData.firstName,
             "lastName": this.signUpData.lastName,
             "designation": this.signUpData.designation,
-            "email": this.signUpData.email,
-            "userPassword": this.signUpData.password,
-            "country": this.signUpData.country,
+            "emailAddress": this.signUpData.email,
+            "password": this.signUpData.password,
+            "countryCode": this.signUpData.country.countryCode,
             "state": this.signUpData.state,
             "address": this.signUpData.address,
             "phoneNo": this.signUpData.phoneNumber,
@@ -134,13 +124,7 @@ export class SignUpComponent implements OnInit {
         this._loginSignUpService.enterSignUpDetails(SIGNUP_BODY).subscribe({
             next: (response) => {
                 console.log('Response: ', response);
-                swal({
-                    title: 'Successfully Signed Up',
-                    text: ' ',
-                    icon: 'success',
-                    buttons: [false],
-                    timer: 2000
-                });
+                swal('Successfully Signed Up', ' ', 'success');
                 this._router.navigate(['login']);
             },
             error: (e: HttpErrorResponse) => {
@@ -157,13 +141,13 @@ export class SignUpComponent implements OnInit {
     public signUp(): void {
         this.errorMessage = '';
         this.errorsMap = new Map<string, string>();
+        this.signUpData.country.countryName = this.searchText;
 
         if (!this.checkSignUpErrors()) {
             return;
         }
         if (this.countries.length !== 0) {
-            const COUNTRY = this.countries.find(i => i.countryName === this.searchText)!;
-            this.signUpData.countryCode = COUNTRY.countryCode;
+            this.signUpData.country = this.countries.find(i => i.countryName === this.signUpData.country.countryName)!;
         }
         this.signUpService();
     }

@@ -1,6 +1,7 @@
-export interface Ticket {
+export interface AdminTickets {
     ticketId: number;
     categoryId: number;
+    fullName: string;
     ticketDescription: string;
     categoryName: string;
     ticketCreatedTime: string;

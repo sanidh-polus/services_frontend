@@ -1,6 +1,7 @@
-export class Tickets {
+export class AdminTickets {
     ticketId: number;
     categoryId: number | undefined;
+    fullName: string;
     ticketDescription: string;
     categoryName: string;
     ticketCreatedTime: string;
@@ -16,6 +17,7 @@ export class Tickets {
     constructor() {
         this.ticketId = 0;
         this.categoryId = 0;
+        this.fullName = '';
         this.ticketDescription = '';
         this.categoryName = '';
         this.ticketCreatedTime = '';

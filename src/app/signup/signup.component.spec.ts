@@ -6,18 +6,23 @@ import { provideRouter } from '@angular/router';
 import { SignUpComponent } from './signup.component';
 
 describe('SignupComponent', () => {
-  let component: SignupComponent;
-  let fixture: ComponentFixture<SignupComponent>;
+    let component: SignUpComponent;
+    let fixture: ComponentFixture<SignUpComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [SignupComponent],
-    }).compileComponents();
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
+            imports: [SignUpComponent],
+            providers: [
+                provideHttpClient(), 
+                provideHttpClientTesting(), 
+                provideRouter([]),
+            ],
+        }).compileComponents();
 
-    fixture = TestBed.createComponent(SignupComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+        fixture = TestBed.createComponent(SignUpComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
     it('should create', () => {
         expect(component).toBeTruthy();
