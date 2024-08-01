@@ -5,12 +5,13 @@ import { BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 import { LoginData } from './LoginData';
-import { SignupData } from './SignupData';
+import { SignUpData } from './SignupData';
 import { Country } from './Country';
 
 @Injectable({
     providedIn: 'root',
 })
+
 export class LoginSignUpService {
     // apiUrl = 'http://10.199.100.140:8080/service/login';
     // proxyUrl = '/api'+'/service/login';
@@ -36,8 +37,8 @@ export class LoginSignUpService {
         return this.currentUser.value;
     }
 
-    public enterSignUpDetails(signUpDetails: SignupData): Observable<SignupData[]> {
-        return this._http.post<SignupData[]>('/service/signup', signUpDetails);
+    public enterSignUpDetails(signUpDetails: SignUpData): Observable<SignUpData[]> {
+        return this._http.post<SignUpData[]>('/service/signup', signUpDetails);
     }
 
     public getCountries(): Observable<Country[]> {

@@ -1,38 +1,49 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
 import { Tickets } from './Tickets';
 import { UserHomeService } from '../../service/user-home/user-home.service';
-import { LoginSignUpService } from '../../service/login-signup/login_signup.service';
+import { LoginSignUpService } from '../../service/login-signup/login-signup.service';
+import { TicketCountService } from '../../service/ticket-count/ticket-count.service';
 
 @Component({
-  selector: 'app-rejected-requests',
-  templateUrl: './rejected-requests.component.html',
-  styleUrl: './rejected-requests.component.css'
+    selector: 'app-rejected-requests',
+    templateUrl: './rejected-requests.component.html',
+    styleUrl: './rejected-requests.component.css'
 })
+
 export class RejectedRequestsComponent implements OnInit {
     
-    constructor(private _loginSignUpService: LoginSignUpService,
-                private _userHomeService: UserHomeService) {}
-
     userId = 0;
-    tickets: Tickets[] = [];
-    page = 0;
-    ticketsPerPage = 10;
+    currentPage = 1;
+    ticketsPerPage = 4;
     totalTicketCount = 0;
+    pages: number[] = [];
+    tickets: Tickets[] = [];
+
+    constructor( private _loginSignUpService: LoginSignUpService,
+                 private _userHomeService: UserHomeService,
+                 private _ticketCountService: TicketCountService,
+                 private _route: ActivatedRoute ) {}
     
     ngOnInit(): void {
         const CURRENT_USER = this._loginSignUpService.getCurrentUser();
-        // console.log('User: ', CURRENT_USER);
-        this.userId = CURRENT_USER.personid;
-        this.getRejectedRequests();
-
-        this.getRejectedTicketsCount().then((response: number) => {
-            this.totalTicketCount = response;
-        });
+        if (CURRENT_USER) {
+            this.userId = CURRENT_USER.personid;
+        }
+        this.pagination();
+        this.fetchCurrentPageTickets();
     }
 
-    private getRejectedRequests(): void {
-    this._userHomeService.getTickets(this.userId, 4, this.page, this.ticketsPerPage).subscribe({
+    public getRejectedRequests( pageNumber: number ): void {
+        const TICKETS_PAYLOAD = {
+            "personId": this.userId,
+            "statusId": 4,
+            "page": pageNumber - 1,
+            "size": this.ticketsPerPage
+        };
+
+        this._userHomeService.getTickets(TICKETS_PAYLOAD).subscribe({
             next: (response) => {
                 console.log(response);
                 this.tickets = response;
@@ -50,18 +61,16 @@ export class RejectedRequestsComponent implements OnInit {
         });
     }
 
-    private getRejectedTicketsCount(): Promise<number> {
-        return new Promise((resolve, reject) => {
-            this._userHomeService.getTicketCount(this.userId, 4).subscribe({
-                next: (response) => {
-                    console.log(response);
-                    resolve(response); 
-                },
-                error: (e: HttpErrorResponse) => {
-                    console.log(e);
-                    reject(e); 
-                },
-            });
+    private pagination(): void {
+        this._ticketCountService.getRejectedTicketsCount().subscribe(count => this.totalTicketCount = count);
+        const TOTAL_PAGES = Math.ceil(this.totalTicketCount / this.ticketsPerPage);
+        this.pages = Array.from({ length: TOTAL_PAGES }, (_, index) => index);
+    }
+
+    private fetchCurrentPageTickets(): void {
+        this._route.params.subscribe(params => {
+            this.currentPage = +params['page'] || 1;
+            this.getRejectedRequests(this.currentPage);
         });
     }
 }

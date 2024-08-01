@@ -9,26 +9,29 @@ import { InProgressRequestsComponent } from './in-progress-requests/in-progress-
 import { AssignedRequestsComponent } from './assigned-requests/assigned-requests.component';
 import { ApprovedRequestsComponent } from './approved-requests/approved-requests.component';
 import { RejectedRequestsComponent } from './rejected-requests/rejected-requests.component';
-import { ProfileComponent } from './profile/profile.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { ProfilePageComponent } from '../components/profile-page/profile-page.component';
 
 @NgModule({
-  declarations: [
-    UserNavComponent,
-    UserHomeComponent,
-    InProgressRequestsComponent,
-    AssignedRequestsComponent,
-    ApprovedRequestsComponent,
-    RejectedRequestsComponent,
-    ProfileComponent
-  ],
-  imports: [
-    CommonModule,
-    UserRoutingModule,
-    FormsModule,
-    NgFor,
-    NgIf,
-    RouterOutlet,
-    RouterLink
-  ]
+    declarations: [
+        UserNavComponent,
+        UserHomeComponent,
+        InProgressRequestsComponent,
+        AssignedRequestsComponent,
+        ApprovedRequestsComponent,
+        RejectedRequestsComponent,
+        UserProfileComponent
+    ],
+    imports: [
+        CommonModule,
+        UserRoutingModule,
+        FormsModule,
+        NgFor,
+        NgIf,
+        RouterOutlet,
+        RouterLink,
+        ProfilePageComponent
+    ]
 })
+
 export class UserModule {}

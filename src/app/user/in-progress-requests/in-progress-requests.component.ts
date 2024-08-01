@@ -1,30 +1,30 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 import swal from 'sweetalert';
 import Swal from 'sweetalert2';
-import { LoginSignUpService } from '../../service/login-signup/login_signup.service';
+import { LoginSignUpService } from '../../service/login-signup/login-signup.service';
 import { UserHomeService } from '../../service/user-home/user-home.service';
 import { Tickets } from './Tickets';
+import { TicketCountService } from '../../service/ticket-count/ticket-count.service';
 
 @Component({
-  selector: 'app-in-progress-requests',
-  templateUrl: './in-progress-requests.component.html',
-  styleUrl: './in-progress-requests.component.css'
+    selector: 'app-in-progress-requests',
+    templateUrl: './in-progress-requests.component.html',
+    styleUrl: './in-progress-requests.component.css'
 })
-export class InProgressRequestsComponent implements OnInit {
 
-    constructor(private _loginSignUpService: LoginSignUpService,
-                private _userHomeService: UserHomeService) {}
+export class InProgressRequestsComponent implements OnInit {
 
     firstName = '';
     userId = 0;
-    currentPage = 0;
+    currentPage = 1;
     ticketsPerPage = 4;
     totalTicketCount = 0;
     pages: number[] = [];
     tickets: Tickets[] = [];
     categoryNames: string[] = [];
-    // categoryNames: string[] = [ "System Repairs", "Security", "Internet problems", "Installation", "Leave Request", "Safety Issue", "Temperature Control" ];
     categoryMap = new Map<string, number>();
     editTicketDetails: Tickets = new Tickets();
     editError = '';
@@ -32,24 +32,70 @@ export class InProgressRequestsComponent implements OnInit {
     adminNames: string[] = [];
     adminMap = new Map<string, number>();
     assignedTicketId = 0;
+    isAssigned = false;
+    private subscription: Subscription = new Subscription();
+    isAdmin = false;
+    userFullName = ''
+
+    constructor( private _loginSignUpService: LoginSignUpService,
+                 private _userHomeService: UserHomeService,
+                 private _ticketCountService: TicketCountService,
+                 private _route: ActivatedRoute ) {}
 
     ngOnInit(): void {
         const CURRENT_USER = this._loginSignUpService.getCurrentUser();
-        // console.log('User: ', CURRENT_USER);
-        this.userId = CURRENT_USER.personid;
-        this.getPendingRequests(0);
+        if (CURRENT_USER) {
+            this.userId = CURRENT_USER.personid;
+        }
+        if (this.hasRole(CURRENT_USER.roles, 'APPLICATION_ADMINISTRATOR')) {
+            this.isAdmin = true;
+            this.userFullName = CURRENT_USER.firstName + ' ' + CURRENT_USER.lastName;
+        }
         this.pagination();
         this.getAllCategories();
         this.getAllAdmins();
+        this.fetchCurrentPageTickets();
     }
 
-    public getPendingRequests(pageNumber: number): void {
-        this.currentPage = pageNumber;
-        this._userHomeService.getTickets(this.userId, 1, pageNumber, this.ticketsPerPage).subscribe({
+    private hasRole(roles: { roleId: number; roleName: string; roleDescription: string }[], roleName: string): boolean {
+        return roles.some(role => role.roleName === roleName);
+    }
+
+    private pagination(): void {
+        this.subscription = this._ticketCountService.getInProgressTicketsCount()
+            .subscribe(count => this.totalTicketCount = count);
+        const TOTAL_PAGES = Math.ceil(this.totalTicketCount / this.ticketsPerPage);
+        this.pages = Array.from({ length: TOTAL_PAGES }, (_, index) => index);
+    }
+      
+    // private async getPendingTicketsCount(): Promise<number> {
+    //     try {
+    //         return await this._ticketCountService.getTicketCount(this.userId, 1);
+    //     } catch (error) {
+    //         console.error('Error fetching pending tickets count:', error);
+    //         throw error; 
+    //     }
+    // }
+
+    private fetchCurrentPageTickets(): void {
+        this._route.params.subscribe(params => {
+            this.currentPage = +params['page'] || 1;
+            this.getPendingRequests(this.currentPage);
+        });
+    }
+
+    public getPendingRequests( pageNumber: number ): void {
+        const TICKETS_PAYLOAD = {
+            "personId": this.userId,
+            "statusId": 1,
+            "page": pageNumber - 1,
+            "size": this.ticketsPerPage
+        };
+
+        this._userHomeService.getTickets(TICKETS_PAYLOAD).subscribe({
             next: (response) => {
                 console.log(response);
                 this.tickets = response;
-                // this.tickets.sort((a, b) => new Date(b.ticketCreatedTime).getTime() - new Date(a.ticketCreatedTime).getTime());
             },
             error: (e: HttpErrorResponse) => {
                 console.log(e);
@@ -67,7 +113,6 @@ export class InProgressRequestsComponent implements OnInit {
     private getAllCategories(): void {
         this._userHomeService.getCategories().subscribe({
             next: (response) => {
-                // console.log(response);
                 response.forEach((category: any) => {
                     this.categoryMap.set(category.categoryName, category.categoryId);
                     this.categoryNames.push(category.categoryName);
@@ -83,10 +128,12 @@ export class InProgressRequestsComponent implements OnInit {
     private getAllAdmins(): void {
         this._userHomeService.getAdmins().subscribe({
             next: (response) => {
-                // console.log(response);
+                console.log(response);
                 response.forEach((admin: any) => {
-                    this.adminMap.set(admin.firstName + ' ' + admin.lastName, admin.id);
-                    this.adminNames.push(admin.firstName + ' ' + admin.lastName);
+                    let ADMIN_FULL_NAME = admin.firstName + ' ' + admin.lastName;
+                    ADMIN_FULL_NAME = (ADMIN_FULL_NAME === this.userFullName) ? 'to me' : ADMIN_FULL_NAME;
+                    this.adminMap.set(ADMIN_FULL_NAME, admin.id);
+                    this.adminNames.push(ADMIN_FULL_NAME);
                 });
                 this.adminNames.sort((a, b) => a.length - b.length);
             },
@@ -96,7 +143,7 @@ export class InProgressRequestsComponent implements OnInit {
         });
     }
 
-    public openEditTicket(ticketDetails: Tickets): void {
+    public openEditTicket( ticketDetails: Tickets ): void {
         this.editTicketDetails = { ...ticketDetails };
     }
 
@@ -114,6 +161,7 @@ export class InProgressRequestsComponent implements OnInit {
                 if (EDITED_TICKET) {
                     EDITED_TICKET.categoryName = this.editTicketDetails.categoryName;
                     EDITED_TICKET.ticketDescription = this.editTicketDetails.ticketDescription;
+                    EDITED_TICKET.ticketUpdatedAt = response.message;
                 }
                 swal({
                     title: 'Successfully Edited',
@@ -125,7 +173,6 @@ export class InProgressRequestsComponent implements OnInit {
             },
             error: (e: HttpErrorResponse) => {
                 console.log(e);
-                console.log('Error: ', e.status, e.statusText);
             }
         });
     }
@@ -138,15 +185,14 @@ export class InProgressRequestsComponent implements OnInit {
         if (this.editTicketDetails.ticketDescription.length > 255) {
             this.editError = 'Please shorten the description, size is too large';
         }
-        console.log(this.editError);
         if (this.editError !== '') {
-            return
+            return;
         }
         this.editTicketDetails.categoryId = this.categoryMap.get(this.editTicketDetails.categoryName);
         this.editTicketService();
     }
 
-    private deleteTicketService(ticketId: number): void {
+    private deleteTicketService( ticketId: number ): void {
         this._userHomeService.deleteTicket(ticketId).subscribe({
             next: (response) => {
                 console.log('Response: ', response);
@@ -158,23 +204,31 @@ export class InProgressRequestsComponent implements OnInit {
                     buttons: [false],
                     timer: 2000
                 });
+                this._ticketCountService.fetchTicketCounts();
+                this.pagination();
             },
             error: (e: HttpErrorResponse) => {
                 console.log(e);
-                console.log('Error: ', e.status, e.statusText);
             }
         });
     }
 
     public deleteTicket(ticketId: number): void {
         Swal.fire({
-            title: "Confirm",
-            text: 'Are you sure you want to delete this ticket?',
+            title: 'Delete Confirmation',
+            html: `
+                <div id="delete-dialog">
+                    <p id="delete-message" tabindex="0">Are you sure you want to delete this item?</p>
+                </div>
+                `,
+            icon: 'warning',
             showCancelButton: true,
+            confirmButtonText: 'Delete',
+            cancelButtonText: 'Cancel',
             cancelButtonColor: '#aaa',
             confirmButtonColor: '#dc3545',
-            confirmButtonText: 'Confirm',
-            reverseButtons: true 
+            reverseButtons: true,
+            focusConfirm: false
         }).then((result) => {
             if (result.isConfirmed) {
                 this.deleteTicketService(ticketId);
@@ -184,7 +238,7 @@ export class InProgressRequestsComponent implements OnInit {
         });
     }
 
-    private assignAdminService(adminId: number | undefined): void {
+    private assignAdminService( adminId: number | undefined ): void {
         const ASSIGN_REQ_BODY = {
             "ticketId": this.assignedTicketId,
             "assignedTo": adminId,
@@ -200,10 +254,11 @@ export class InProgressRequestsComponent implements OnInit {
                     buttons: [false],
                     timer: 2000
                 });
+                this._ticketCountService.fetchTicketCounts();
+                this.pagination();
             },
             error: (e: HttpErrorResponse) => {
                 console.log(e);
-                console.log('Error: ', e.status, e.statusText);
             }
         });
     }
@@ -212,31 +267,5 @@ export class InProgressRequestsComponent implements OnInit {
         const ADMIN_ID = this.adminMap.get(this.selectedAdmin);
         this.assignAdminService(ADMIN_ID);
         this.selectedAdmin = '';
-    }
-
-    private pagination(): void {
-        this.getPendingTicketsCount().then((response: number) => {
-            this.totalTicketCount = response;
-            const TOTAL_PAGES = Math.ceil(this.totalTicketCount / this.ticketsPerPage);
-            this.pages = Array.from({ length: TOTAL_PAGES }, (_, index) => index);
-        }).catch((error) => {
-            console.error('Error fetching ticket count:', error);
-        });
-    }
-    
-
-    private getPendingTicketsCount(): Promise<number> {
-        return new Promise((resolve, reject) => {
-            this._userHomeService.getTicketCount(this.userId, 1).subscribe({
-                next: (response) => {
-                    console.log(response);
-                    resolve(response); 
-                },
-                error: (e: HttpErrorResponse) => {
-                    console.log(e);
-                    reject(e); 
-                },
-            });
-        });
     }
 }
