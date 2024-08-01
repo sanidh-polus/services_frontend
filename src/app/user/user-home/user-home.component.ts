@@ -6,20 +6,18 @@ import swal from 'sweetalert';
 import { UserHomeService } from '../../service/user-home/user-home.service';
 import { NewRequest } from './NewRequest';
 import { CategoryDetails } from './CategoryDetails';
-import { LoginSignUpService } from '../../service/login-signup/login_signup.service';
+import { LoginSignUpService } from '../../service/login-signup/login-signup.service';
+import { TicketCountService } from '../../service/ticket-count/ticket-count.service';
 
 declare let bootstrap: any;
 
 @Component({
-  selector: 'app-user-home',
-  templateUrl: './user-home.component.html',
-  styleUrl: './user-home.component.css'
+    selector: 'app-user-home',
+    templateUrl: './user-home.component.html',
+    styleUrl: './user-home.component.css'
 })
-export class UserHomeComponent implements OnInit {
 
-    constructor(private _loginSignUpService: LoginSignUpService,
-                private _userHomeService: UserHomeService,
-                private _router: Router) {}
+export class UserHomeComponent implements OnInit {
 
     @ViewChild('carousel') carouselElement!: ElementRef; 
     newRequest: NewRequest = new NewRequest();
@@ -35,10 +33,14 @@ export class UserHomeComponent implements OnInit {
     errorsMap = new Map<string, string>();
     showAlert = true; 
 
+    constructor( private _loginSignUpService: LoginSignUpService,
+                 private _userHomeService: UserHomeService,
+                 private _router: Router,
+                 private _ticketCountService: TicketCountService ) {}
+
     ngOnInit(): void {
         const CURRENT_USER = this._loginSignUpService.getCurrentUser();
-        console.log(CURRENT_USER)
-        if (CURRENT_USER !== null) {
+        if (CURRENT_USER) {
             this.firstName = CURRENT_USER.firstName;
             this.newRequest.personId = CURRENT_USER.personid;
         }
@@ -55,8 +57,9 @@ export class UserHomeComponent implements OnInit {
     public setCarousel(): void {
         const MY_CAROUSEL = this.carouselElement.nativeElement.querySelector('div');
         const CAROUSEL = new bootstrap.Carousel(MY_CAROUSEL);
-        const POS = this.categoryDetails.findIndex(category => category.categoryName === this.requestFormData.category);
-        CAROUSEL.to(POS);
+        const SLIDE_POSITION = this.categoryDetails.findIndex(category => 
+                            category.categoryName === this.requestFormData.category);
+        CAROUSEL.to(SLIDE_POSITION);
     }
 
     private resetForm(): void {
@@ -67,7 +70,6 @@ export class UserHomeComponent implements OnInit {
     private getAllCategories(): void {
         this._userHomeService.getCategories().subscribe({
             next: (response) => {
-                console.log(response);
                 this.categoryDetails = response;
                 response.forEach((category: any) => {
                     this.categories.set(category.categoryName, category.categoryId);
@@ -131,6 +133,7 @@ export class UserHomeComponent implements OnInit {
                     timer: 2000
                 });
                 this.resetForm();
+                this._ticketCountService.fetchTicketCounts();
                 this._router.navigate(['/user/nav/in-progress']);
             },
             error: (e: HttpErrorResponse) => {
@@ -143,7 +146,7 @@ export class UserHomeComponent implements OnInit {
     public createRequest(): void {
         this.errorMessage = '';
         this.errorsMap = new Map<string, string>();
-
+        
         if (!this.checkNewRequestErrors()) {
             return;
         }
