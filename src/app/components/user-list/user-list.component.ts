@@ -13,7 +13,7 @@ import { User } from './User';
 export class UserListComponent {
     
     @Input() users: User[] = [];
-    @Input() role: string = '';
+    @Input() userRole: string = '';
     @Output() selectedUser = new EventEmitter<any>();
 
     onUserSelect(userId: number) {

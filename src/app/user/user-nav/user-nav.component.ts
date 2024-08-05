@@ -1,6 +1,6 @@
-import { Component, HostListener, OnInit, OnDestroy } from '@angular/core';
+import { Component, HostListener, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { LoginSignUpService } from '../../service/login-signup/login-signup.service';
 import { TicketCountService } from '../../service/ticket-count/ticket-count.service';
 
@@ -10,7 +10,9 @@ import { TicketCountService } from '../../service/ticket-count/ticket-count.serv
     styleUrl: './user-nav.component.css'
 })
 
-export class UserNavComponent implements OnInit, OnDestroy {       
+export class UserNavComponent implements OnInit, OnDestroy {     
+    
+    @ViewChild('skipLink') skipLink!: ElementRef<HTMLAnchorElement>;
 
     firstName = '';
     userId = 0;
@@ -22,7 +24,7 @@ export class UserNavComponent implements OnInit, OnDestroy {
     rejectedTicketsCount = 0;
     private subscription: Subscription = new Subscription();
     isAdmin = false;
-
+    
     constructor( private _router: Router,
                  private _loginSignUpService: LoginSignUpService,
                  private _ticketCountService: TicketCountService ) {}
@@ -36,7 +38,9 @@ export class UserNavComponent implements OnInit, OnDestroy {
                 this.isAdmin = true;
             }
         }
+        this._ticketCountService.fetchTicketCounts();
         this.fetchTicketCount();
+        this.getCurrentContent()
     }
 
     ngOnDestroy(): void {
@@ -45,6 +49,16 @@ export class UserNavComponent implements OnInit, OnDestroy {
 
     private hasRole(roles: { roleId: number; roleName: string; roleDescription: string }[], roleName: string): boolean {
         return roles.some(role => role.roleName === roleName);
+    }
+
+    private getCurrentContent(): void {
+        this._router.events.subscribe(event => {
+            if (event instanceof NavigationEnd) {
+                // let currentUrl = event.urlAfterRedirects;
+                // console.log('Current URL:', currentUrl);
+                this.skipLink.nativeElement.focus();
+            }
+        });
     }
 
     @HostListener('window:scroll', ['$event'])
@@ -59,7 +73,7 @@ export class UserNavComponent implements OnInit, OnDestroy {
     }
 
     public logout(): void {
-        localStorage.removeItem('currentUser');
+        this._loginSignUpService.logout();
         localStorage.setItem('firstTime', 'false');
         this._router.navigate(['login']);
     };

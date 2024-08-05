@@ -1,7 +1,8 @@
-<section class="px-5 py-4 rejected-body" id="rejected-requests" aria-label="Rejected Requests Page" tabindex="0">
-    <h1 class="display-6" id="rejected-requests-title" tabindex="0">Rejected Requests ({{ totalTicketCount }})</h1>
-    <div class="alert alert-info" id="rejected-empty-alert" *ngIf="tickets === null || tickets.length === 0" role="alert"
-        tabindex="0">
+<section class="px-5 py-4 rejected-body" id="rejected-requests" aria-label="Rejected Requests Page" tabindex="0"
+    *ngIf="userId !== 0">
+    <h1 class="display-6" id="main-content" tabindex="0">Rejected Requests ({{ totalTicketCount }})</h1>
+    <div class="alert alert-info" id="rejected-empty-alert" *ngIf="tickets === null || tickets.length === 0"
+        tabindex="0" [attr.aria-hidden]="!isEmpty">
         <b>No tickets rejected yet</b>
     </div>
     <div class="row row-cols-1 row-cols-md-2 g-5 py-4" id="rejected-card-grid">
@@ -13,8 +14,8 @@
                             Rejected</span>
                         <p class="mb-0" tabindex="0"><b>Ticket ID:</b> {{ ticket.ticketId }}</p>
                     </div>
-                    <h5 class="card-title d-inline" id="ticket-{{ ticket.ticketId }}-category" tabindex="0">
-                        {{ ticket?.categoryName }}</h5>
+                    <h2 class="card-title d-inline fs-4" id="ticket-{{ ticket.ticketId }}-category" tabindex="0">
+                        {{ ticket?.categoryName }}</h2>
                     <p class="card-text mt-2 mb-2" id="ticket-{{ ticket.ticketId }}-description" tabindex="0">
                         {{ ticket?.ticketDescription }}</p>
                     <p class="text-muted" id="ticket-{{ ticket.ticketId }}-created-time" tabindex="0"><b>Created At:</b> 
@@ -23,7 +24,7 @@
                         {{ ticket?.ticketUpdatedAt | date:'medium' }}</p>
                     <p class="text-muted" id="ticket-{{ ticket.ticketId }}-rejected-by" tabindex="0"><b>Rejected By:</b> 
                         {{ ticket?.assignedTo?.firstName + ' ' + ticket?.assignedTo?.lastName }}</p>
-                    <!-- <p class="text-muted"><b>Comments:</b> {{ ticket?.comments }}</p> -->
+                    <p class="text-muted"><b>Comments:</b> {{ ticket?.ticketComments?.[0]?.comments }}</p>
                 </div>
             </div>
         </div>

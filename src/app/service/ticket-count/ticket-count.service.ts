@@ -18,6 +18,9 @@ export class TicketCountService {
     private assignedTicketsCountSubject = new BehaviorSubject<number>(0);
     private approvedTicketsCountSubject = new BehaviorSubject<number>(0);
     private rejectedTicketsCountSubject = new BehaviorSubject<number>(0);
+    private assignedToMeCountSubject = new BehaviorSubject<number>(0);
+    private approvedByMeCountSubject = new BehaviorSubject<number>(0);
+    private rejectedByMeCountSubject = new BehaviorSubject<number>(0);
 
     constructor( private _userHomeService: UserHomeService,
                  private _loginSignUpService: LoginSignUpService ) {
@@ -40,6 +43,9 @@ export class TicketCountService {
             this.assignedTicketsCountSubject.next(TICKETS_COUNT.assignedCount);
             this.approvedTicketsCountSubject.next(TICKETS_COUNT.approvedCount);
             this.rejectedTicketsCountSubject.next(TICKETS_COUNT.rejectedCount);
+            this.assignedToMeCountSubject.next(TICKETS_COUNT.assignedToMeCount);
+            this.approvedByMeCountSubject.next(TICKETS_COUNT.approvedByMeCount);
+            this.rejectedByMeCountSubject.next(TICKETS_COUNT.rejectedByMeCount);
         } catch (error) {
             console.error('Error fetching ticket counts: ', error);
         }
@@ -76,5 +82,17 @@ export class TicketCountService {
 
     getRejectedTicketsCount(): Observable<number> {
         return this.rejectedTicketsCountSubject.asObservable();
+    }
+
+    getAssignedToMeTicketsCount(): Observable<number> {
+        return this.assignedToMeCountSubject.asObservable();
+    }
+
+    getApprovedByMeTicketsCount(): Observable<number> {
+        return this.approvedByMeCountSubject.asObservable();
+    }
+
+    getRejectedByMeTicketsCount(): Observable<number> {
+        return this.rejectedByMeCountSubject.asObservable();
     }
 }

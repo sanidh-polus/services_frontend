@@ -7,12 +7,13 @@
             (click)="showAlert = false">
         </button>
     </div>
-    <div class="row d-flex flex-lg-row flex-column-reverse py-0" [ngClass]="{'py-lg-0': showAlert, 'py-lg-5': !showAlert }">
+    <div class="row d-flex flex-lg-row flex-column-reverse py-0" [ngClass]="{'py-lg-0': showAlert, 'py-lg-5': !showAlert }"
+        id="main-content" #mainContent>
         <div class="col-lg-8 mt-lg-0 mt-4" id="create-request-div" tabindex="-1">
             <div class="d-flex justify-content-center mt-4" tabindex="-1">    
                 <form class="col-9 p-4 border shadow rounded main-color" id="create-request-form" tabindex="0"
                     aria-label="Create a request form">
-                    <h4 class="text-center" id="create-request-title" tabindex="0">Create a Request</h4>
+                    <h1 class="text-center fs-4" id="create-request-title" tabindex="0">Create a Request</h1>
                     <div class="form-group" [class.mt-3]="categoryNames.length === 0" id="request-category-div">
                         <label for="request-category" id="request-category-label" tabindex="0">
                             Category <span class="text-danger">*</span>
@@ -33,10 +34,11 @@
                             aria-label="Enter a description" [ngClass]="{'error-border': errorsMap.has('description') }">
                         </textarea>
                     </div>
-                    <p class="text-danger" id="create-request-error-text" aria-live="assertive" tabindex="0">
+                    <p class="text-danger" id="create-request-error-text" aria-live="assertive" tabindex="0"
+                       *ngIf="errorMessage !== ''">
                        <b>{{ errorMessage }}</b> 
                     </p>
-                    <button class="btn btn-success mt-1" id="submit-button" type="button" (click)="createRequest()" 
+                    <button class="btn btn-success mt-2" id="submit-button" type="button" (click)="createRequest()" 
                         tabindex="0">
                         Create
                     </button>
@@ -51,7 +53,7 @@
                         [class.active]="isFirstIndex" id="carousel-item">
                         <div class="p-5">
                             <div class="carousel-content text-center" id="carousel-body">
-                                <h4 id="carousel-head" tabindex="0">{{ category?.categoryName }}</h4>
+                                <h1 class="fs-4" id="carousel-head" tabindex="0">{{ category?.categoryName }}</h1>
                                 <p class="mt-3" id="carousel-text" tabindex="0">{{ category?.categoryDescription }}</p>
                             </div>
                         </div>

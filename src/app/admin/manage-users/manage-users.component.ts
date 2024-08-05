@@ -56,7 +56,11 @@ export class ManageUsersComponent implements OnInit {
     
     public makeAdmin(selectedUser: number): void {
         console.log('Selected User:', selectedUser);
-        this._adminHomeService.makeAdmin(this.userId, selectedUser).subscribe({
+        const ADD_ADMIN_BODY = {
+            "adminId": this.userId,
+            "personId": selectedUser
+        }
+        this._adminHomeService.makeAdmin(ADD_ADMIN_BODY).subscribe({
             next: (response) => {
                 console.log(response);
                 const POSITION = this.users.findIndex(person => person.id === selectedUser);

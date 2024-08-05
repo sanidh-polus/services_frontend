@@ -7,15 +7,12 @@
             </span>
             <p class="mb-0" id="request-ticket-id" tabindex="0"><b>Ticket ID:</b> {{ ticket.ticketId }}</p>
         </div>
-        <h5 class="card-title d-inline" id="ticket-{{ ticket.ticketId }}-category" tabindex="0">
-            {{ ticket.categoryName }}
-        </h5>
+        <h2 class="card-title d-inline fs-4" id="ticket-{{ ticket.ticketId }}-category" tabindex="0">
+            {{ ticket.categoryName }}</h2>
         <p class="card-text mt-2 mb-2" id="ticket-{{ ticket.ticketId }}-description" tabindex="0">
-            {{ ticket.ticketDescription }}
-        </p>
+            {{ ticket.ticketDescription }}</p>
         <p class="text-muted" id="ticket-{{ ticket.ticketId }}-created-by" tabindex="0"><b>Created By:</b> 
-            {{ ticket.fullName }}
-        </p> 
+            {{ ticket.fullName }}</p> 
         <p class="text-muted" id="ticket-{{ ticket.ticketId }}-created-time" tabindex="0">
             <b>Created At:</b> {{ ticket.ticketCreatedTime | date:'medium' }}
         </p>
@@ -29,11 +26,11 @@
                 <b>Rejected At:</b> {{ ticket.ticketUpdatedAt | date:'medium' }}
             </p>
             <!-- Conditionally render comments for rejected tickets -->
-            <!-- <ng-container *ngIf="ticket?.rejectionComments">
+            <ng-container *ngIf="ticket?.ticketComments">
                 <p class="text-muted mt-2" id="ticket-{{ ticket.ticketId }}-rejection-comments" tabindex="0">
-                    <b>Comments:</b> {{ ticket.rejectionComments }}
+                    <b>Comments:</b> {{ ticket.ticketComments?.[0]?.comments }}
                 </p>
-            </ng-container> -->
+            </ng-container>
         </ng-template>
     </div>
 </div>

@@ -19,7 +19,8 @@ declare let bootstrap: any;
 
 export class UserHomeComponent implements OnInit {
 
-    @ViewChild('carousel') carouselElement!: ElementRef; 
+    @ViewChild('carousel') carouselElement!: ElementRef;
+
     newRequest: NewRequest = new NewRequest();
     firstName = '';
     errorMessage = '';
@@ -32,6 +33,8 @@ export class UserHomeComponent implements OnInit {
     };
     errorsMap = new Map<string, string>();
     showAlert = true; 
+    totalTicketCount = 0;
+    ticketsPerPage = 4;
 
     constructor( private _loginSignUpService: LoginSignUpService,
                  private _userHomeService: UserHomeService,
@@ -134,12 +137,21 @@ export class UserHomeComponent implements OnInit {
                 });
                 this.resetForm();
                 this._ticketCountService.fetchTicketCounts();
-                this._router.navigate(['/user/nav/in-progress']);
+                this.goToNewRequest();
             },
             error: (e: HttpErrorResponse) => {
                 console.log(e);
                 console.log('Error: ', e.status, e.statusText);
             }
+        });
+    }
+
+    public goToNewRequest(): void {
+        this._ticketCountService.getInProgressTicketsCount()
+            .subscribe(count => this.totalTicketCount = count + 1);
+        const TOTAL_PAGES = Math.ceil(this.totalTicketCount / this.ticketsPerPage);
+        this._router.navigate(['/user/nav/in-progress'], {
+            queryParams: { page: TOTAL_PAGES }
         });
     }
 

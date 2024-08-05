@@ -1,4 +1,4 @@
-<section class="login-body" id="login-box-main" tabindex="0" aria-label="Login Page Body" role="login-body">
+<section class="login-body" id="login-box-main" tabindex="0" aria-label="Login Page Body">
     <div class="container p-4 d-flex justify-content-center" id="login-main-container">
         <div class="form-container border rounded col-lg-6 col-10 p-4 main-color" id="login-form-box">
             <div class="text-center" id="app-login-image">
@@ -32,7 +32,8 @@
                         <i class="{{ togglePasswordClass }}" id="toggle-password-button"></i>
                     </button>
                 </div>
-                <p class="text-danger text-center" id="error-text" aria-live="assertive" tabindex="0">
+                <p class="text-danger text-center" id="error-text" aria-live="assertive" tabindex="0"
+                    *ngIf="errorMessage !== ''">
                     <b>{{ errorMessage }}</b>
                 </p>
                 <div class="text-center" id="login-button-div">

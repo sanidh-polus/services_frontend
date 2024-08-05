@@ -1,7 +1,8 @@
-<section class="px-5 py-4 progress-body" id="in-progress-requests" aria-label="In-Progress Requests Page" tabindex="0">
-    <h1 class="display-6" id="in-progress-requests-title" tabindex="0">In-Progress Requests ({{ totalTicketCount }})</h1>
+<section class="px-5 py-4 progress-body" id="in-progress-requests" aria-label="In-Progress Requests Page" tabindex="0"
+    *ngIf="userId !== 0">
+    <h1 class="display-6" id="main-content" tabindex="0">In-Progress Requests ({{ totalTicketCount }})</h1>
     @if (tickets === null || tickets.length === 0) {
-        <div class="alert alert-info" id="in-progress-empty-alert" role="alert" tabindex="0">
+        <div class="alert alert-info" id="in-progress-empty-alert" tabindex="0" [attr.aria-hidden]="!isEmpty">
             <b>No tickets created yet</b>
         </div>
     }
@@ -14,8 +15,8 @@
                             id="in-progress-badge">In-Progress</span>
                         <p class="mb-0" tabindex="0"><b>Ticket ID:</b> {{ ticket.ticketId }}</p>
                     </div>
-                    <h5 class="card-title d-inline" id="ticket-{{ ticket.ticketId }}-category" tabindex="0">
-                        {{ ticket?.categoryName }}</h5>
+                    <h2 class="card-title d-inline fs-4" id="ticket-{{ ticket.ticketId }}-category" tabindex="0">
+                        {{ ticket?.categoryName }}</h2>
                     <p class="card-text mt-2 mb-2" id="ticket-{{ ticket.ticketId }}-description" tabindex="0">
                         {{ ticket?.ticketDescription }}</p>
                     <p class="text-muted" id="ticket-{{ ticket.ticketId }}-created-time" tabindex="0"><b>Created At:</b> 
@@ -43,7 +44,7 @@
         </div>
     </div>
     <button class="btn btn-primary mx-1" id="'pagination-button-{{ page + 1 }}" *ngFor="let page of pages" 
-        attr.aria-label="'Go to page {{ page + 1 }}" [routerLink]="['.', { page: page + 1 }]"
+        attr.aria-label="'Go to page {{ page + 1 }}" [routerLink]="['.']" [queryParams]="{ page: page + 1 }"
         [ngClass]="{ 'btn-secondary': currentPage-1 === page }">
         {{ page + 1 }}
     </button>
@@ -54,12 +55,12 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" id="edit-modal-header">
-                <h5 class="modal-title" id="edit-modal-title">Edit Request</h5>
+                <h2 class="modal-title fs-4" id="edit-modal-title">Edit Request</h2>
             </div>
             <div class="modal-body me-3" id="edit-modal-body">
                 <select class="form-select my-2" id="edit-request-category" [(ngModel)]="editTicketDetails.categoryName" 
                     name="category" tabindex="0" aria-label="Select a category">
-                    <option value="" disabled selected>Select a category</option>
+                    <!-- <option value="" disabled selected>Select a category</option> -->
                     <option *ngFor="let category of categoryNames">{{ category }}</option>
                 </select>
                 <textarea class="form-control my-2" id="edit-request-description" placeholder="Enter a description"
@@ -87,7 +88,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" id="assign-modal-header">
-                <h5 class="modal-title" id="assign-modal-title">Assign Admin</h5>
+                <h2 class="modal-title fs-4" id="assign-modal-title">Assign Admin</h2>
             </div>
             <div class="modal-body me-3" id="assign-modal-body">
                 <select class="form-select my-2" id="assign-request-admin" [(ngModel)]="selectedAdmin" name="admin"

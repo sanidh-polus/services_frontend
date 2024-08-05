@@ -24,8 +24,8 @@ export class AdminHomeService {
         return this._http.get<any>(`/service/roles/${roleId}`);
     }
 
-    makeAdmin(adminId: number, userId: number): Observable<any> {
-        return this._http.post<any>(`/service/makeadmin/${adminId}/${userId}`, {});
+    makeAdmin(addAdminBody: any): Observable<any> {
+        return this._http.post<any>(`/service/makeadmin`, addAdminBody);
     }
 
     removeAdmin(adminId: number, userId: number): Observable<any> {

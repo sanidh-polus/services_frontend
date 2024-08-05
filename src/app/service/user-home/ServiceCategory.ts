@@ -4,5 +4,5 @@ export interface ServiceCategory {
     categoryDescription: string;
     categoryCreatedBy: string;
     categoryCreatedAt: string;
-    tickets: any[];
+    // tickets: any[];
 }

@@ -17,7 +17,8 @@ export class PreviousRequestsComponent implements OnInit {
     size = 20;
     tickets: AdminTickets[] = [];
     activeTab: 'approved' | 'rejected' = 'approved';
-    
+    isEmpty = false;
+
     constructor(private _loginSignUpService: LoginSignUpService,
                 private _adminHomeService: AdminHomeService) {}
 
@@ -47,6 +48,7 @@ export class PreviousRequestsComponent implements OnInit {
             next: (response) => {
                 console.log(response);
                 this.tickets = response;
+                this.isEmpty = response.length === 0;
             },
             error: (e: HttpErrorResponse) => {
                 console.log(e);

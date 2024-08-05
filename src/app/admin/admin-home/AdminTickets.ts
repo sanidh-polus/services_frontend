@@ -5,12 +5,14 @@ export interface AdminTickets {
     ticketDescription: string;
     categoryName: string;
     ticketCreatedTime: string;
-    assignedTo: {
-        designation: string,
-        email: string,
-        firstName: string, 
-        id: number,
-        lastName: string
-    } | null,
+    assignedTo: Admin | null;
     ticketUpdatedAt: string;
+}
+
+interface Admin {
+    designation: string;
+    email: string;
+    firstName: string;
+    id: number;
+    lastName: string;
 }

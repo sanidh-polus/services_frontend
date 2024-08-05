@@ -37,6 +37,11 @@ export class LoginSignUpService {
         return this.currentUser.value;
     }
 
+    public logout(): void {
+        localStorage.removeItem('currentUser');
+        this.currentUser.next(null);
+    }
+
     public enterSignUpDetails(signUpDetails: SignUpData): Observable<SignUpData[]> {
         return this._http.post<SignUpData[]>('/service/signup', signUpDetails);
     }

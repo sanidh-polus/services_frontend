@@ -62,6 +62,15 @@ export class LoginComponent {
         this._loginSignUpService.checkLoginDetails(LOGIN_BODY).subscribe({
             next: (response) => {
                 console.log('Response: ', response);
+                if (this.hasRole(response.roles, 'APPLICATION_ADMINISTRATOR')) 
+                    this._router.navigate(['/admin']);
+                else if (this.hasRole(response.roles, 'PRINCIPAL INVESTIGATOR')) {
+                    this._router.navigate(['/user']);
+                }
+                else { 
+                    swal('Error', 'Not a valid user, please contact an admin', 'error'); 
+                    return;
+                }
                 swal({
                     title: 'Successfully Logged In',
                     text: ' ',
@@ -69,11 +78,6 @@ export class LoginComponent {
                     buttons: [false],
                     timer: 2000
                 });
-                if (this.hasRole(response.roles, 'APPLICATION_ADMINISTRATOR')) 
-                    this._router.navigate(['/admin']);
-                else if (this.hasRole(response.roles, 'PRINCIPAL INVESTIGATOR')) {
-                    this._router.navigate(['/user']);
-                }
             },
             error: (e: HttpErrorResponse) => {
                 console.log(e);

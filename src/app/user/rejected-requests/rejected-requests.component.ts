@@ -20,6 +20,7 @@ export class RejectedRequestsComponent implements OnInit {
     totalTicketCount = 0;
     pages: number[] = [];
     tickets: Tickets[] = [];
+    isEmpty = false;
 
     constructor( private _loginSignUpService: LoginSignUpService,
                  private _userHomeService: UserHomeService,
@@ -42,11 +43,11 @@ export class RejectedRequestsComponent implements OnInit {
             "page": pageNumber - 1,
             "size": this.ticketsPerPage
         };
-
         this._userHomeService.getTickets(TICKETS_PAYLOAD).subscribe({
             next: (response) => {
                 console.log(response);
                 this.tickets = response;
+                this.isEmpty = response.length === 0;
             },
             error: (e: HttpErrorResponse) => {
                 console.log(e);

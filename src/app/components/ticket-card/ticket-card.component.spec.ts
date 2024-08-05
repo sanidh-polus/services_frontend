@@ -23,6 +23,7 @@ describe('TicketCardComponent', () => {
             categoryName: '',
             ticketCreatedTime: '',
             assignedTo: null,
+            ticketComments: null,
             ticketUpdatedAt: '',
         };
         fixture.detectChanges();

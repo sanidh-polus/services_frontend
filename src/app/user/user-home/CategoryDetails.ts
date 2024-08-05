@@ -4,7 +4,7 @@ export class CategoryDetails {
     categoryDescription: string;
     categoryCreatedBy: string;
     categoryCreatedAt: string;
-    tickets: any[];
+    // tickets: any[];
 
     constructor() {
         this.categoryId = 0;
@@ -12,6 +12,6 @@ export class CategoryDetails {
         this.categoryDescription = '';
         this.categoryCreatedBy = '';
         this.categoryCreatedAt = '';
-        this.tickets = [];
+        // this.tickets = [];
     }
 }

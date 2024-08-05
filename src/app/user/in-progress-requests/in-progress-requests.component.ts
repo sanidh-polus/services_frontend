@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
 import swal from 'sweetalert';
 import Swal from 'sweetalert2';
 import { LoginSignUpService } from '../../service/login-signup/login-signup.service';
@@ -32,10 +31,9 @@ export class InProgressRequestsComponent implements OnInit {
     adminNames: string[] = [];
     adminMap = new Map<string, number>();
     assignedTicketId = 0;
-    isAssigned = false;
-    private subscription: Subscription = new Subscription();
     isAdmin = false;
     userFullName = ''
+    isEmpty = false;
 
     constructor( private _loginSignUpService: LoginSignUpService,
                  private _userHomeService: UserHomeService,
@@ -62,8 +60,7 @@ export class InProgressRequestsComponent implements OnInit {
     }
 
     private pagination(): void {
-        this.subscription = this._ticketCountService.getInProgressTicketsCount()
-            .subscribe(count => this.totalTicketCount = count);
+        this._ticketCountService.getInProgressTicketsCount().subscribe(count => this.totalTicketCount = count);
         const TOTAL_PAGES = Math.ceil(this.totalTicketCount / this.ticketsPerPage);
         this.pages = Array.from({ length: TOTAL_PAGES }, (_, index) => index);
     }
@@ -78,7 +75,7 @@ export class InProgressRequestsComponent implements OnInit {
     // }
 
     private fetchCurrentPageTickets(): void {
-        this._route.params.subscribe(params => {
+        this._route.queryParams.subscribe(params => {
             this.currentPage = +params['page'] || 1;
             this.getPendingRequests(this.currentPage);
         });
@@ -91,11 +88,11 @@ export class InProgressRequestsComponent implements OnInit {
             "page": pageNumber - 1,
             "size": this.ticketsPerPage
         };
-
         this._userHomeService.getTickets(TICKETS_PAYLOAD).subscribe({
             next: (response) => {
                 console.log(response);
                 this.tickets = response;
+                this.isEmpty = response.length === 0;
             },
             error: (e: HttpErrorResponse) => {
                 console.log(e);
