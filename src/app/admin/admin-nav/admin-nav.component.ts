@@ -1,7 +1,7 @@
 import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { LoginSignUpService } from '../../service/login-signup/login-signup.service';
-import { TicketCountService } from '../../service/ticket-count/ticket-count.service';
-import { NavigationEnd, Router } from '@angular/router';
+import { Router } from '@angular/router';
+// import { NavigationEnd } from '@angular/router';
 
 @Component({
     selector: 'app-admin-nav',
@@ -19,7 +19,6 @@ export class AdminNavComponent implements OnInit {
     isNavbarHidden = false;
     
     constructor(private _loginSignUpService: LoginSignUpService,
-                private _ticketCountService: TicketCountService,
                 private _router: Router) {}
 
     ngOnInit(): void {
@@ -28,7 +27,7 @@ export class AdminNavComponent implements OnInit {
             this.userId = CURRENT_USER.personid;
             this.firstName = CURRENT_USER.firstName;
         }
-        this.getCurrentContent();
+        // this.getCurrentContent();
     }
 
     // public async switchToUser(): Promise<void> {
@@ -37,15 +36,15 @@ export class AdminNavComponent implements OnInit {
     //     this._router.navigate(['user']);
     // }
     
-    private getCurrentContent(): void {
-        this._router.events.subscribe(event => {
-            if (event instanceof NavigationEnd) {
-                // let currentUrl = event.urlAfterRedirects;
-                // console.log('Current URL:', currentUrl);
-                this.skipLink.nativeElement.focus();
-            }
-        });
-    }
+    // private getCurrentContent(): void {
+    //     this._router.events.subscribe(event => {
+    //         if (event instanceof NavigationEnd) {
+    //             const currentUrl = event.urlAfterRedirects;
+    //             console.log('Current URL:', currentUrl);
+    //             this.skipLink.nativeElement.focus();
+    //         }
+    //     });
+    // }
 
     public logout(): void {
         this._loginSignUpService.logout();

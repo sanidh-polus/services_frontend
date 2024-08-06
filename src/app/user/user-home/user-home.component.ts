@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import swal from 'sweetalert';
@@ -8,6 +8,7 @@ import { NewRequest } from './NewRequest';
 import { CategoryDetails } from './CategoryDetails';
 import { LoginSignUpService } from '../../service/login-signup/login-signup.service';
 import { TicketCountService } from '../../service/ticket-count/ticket-count.service';
+import { FocusService } from '../../service/focus/focus.service';
 
 declare let bootstrap: any;
 
@@ -17,9 +18,10 @@ declare let bootstrap: any;
     styleUrl: './user-home.component.css'
 })
 
-export class UserHomeComponent implements OnInit {
+export class UserHomeComponent implements OnInit, AfterViewInit {
 
     @ViewChild('carousel') carouselElement!: ElementRef;
+    @ViewChild('userHomeMainContent') mainContent!: ElementRef;
 
     newRequest: NewRequest = new NewRequest();
     firstName = '';
@@ -39,7 +41,8 @@ export class UserHomeComponent implements OnInit {
     constructor( private _loginSignUpService: LoginSignUpService,
                  private _userHomeService: UserHomeService,
                  private _router: Router,
-                 private _ticketCountService: TicketCountService ) {}
+                 private _ticketCountService: TicketCountService,
+                 private _focusService: FocusService ) {}
 
     ngOnInit(): void {
         const CURRENT_USER = this._loginSignUpService.getCurrentUser();
@@ -48,7 +51,15 @@ export class UserHomeComponent implements OnInit {
             this.newRequest.personId = CURRENT_USER.personid;
         }
         this.getAllCategories();
+        this.setWelcomeBanner();
+    }
 
+    ngAfterViewInit(): void {
+        // console.log(this.mainContent);
+        this._focusService.focusElement(this.mainContent);
+    }
+
+    public setWelcomeBanner(): void {
         if (localStorage.getItem('firstTime') === 'false') {
             localStorage.setItem('firstTime', 'true');
         }

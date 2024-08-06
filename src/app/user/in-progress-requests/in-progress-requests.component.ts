@@ -44,10 +44,11 @@ export class InProgressRequestsComponent implements OnInit {
         const CURRENT_USER = this._loginSignUpService.getCurrentUser();
         if (CURRENT_USER) {
             this.userId = CURRENT_USER.personid;
-        }
-        if (this.hasRole(CURRENT_USER.roles, 'APPLICATION_ADMINISTRATOR')) {
-            this.isAdmin = true;
-            this.userFullName = CURRENT_USER.firstName + ' ' + CURRENT_USER.lastName;
+            
+            if (this.hasRole(CURRENT_USER.roles, 'APPLICATION_ADMINISTRATOR')) {
+                this.isAdmin = true;
+                this.userFullName = CURRENT_USER.firstName + ' ' + CURRENT_USER.lastName;
+            }
         }
         this.pagination();
         this.getAllCategories();

@@ -18,7 +18,7 @@ import { LoginSignUpService } from '../service/login-signup/login-signup.service
 
 export class LoginComponent {
 
-    constructor( private _loginSignUpService: LoginSignUpService, 
+    constructor(private _loginSignUpService: LoginSignUpService, 
                 private _router: Router) {}
 
     errorMessage = '';

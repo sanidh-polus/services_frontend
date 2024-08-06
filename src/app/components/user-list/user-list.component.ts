@@ -16,7 +16,7 @@ export class UserListComponent {
     @Input() userRole: string = '';
     @Output() selectedUser = new EventEmitter<any>();
 
-    onUserSelect(userId: number) {
+    public onUserSelect(userId: number): void {
         this.selectedUser.emit(userId); 
     }
 }

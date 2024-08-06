@@ -1,6 +1,7 @@
-import { Component, HostListener, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, HostListener, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { NavigationEnd, Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { NavigationEnd } from '@angular/router';
 import { LoginSignUpService } from '../../service/login-signup/login-signup.service';
 import { TicketCountService } from '../../service/ticket-count/ticket-count.service';
 
@@ -10,9 +11,10 @@ import { TicketCountService } from '../../service/ticket-count/ticket-count.serv
     styleUrl: './user-nav.component.css'
 })
 
-export class UserNavComponent implements OnInit, OnDestroy {     
+export class UserNavComponent implements OnInit, OnDestroy, AfterViewInit {     
     
     @ViewChild('skipLink') skipLink!: ElementRef<HTMLAnchorElement>;
+    // @ViewChild(' mainContent') mainContent!: ElementRef;
 
     firstName = '';
     userId = 0;
@@ -34,13 +36,18 @@ export class UserNavComponent implements OnInit, OnDestroy {
         if (CURRENT_USER) {
             this.firstName = CURRENT_USER.firstName;
             this.userId = CURRENT_USER.personid;
+            
             if (this.hasRole(CURRENT_USER.roles, 'APPLICATION_ADMINISTRATOR')) {
                 this.isAdmin = true;
             }
         }
         this._ticketCountService.fetchTicketCounts();
         this.fetchTicketCount();
-        this.getCurrentContent()
+        // this.getCurrentContent();
+    }
+
+    ngAfterViewInit(): void {
+        this.getCurrentContent();
     }
 
     ngOnDestroy(): void {
@@ -54,9 +61,10 @@ export class UserNavComponent implements OnInit, OnDestroy {
     private getCurrentContent(): void {
         this._router.events.subscribe(event => {
             if (event instanceof NavigationEnd) {
-                // let currentUrl = event.urlAfterRedirects;
-                // console.log('Current URL:', currentUrl);
+                const currentUrl = event.urlAfterRedirects;
+                console.log('Current URL:', currentUrl);
                 this.skipLink.nativeElement.focus();
+                // this.skipLink.nativeElement.click();
             }
         });
     }

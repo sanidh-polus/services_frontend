@@ -5,7 +5,7 @@
 </div>
 <nav class="navbar navbar-expand-lg navbar-light p-3 sticky-top" id="navbar" aria-label="Navbar" tabindex="0"
     [ngClass]="{'navbar-hidden': isNavbarHidden}" *ngIf="userId !== 0">
-    <a href="#main-content" id="skip-link" aria-label="Skip to main content" #skipLink></a>
+    <a [routerLink]="[]" fragment="main-content" id="skip-link" aria-label="Skip to main content" #skipLink></a>
     <h1 class="navbar-brand display-6 ms-lg-4 ms-2 fs-3" id="app-title" tabindex="0"><b>Service Requests App</b></h1>
     <div class="d-flex align-items-center d-lg-none mb-3">
         <button class="navbar-toggler" id="nav-toggle" type="button" data-bs-toggle="collapse" tabindex="0"

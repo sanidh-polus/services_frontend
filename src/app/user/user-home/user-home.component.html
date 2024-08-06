@@ -8,12 +8,13 @@
         </button>
     </div>
     <div class="row d-flex flex-lg-row flex-column-reverse py-0" [ngClass]="{'py-lg-0': showAlert, 'py-lg-5': !showAlert }"
-        id="main-content" #mainContent>
+        id="create-request-main-box">
         <div class="col-lg-8 mt-lg-0 mt-4" id="create-request-div" tabindex="-1">
             <div class="d-flex justify-content-center mt-4" tabindex="-1">    
                 <form class="col-9 p-4 border shadow rounded main-color" id="create-request-form" tabindex="0"
                     aria-label="Create a request form">
-                    <h1 class="text-center fs-4" id="create-request-title" tabindex="0">Create a Request</h1>
+                    <h1 class="text-center fs-4" id="create-request-title" tabindex="0" #userHomeMainContent>
+                        Create a Request</h1>
                     <div class="form-group" [class.mt-3]="categoryNames.length === 0" id="request-category-div">
                         <label for="request-category" id="request-category-label" tabindex="0">
                             Category <span class="text-danger">*</span>
